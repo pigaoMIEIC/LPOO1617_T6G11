@@ -1,11 +1,11 @@
 
 public class Board {
-	char board[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
-			{ 'x', 'h', ' ', ' ', 'i', ' ', 'x', ' ', 'g', 'x' }, { 'x', 'x', 'x', ' ', 'x', 'x', 'x', ' ', ' ', 'x' },
-			{ 'x', ' ', 'i', ' ', 'i', ' ', 'x', ' ', ' ', 'x' }, { 'x', 'x', 'x', ' ', 'x', 'x', 'x', ' ', ' ', 'x' },
-			{ 'i', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'i', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', 'x', 'x', ' ', 'x', 'x', 'x', 'x', ' ', 'x' }, { 'x', ' ', 'i', ' ', 'i', ' ', 'x', 'k', ' ', 'x' },
-			{ 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
+	char board[][];
+	String name;
+			
+	Board(char[][] layout){
+		board=layout;
+	}
 
 	public void print() {
 		for (int i = 0; i < board.length; i++) {
@@ -15,7 +15,18 @@ public class Board {
 			}
 			System.out.println();
 		}
-
+	}
+	
+	public void setName(String name){
+		this.name=name;
+	}
+	
+	public void updateLevel(char[][] level){
+		board=level;
+	}
+	
+	public void set(int x,int y, char value){
+		board[y][x]= value;
 	}
 	
 	public char get(int x,int y){
@@ -45,8 +56,19 @@ public class Board {
 		return temp;
 	}
 	
-	public void openDoors(){
-		this.board[5][0]='s';
-		this.board[6][0]='s';
+	public void openDoors(){		
+//		for (int i = 0; i < board.length; i++) {
+//			for (int j = 0; j < board[0].length; j++) {
+//				if(board[j][i]=='i')
+//					board[j][i]='s';
+//			}
+//		}
+		if (name == "level1") {
+			board[5][0] = 's';
+			board[6][0] = 's';
+		}
+		if (name == "level2") {
+			board[1][0] = 's';
+		}
 	}
 }

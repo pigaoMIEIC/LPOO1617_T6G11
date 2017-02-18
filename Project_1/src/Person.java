@@ -1,58 +1,104 @@
-import java.util.Scanner;
 
 public class Person {
 	char tag;
 	int x;
 	int y;
 	char current=' ';
+	char state;
 
 	Person(char tag, int x, int y) {
 		this.tag = tag;
 		this.x = x;
 		this.y = y;
 	}
+	
+	public char state(){
+		return this.state;
+	}
+	
+	public char setState(char state){
+		return this.state=state;
+	}
+	
+	
+	
+	public boolean checkSurround(Board b,char enemy){
+		if (b.get(x+1, y) == enemy || b.get(x-1, y) == enemy || b.get(x, y+1) == enemy || b.get(x, y-1) == enemy){
+			System.out.println("You got caught! :(");
+			return true;}
+		else
+			return false; 
+	}
+	
+	public void setPosition(int x, int y, Board b){
+		this.x=x;
+		this.y=y;
+		current=' ';
+		b.set(x,y,state);
+	}
 
-	public boolean move(Board b) {
-		char input;
-		Scanner s = new Scanner(System.in);
-		input = s.next().charAt(0);
+	public boolean move(Board b, char input) {
 		switch (input) {
 		case 's':
-			if (b.get(x, y + 1) != 'x') {
-				current = b.refresh(x, y + 1, input, tag, current);
-				y++;
+			if (b.get(x, y + 1) == 'x') {
+				break;
 			}
+			if (b.get(x, y + 1) == 'i') {
+				if (state == 'K')
+					b.openDoors();
+				break;
+			}
+			current = b.refresh(x, y + 1, input, tag, current);
+			y++;
 			break;
 		case 'w':
-			if (b.get(x, y - 1) != 'x') {
-				current = b.refresh(x, y - 1, input, tag, current);
-				y--;
+			if (b.get(x, y - 1) == 'x') {
+				break;
 			}
+			if (b.get(x, y - 1) == 'i') {
+				if (state == 'K')
+					b.openDoors();
+				break;
+			}
+			current = b.refresh(x, y - 1, input, tag, current);
+			y--;
 			break;
 		case 'd':
-			if (b.get(x + 1, y) != 'x') {
-				current = b.refresh(x + 1, y, input, tag, current);
-				x++;
+			if (b.get(x + 1, y) == 'x') {
+				break;
 			}
+			if (b.get(x + 1, y) == 'i') {
+				if (state == 'K')
+					b.openDoors();
+				break;
+			}
+			current = b.refresh(x + 1, y, input, tag, current);
+			x++;
 			break;
 		case 'a':
-			if (b.get(x - 1, y) != 'x') {
-				current = b.refresh(x - 1, y, input, tag, current);
-				x--;
+			if (b.get(x - 1, y) == 'x') {
+				break;
 			}
+			if (b.get(x - 1, y) == 'i') {
+				if (state == 'K')
+					b.openDoors();
+				break;
+			}
+			current = b.refresh(x - 1, y, input, tag, current);
+			x--;
 			break;
 		default:
 			System.out.println("default input");
 		}
-		
-		b.print();
-		
-		if (current == 'k')
-			b.openDoors();
-		if(current == 's'){
+
+		if (current == 'k') {
+			state = 'K';
+		}
+		if (current == 's') {
 			System.out.println("Parabens passou o nivel!!");
-			return true;}
+			return true;
+		}
 		return false;
-		
+
 	}
 }
