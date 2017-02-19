@@ -55,7 +55,7 @@ public class Enemy extends Person {
 	}
 
 	public boolean attack(Board b) {
-		switch (direction[rand.nextInt(4)]) {
+		switch (s.next().charAt(0)) {
 		case 's':
 			if (b.get(x, y + 1) == 'x' || b.get(x, y + 1) == 'i') {
 				break;
@@ -115,7 +115,9 @@ public class Enemy extends Person {
 	}
 
 	public void move(Board b) {
-		while (!tryMove(direction[rand.nextInt(4)], b)) {
+//		while (!tryMove(direction[rand.nextInt(4)], b)) {
+//		}
+		while (!tryMove(s.next().charAt(0), b)) {
 		}
 	}
 

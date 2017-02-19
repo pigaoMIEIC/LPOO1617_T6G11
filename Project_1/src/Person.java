@@ -1,5 +1,8 @@
+import java.util.Scanner;
 
 public class Person {
+	
+	static Scanner s = new Scanner(System.in);
 
 	char tag;
 	int x;
