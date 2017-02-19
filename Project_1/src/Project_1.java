@@ -14,55 +14,68 @@ public class Project_1 {
 			{ 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
 
 	static char level2[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
-			{ 'i', ' ', ' ', ' ', 'o', ' ', ' ', 'k', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
+			{ 'i', ' ', ' ', ' ', ' ', ' ', ' ', 'k', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
 			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
 			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', 'h', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
+			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
 
 	public static void main(String[] args) throws InterruptedException {
 		char[] guardMovement = { 'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd',
 				'd', 'd', 'w', 'w', 'w', 'w', 'w' };
-		char[] heroMovement = { 'd', 'a', 'd', 'a', 'd', 'a', 'd', 'a', 'd', 'a', 'd', 'a', 'd', 'a', 'd', 'a', 'd',
-				'a', 'd', 'a', 'd', 'a', 'd', 'a', 'd' };
+		char[] heroMovement = { 'd', 'd', 's', 's', 's', 's', 's', 's', 's', 'w', 'w', 'd', 'd', 'd', 'd', 'd', 's',
+				's', 'a', 'd', 'w', 'w', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a' };
 		int i = 0;
+		int j = 0;
 		char input;
 		boolean end = false;
-		Person guard = new Person('g', 8, 1);
 		Board b1 = new Board(level1);
+		//:::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		//Level 1
+		Enemy enemy = new Enemy('g', 8, 1);
 		b1.print();
 		b1.setName("level1");
 		while (!end) {
-			b1.print();
-			input = s.next().charAt(0);
-			// input = heroMovement[i];
+			// input = s.next().charAt(0);
+			input = heroMovement[j];
+			j++;
 			end = hero.move(b1, input);
 			if (hero.current == 'k')
 				b1.openDoors();
 			if (end) {
-				b1.print();
-				return;
+				break;
 			}
 			input = guardMovement[i];
 			if (++i == guardMovement.length)
 				i = 0;
-			guard.move(b1, input);
-			end = guard.checkSurround(b1, 'h');
+			enemy.move(b1, input);
+			end = enemy.checkSurround(b1, 'h');
+			b1.print();
+			TimeUnit.MILLISECONDS.sleep(250);
+		}
+		end = false;
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		//Level 2
+		b1.updateLevel(level2);
+		b1.setName("level2");
+		hero.reset(1,7,'h',b1);
+		enemy.reset(4,1,'o',b1);
+		b1.print();
+		while (!end) {
+			input = s.next().charAt(0);
+			// input = heroMovement[i];
+			end = hero.move(b1, input);
+			if (hero.state == 'K')
+				hero.tag = 'K';
+			if (end)
+				break;
+			enemy.move(b1);
+			end = enemy.checkSurround(b1, 'h');
+			end = enemy.checkSurround(b1, 'K');
+			while(!enemy.attack(b1));
+			end = hero.checkSurround(b1,'*');
+			b1.print();
+			enemy.clearAttack(b1);
 			// TimeUnit.MILLISECONDS.sleep(1000);
 		}
-		// b1.updateLevel(level2);
-		// b1.print();
-		// while(!end){
-		// input = s.next().charAt(0);
-		// //input = heroMovement[i];
-		// end = hero.move(b1,input);
-		// if(end)
-		// return;
-		// input = guardMovement[i];
-		// if(++i == guardMovement.length)
-		// i=0;
-		// guard.move(b1,input);
-		// end=guard.checkSurround(b1,'h');
-		// //TimeUnit.MILLISECONDS.sleep(1000);
-		// }
 	}
 }

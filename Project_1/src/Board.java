@@ -33,23 +33,33 @@ public class Board {
 		return board[y][x];
 	}
 	
-	public char refresh(int x, int y, char dir,char person,char current) {
+	public char refresh(int x, int y, char dir,char tag,char current) {
 		char temp = this.get(x,y);
+		if(temp=='k'&&name=="level2"){
+			switch(tag){
+			case 'h':
+				tag='K';
+				break;
+			case 'o':
+				tag='$';
+				break;
+			}		
+		}
 		switch (dir) {
 		case 's':
-			this.board[y][x]=person;
+			this.board[y][x]=tag;
 			this.board[y-1][x]=	current;
 			break;
 		case 'w':
-			this.board[y][x]=person;
+			this.board[y][x]=tag;
 			this.board[y+1][x]=	current;
 			break;
 		case 'd':
-			this.board[y][x]=person;
+			this.board[y][x]=tag;
 			this.board[y][x-1]=	current;
 			break;
 		case 'a':
-			this.board[y][x]=person;
+			this.board[y][x]=tag;
 			this.board[y][x+1]=	current;
 			break;
 		}

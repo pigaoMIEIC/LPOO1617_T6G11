@@ -1,40 +1,43 @@
 
 public class Person {
+
 	char tag;
 	int x;
 	int y;
-	char current=' ';
+	char current = ' ';
 	char state;
 
 	Person(char tag, int x, int y) {
 		this.tag = tag;
 		this.x = x;
 		this.y = y;
+		state = ' ';
 	}
-	
-	public char state(){
+
+	public char state() {
 		return this.state;
 	}
-	
-	public char setState(char state){
-		return this.state=state;
+
+	public char setState(char state) {
+		return this.state = state;
 	}
-	
-	
-	
-	public boolean checkSurround(Board b,char enemy){
-		if (b.get(x+1, y) == enemy || b.get(x-1, y) == enemy || b.get(x, y+1) == enemy || b.get(x, y-1) == enemy){
+
+	public boolean checkSurround(Board b, char enemy) {
+		if (b.get(x + 1, y) == enemy || b.get(x - 1, y) == enemy || b.get(x, y + 1) == enemy
+				|| b.get(x, y - 1) == enemy) {
 			System.out.println("You got caught! :(");
-			return true;}
-		else
-			return false; 
+			return true;
+		} else
+			return false;
 	}
-	
-	public void setPosition(int x, int y, Board b){
-		this.x=x;
-		this.y=y;
-		current=' ';
-		b.set(x,y,state);
+
+	public void reset(int x, int y,char tag,Board b) {
+		this.x = x;
+		this.y = y;
+		current = ' ';
+		this.tag=tag;
+		state = ' ';
+		b.set(x, y, tag);
 	}
 
 	public boolean move(Board b, char input) {
@@ -95,6 +98,7 @@ public class Person {
 			state = 'K';
 		}
 		if (current == 's') {
+			b.print();
 			System.out.println("Parabens passou o nivel!!");
 			return true;
 		}
