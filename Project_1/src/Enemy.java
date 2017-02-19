@@ -55,7 +55,7 @@ public class Enemy extends Person {
 	}
 
 	public boolean attack(Board b) {
-		switch (s.next().charAt(0)) {
+		switch (direction[rand.nextInt(4)]) {
 		case 's':
 			if (b.get(x, y + 1) == 'x' || b.get(x, y + 1) == 'i') {
 				break;
@@ -95,10 +95,9 @@ public class Enemy extends Person {
 			}
 			lastAttack[0] = x - 1;
 			lastAttack[1] = y;
-			if (b.get(x - 1, y) == 'k'){
+			if (b.get(x - 1, y) == 'k') {
 				b.set(x - 1, y, '$');
-			}
-			else
+			} else
 				b.set(x - 1, y, '*');
 			return true;
 		default:
@@ -110,15 +109,15 @@ public class Enemy extends Person {
 	public void clearAttack(Board b) {
 		if (b.get(lastAttack[0], lastAttack[1]) == '$') {
 			b.set(lastAttack[0], lastAttack[1], 'k');
-		}
-		b.set(lastAttack[0], lastAttack[1], '.');
+		} else
+			b.set(lastAttack[0], lastAttack[1], ' ');
 	}
 
 	public void move(Board b) {
-//		while (!tryMove(direction[rand.nextInt(4)], b)) {
+		 while (!tryMove(direction[rand.nextInt(4)], b)) {
+		 }
+//		while (!tryMove(s.next().charAt(0), b)) {
 //		}
-		while (!tryMove(s.next().charAt(0), b)) {
-		}
 	}
 
 }
