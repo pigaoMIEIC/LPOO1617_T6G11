@@ -1,5 +1,10 @@
+package dkeep.cli;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+
+import dkeep.logic.Board;
+import dkeep.logic.Enemy;
+import dkeep.logic.Person;
 
 public class Project_1 {
 	//project
@@ -7,19 +12,7 @@ public class Project_1 {
 	private static Scanner s = new Scanner(System.in);
 	private static Person hero = new Person('h', 1, 1);
 
-	static char level1[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
-			{ 'x', 'h', ' ', ' ', 'i', ' ', 'x', ' ', 'g', 'x' }, { 'x', 'x', 'x', ' ', 'x', 'x', 'x', ' ', ' ', 'x' },
-			{ 'x', ' ', 'i', ' ', 'i', ' ', 'x', ' ', ' ', 'x' }, { 'x', 'x', 'x', ' ', 'x', 'x', 'x', ' ', ' ', 'x' },
-			{ 'i', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'i', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', 'x', 'x', ' ', 'x', 'x', 'x', 'x', ' ', 'x' }, { 'x', ' ', 'i', ' ', 'i', ' ', 'x', 'k', ' ', 'x' },
-			{ 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
-
-	static char level2[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
-			{ 'i', ' ', ' ', ' ', ' ', ' ', ' ', 'k', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
-
+	
 	public static void main(String[] args) throws InterruptedException {
 		char[] guardMovement = { 'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd',
 				'd', 'd', 'w', 'w', 'w', 'w', 'w' };
@@ -40,7 +33,7 @@ public class Project_1 {
 			input = heroMovement[j];
 			j++;
 			end = hero.move(b1, input);
-			if (hero.current == 'k')
+			if (hero.getCurrent() == 'k')
 				b1.openDoors();
 			if (end) {
 				break;
@@ -65,8 +58,8 @@ public class Project_1 {
 			input = s.next().charAt(0);
 			// input = heroMovement[i];
 			end = hero.move(b1, input);
-			if (hero.state == 'K')
-				hero.tag = 'K';
+			if (hero.getState() == 'K')
+				hero.setTag('K');
 			if (end)
 				break;
 			enemy.move(b1);

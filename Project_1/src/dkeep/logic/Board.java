@@ -1,9 +1,10 @@
+package dkeep.logic;
 
 public class Board {
 	char board[][];
 	String name;
 			
-	Board(char[][] layout){
+	public Board(char[][] layout){
 		board=layout;
 	}
 

@@ -1,3 +1,4 @@
+package dkeep.logic;
 import java.util.Random;
 
 public class Enemy extends Person {
