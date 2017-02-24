@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Project_1 {
+	//project
 
 	private static Scanner s = new Scanner(System.in);
 	private static Person hero = new Person('h', 1, 1);
