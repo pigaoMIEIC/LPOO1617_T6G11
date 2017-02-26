@@ -1,26 +1,35 @@
 package dkeep.logic;
-import java.util.Vector;;
+
+import java.util.Scanner;
+import java.util.Vector;
 
 public class Game {
-	static char level1[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
-			{ 'x', /*'h'*/' ', ' ', ' ', 'i', ' ', 'x', ' ', /*'g'*/' ', 'x' }, { 'x', 'x', 'x', ' ', 'x', 'x', 'x', ' ', ' ', 'x' },
-			{ 'x', ' ', 'i', ' ', 'i', ' ', 'x', ' ', ' ', 'x' }, { 'x', 'x', 'x', ' ', 'x', 'x', 'x', ' ', ' ', 'x' },
-			{ 'i', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'i', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', 'x', 'x', ' ', 'x', 'x', 'x', 'x', ' ', 'x' }, { 'x', ' ', 'i', ' ', 'i', ' ', 'x', 'k', ' ', 'x' },
-			{ 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
 
-	static char level2[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
-			{ 'i', ' ', ' ', ' ', ' ', ' ', ' ', 'k', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
-			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
+	private static Scanner s = new Scanner(System.in);
 
-	Vector map = new Vector();
-	String level;
-	Board b;
-	public Game(String level) {
-		this.level = level;
-		b = new Board()
+	static Board board;
+	static Vector<Entidade> map;
+	boolean endLevel[] = new boolean[1];
+	char input;
+
+	public Game(Board b, Vector<Entidade> map) {
+		Game.board = b;
+		Game.map = map;
+		endLevel[0]=false;
+	}
+
+	public void Run() {
+		board.print(map, endLevel);
+		while (!endLevel[0]) {
+			input = s.next().charAt(0);
+			for (Entidade temp : map) {
+				temp.move(input, board);
+				if(temp instanceof Hero){
+				endLevel[0]=((Hero) temp).checkSurround(board, 'G',map);
+				}
+			}
+			board.print(map, endLevel);
+		}
 	}
 
 }

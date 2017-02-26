@@ -9,11 +9,11 @@ public class Suspicious extends Guarda {
 		super(x, y, tag, mov);
 	}
 	
-	public void move() {
-		int i = rd.nextInt(10);
-		if (i < 3) {
+	public void move(char direction, Board b) {
+		int i = rd.nextInt(100);
+		if (i < 10) {
 		dir = !dir;
 		}
-		compGuarda.move(dir, this);
+		compGuarda.move(dir, this, b);
 	}
 }

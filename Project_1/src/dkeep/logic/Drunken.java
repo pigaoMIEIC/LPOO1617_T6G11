@@ -8,8 +8,8 @@ public class Drunken extends Guarda {
 	public Drunken(int x, int y, char tag, char[] mov) {
 		super(x, y, tag, mov);
 	}
-
-	public void move() {
+	
+	public void move(char direction, Board b) {
 		int i = rd.nextInt(10);
 		if (i < 3) {
 			tag = 'g';
@@ -23,6 +23,6 @@ public class Drunken extends Guarda {
 				}
 			}
 		}
-		compGuarda.move(dir, this);
+		compGuarda.move(dir, this, b);
 	}
 }

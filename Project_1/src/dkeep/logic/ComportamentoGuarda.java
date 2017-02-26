@@ -8,22 +8,31 @@ public class ComportamentoGuarda {
 		this.mov = mov;
 	}
 
-	public void move(boolean dir, Guarda guarda) {
+	public void move(boolean dir, Guarda guarda, Board b) {
 		char input = mov[i];
 		if (!dir) {
+			i--;
+			if (i < 0)
+				i = mov.length - 1;
+			input = mov[i];
 			switch (input) {
 			case 's':
 				input = 'w';
+				break;
 			case 'a':
 				input = 'd';
+				break;
 			case 'd':
 				input = 'a';
+				break;
 			case 'w':
 				input = 's';
+				break;
 			}
-			i--;
-		}
-		else i++;
+		} else
+			i++;
+		if (i == mov.length)
+			i = 0;
 		switch (input) {
 		case 's':
 			if (b.get(guarda.x, guarda.y + 1) == 'x') {
@@ -32,7 +41,6 @@ public class ComportamentoGuarda {
 			if (b.get(guarda.x, guarda.y + 1) == 'i') {
 				break;
 			}
-			current = b.refresh(guarda.x, guarda.y + 1, input, guarda.tag, current);
 			guarda.y++;
 			break;
 		case 'w':
@@ -42,7 +50,6 @@ public class ComportamentoGuarda {
 			if (b.get(guarda.x, guarda.y - 1) == 'i') {
 				break;
 			}
-			current = b.refresh(guarda.x, guarda.y - 1, input, guarda.tag, current);
 			guarda.y--;
 			break;
 		case 'd':
@@ -50,11 +57,8 @@ public class ComportamentoGuarda {
 				break;
 			}
 			if (b.get(guarda.x + 1, guarda.y) == 'i') {
-				if (state == 'K')
-					b.openDoors();
 				break;
 			}
-			current = b.refresh(guarda.x + 1, guarda.y, input, guarda.tag, current);
 			guarda.x++;
 			break;
 		case 'a':
@@ -64,7 +68,8 @@ public class ComportamentoGuarda {
 			if (b.get(guarda.x - 1, guarda.y) == 'i') {
 				break;
 			}
-			current = b.refresh(guarda.x - 1, guarda.y, input, guarda.tag, current);
+			// current = b.refresh(guarda.x - 1, guarda.y, input, guarda.tag,
+			// current);
 			guarda.x--;
 			break;
 		default:
