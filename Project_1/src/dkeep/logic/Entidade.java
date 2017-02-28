@@ -5,9 +5,10 @@ public abstract class Entidade {
 	char tag=' ';
 	char current=' ';
 	
-	public Entidade(int x, int y){
+	public Entidade(int x, int y,char tag){
 		this.x = x;
 		this.y = y;
+		this.tag = tag;
 	}
 
 	public abstract boolean print(String level,char current,Board b);

@@ -13,7 +13,7 @@ public class Board {
 	public void print(Vector<Entidade> map, boolean endFlag[]) {
 		for (int y = 0; y < board.length; y++) {
 			for (int x = 0; x < board[0].length; x++) {
-				if (printEntidade(x, y, map, endFlag)) {
+				if (this.printEntidade(x, y, map, endFlag)) {
 					System.out.print(' ');
 					continue;
 				}
@@ -31,9 +31,9 @@ public class Board {
 		for (Entidade temp : map) {
 			if (temp.x == x && temp.y == y) {
 				if (endFlag[0]) {
-					temp.print(this.name, board[y][x], this);
+					temp.print(this.name, temp.current, this);
 				} else {
-					endFlag[0] = temp.print(this.name, board[y][x], this);
+					endFlag[0] = temp.print(this.name, temp.current, this);
 				}
 				flag = true;
 			}
@@ -61,10 +61,7 @@ public class Board {
 		char temp = this.get(x, y);
 		if (temp == 'k' && name == "level2") {
 			switch (tag) {
-			case 'h':
-				tag = 'K';
-				break;
-			case 'o':
+			case 'O':
 				tag = '$';
 				break;
 			}

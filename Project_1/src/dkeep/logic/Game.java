@@ -1,12 +1,9 @@
 package dkeep.logic;
 
-import java.util.Scanner;
 import java.util.Vector;
 
 public class Game {
-
-	private static Scanner s = new Scanner(System.in);
-
+	
 	static Board board;
 	static Vector<Entidade> map;
 	boolean endLevel[] = new boolean[1];
@@ -15,21 +12,53 @@ public class Game {
 	public Game(Board b, Vector<Entidade> map) {
 		Game.board = b;
 		Game.map = map;
-		endLevel[0]=false;
+		endLevel[0] = false;
 	}
 
-	public void Run() {
-		board.print(map, endLevel);
-		while (!endLevel[0]) {
-			input = s.next().charAt(0);
-			for (Entidade temp : map) {
-				temp.move(input, board);
-				if(temp instanceof Hero){
-				endLevel[0]=((Hero) temp).checkSurround(board, 'G',map);
-				}
-			}
-			board.print(map, endLevel);
+	public void Move(char input) {
+		for (Entidade temp : map) {
+			temp.move(input, board);
 		}
+	}
+	
+	public void attack(){
+		for (Entidade temp : map) {
+			if (temp instanceof Ogre) {
+				((Ogre) temp).attack(board);
+			}
+		}
+	}
+
+	public void clearAttack() {
+		for (Entidade temp : map) {
+			if (temp instanceof Ogre) {
+				((Ogre) temp).clearAttack(board);
+			}
+		}
+	}
+
+	public void printBoard() {
+		board.print(map, endLevel);
+	}
+
+	public boolean end() {
+		if (((Hero) map.lastElement()).checkSurround('G', map)) {
+			System.out.print("Foi apanhado pelo guarda. :(");
+			return true;
+		}
+		if (((Hero) map.lastElement()).checkSurround('O', map)) {
+			System.out.print("Foi apanhado pelo Ogre. :(");
+			return true;
+		}
+		if (((Hero) map.lastElement()).checkSurround(board, '*')) {
+			System.out.print("Foi atingido pelo Ogre. :(");
+			return true;
+		}
+		if (endLevel[0]) {
+			System.out.print("Parabéns passou o nível!!\n");
+			return true;
+		}
+		return false;
 	}
 
 }
