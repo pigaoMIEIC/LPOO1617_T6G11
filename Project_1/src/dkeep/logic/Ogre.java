@@ -17,6 +17,10 @@ public class Ogre extends Entidade {
 		lastAttack[1]=y;
 	}
 
+	public void stun() {
+			stunned = 2;
+	}
+
 	public boolean isStunned() {
 		if (stunned == 0) {
 			tag = 'O';
@@ -26,7 +30,16 @@ public class Ogre extends Entidade {
 			return true;
 		}
 	}
-
+	
+	public boolean checkSurround(Board b, char enemy){
+		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy
+				| b.get(x, y - 1) == enemy| current==enemy) {
+			return true;
+		} else
+			return false;
+	}	
+	
+	
 	public boolean print(String level, char current, Board b) {
 		isStunned();
 		if (level == "level2") {
@@ -49,9 +62,10 @@ public class Ogre extends Entidade {
 
 	public void move(char direction, Board b) {
 		char input;
+		
 		if (isStunned()) {
 			stunned--;
-			attack(b);
+			return;
 		} else {
 			while (true) {
 				input = s.next().charAt(0);

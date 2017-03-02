@@ -18,6 +18,9 @@ public class Game {
 	public void Move(char input) {
 		for (Entidade temp : map) {
 			temp.move(input, board);
+			if (temp instanceof Hero) {
+				((Hero) temp).stun(board,map);
+			}
 		}
 	}
 	
@@ -46,10 +49,10 @@ public class Game {
 			System.out.print("Foi apanhado pelo guarda. :(");
 			return true;
 		}
-		if (((Hero) map.lastElement()).checkSurround('O', map)) {
-			System.out.print("Foi apanhado pelo Ogre. :(");
-			return true;
-		}
+//		if (((Hero) map.lastElement()).checkSurround('O', map)) {
+//			System.out.print("Foi apanhado pelo Ogre. :(");
+//			return true;
+//		}
 		if (((Hero) map.lastElement()).checkSurround(board, '*')) {
 			System.out.print("Foi atingido pelo Ogre. :(");
 			return true;

@@ -114,4 +114,18 @@ public class Hero extends Entidade {
 		} else
 			return false;
 	}
+	
+	public boolean stun(Board b,Vector<Entidade> map){
+		if (!((Hero) map.lastElement()).checkSurround('O', map)) {
+			return false;
+		}
+		for(Entidade temp: map){
+			if(temp instanceof Ogre){
+				if(((Ogre) temp).checkSurround(b, tag)){
+					((Ogre)temp).stun();
+				}
+			}
+		}
+		return true;
+	}
 }
