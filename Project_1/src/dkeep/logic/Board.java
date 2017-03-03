@@ -95,5 +95,12 @@ public class Board {
 		if (name == "level2") {
 			board[1][0] = 's';
 		}
+		if(name== "testlevel"){
+			board[2][0] = 's';
+			board[3][0] = 's';
+		}
+		if(name== "testlevel2"){
+			board[2][0] = 's';
+		}
 	}
 }

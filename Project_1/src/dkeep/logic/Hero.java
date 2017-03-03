@@ -4,7 +4,15 @@ import java.util.Vector;
 
 public class Hero extends Entidade {
 
-	char state = ' ';
+	private char state = ' ';
+
+	public char getState() {
+		return state;
+	}
+
+	public void setState(char state) {
+		this.state = state;
+	}
 
 	public Hero(int x, int y, char tag) {
 		super(x, y, tag);
@@ -24,8 +32,8 @@ public class Hero extends Entidade {
 		} else if (level == "level2" && current != ' ') {
 			switch (current) {
 			case 'k':
-				tag = 'K';
-				state = 'K';
+				this.setTag('K');
+				this.setState('K');
 				System.out.print(tag);
 				break;
 			case 's':
@@ -51,6 +59,14 @@ public class Hero extends Entidade {
 				break;
 			}
 			current = b.refresh(x, y + 1, input, tag, current);
+			if(current=='k'&& b.name=="testlevel"){
+				state='K';
+				b.openDoors();
+			}
+			if(current=='k'&& b.name=="testlevel2"){
+				state='K';
+				tag='K';
+			}
 			y++;
 			break;
 		case 'w':
@@ -108,8 +124,8 @@ public class Hero extends Entidade {
 	}
 	
 	public boolean checkSurround(Board b, char enemy) {
-		if (b.get(x + 1, y) == enemy || b.get(x - 1, y) == enemy || b.get(x, y + 1) == enemy
-				|| b.get(x, y - 1) == enemy|| current==enemy) {
+		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy
+				| b.get(x, y - 1) == enemy| current==enemy) {
 			return true;
 		} else
 			return false;
