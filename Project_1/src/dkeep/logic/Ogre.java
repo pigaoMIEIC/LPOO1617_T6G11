@@ -61,14 +61,32 @@ public class Ogre extends Entidade {
 	}
 
 	public void move(char direction, Board b) {
-		char input;
+		char input = 'w'; //initializing cause eclipse
 		
 		if (isStunned()) {
 			stunned--;
 			return;
 		} else {
 			while (true) {
-				input = s.next().charAt(0);
+				// input = s.next().charAt(0); //manual input
+
+				int random, max = 4, min = 1;      //random input
+				random = rand.nextInt(max - min + 1) + min;
+				switch (random) {
+				case 1:
+					input = 'a';
+					break;
+				case 2:
+					input = 's';
+					break;
+				case 3:
+					input = 'd';
+					break;
+				case 4:
+					input = 'w';
+					break;
+
+				}
 				// input = moves[rand.nextInt(4)];
 				switch (input) {
 				case 's':

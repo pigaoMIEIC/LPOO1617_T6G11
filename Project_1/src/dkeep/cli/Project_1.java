@@ -19,6 +19,7 @@ public class Project_1 {
 	static Vector<Entidade> entidades;
 	static Hero hero;
 	static Game game;
+	
 	static char input;
 
 	static char level1[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
