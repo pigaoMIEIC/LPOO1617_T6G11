@@ -9,6 +9,10 @@ public class Drunken extends Guarda {
 		super(x, y, tag, mov);
 	}
 	
+	public boolean getDir() {
+		return dir;
+	}
+
 	public void move(char direction, Board b) {
 		int i = rd.nextInt(10);
 		if (i < 3) {

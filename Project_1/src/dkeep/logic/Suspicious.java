@@ -16,4 +16,8 @@ public class Suspicious extends Guarda {
 		}
 		compGuarda.move(dir, this, b);
 	}
+
+	public boolean getDir() {
+		return dir;
+	}
 }

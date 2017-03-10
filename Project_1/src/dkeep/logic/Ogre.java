@@ -31,6 +31,10 @@ public class Ogre extends Entidade {
 		}
 	}
 	
+	public int[] getLastAttack() {
+		return lastAttack;
+	}
+	
 	public boolean checkSurround(Board b, char enemy){
 		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy
 				| b.get(x, y - 1) == enemy| current==enemy) {
@@ -143,6 +147,8 @@ public class Ogre extends Entidade {
 			}
 		}
 	}
+
+	
 
 	public void attack(Board b) {
 		while (true) {

@@ -10,6 +10,7 @@ import dkeep.logic.Game;
 import dkeep.logic.Guarda;
 import dkeep.logic.Hero;
 import dkeep.logic.Ogre;
+import dkeep.logic.Rookie;
 import dkeep.logic.Suspicious;
 
 public class Project_1 {
@@ -19,6 +20,7 @@ public class Project_1 {
 	static Vector<Entidade> entidades;
 	static Hero hero;
 	static Game game;
+	static Guarda guarda;
 	
 	static char input;
 
@@ -97,7 +99,7 @@ public class Project_1 {
 		entidades = new Vector<Entidade>();
 		entidades.add(ogre1);
 		entidades.add(ogre);
-		entidades.add(hero);		
+		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
 		game.printBoard();
