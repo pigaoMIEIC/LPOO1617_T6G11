@@ -17,6 +17,7 @@ public class Project_1 {
 
 	private static Scanner s = new Scanner(System.in);
 	static Board b;
+	static int noOgres;
 	static Vector<Entidade> entidades;
 	static Hero hero;
 	static Game game;
@@ -67,38 +68,44 @@ public class Project_1 {
 						+ "Para sobreviver evite os guardas(G) e os ogres(O).\n\n");
 		// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Level 1
-//		 System.out.print("Level 1");
-//		 b = new Board(level1);
-//		 b.setName("level1");
-//		 // Entidades
-//		 Guarda guarda = new Drunken(8, 1, 'G', level1_mov);
-//		 hero = new Hero(1, 1, 'H');
-//		 // Map
-//		 entidades = new Vector<Entidade>();
-//		 entidades.add(guarda);
-//		 entidades.add(hero);
-//		 // Game
-//		 game = new Game(b, entidades);
-//		 game.printBoard();
-//		 while (!game.end()) {
-//		 System.out.print("Mover para(a,s,d,w):");
-//		 input = s.next().charAt(0);
-//		 game.Move(input);
-//		 game.printBoard();
-//		 }
+		 System.out.print("Level 1");
+		 b = new Board(level1);
+		 b.setName("level1");
+		 // Entidades
+		 Guarda guarda = new Drunken(8, 1, 'G', level1_mov);
+		 hero = new Hero(1, 1, 'H');
+		 // Map
+		 entidades = new Vector<Entidade>();
+		 entidades.add(guarda);
+		 entidades.add(hero);
+		 // Game
+		 game = new Game(b, entidades);
+		 game.printBoard();
+		 while (!game.end()) {
+		 System.out.print("Mover para(a,s,d,w):");
+		 input = s.next().charAt(0);
+		 game.Move(input);
+		 game.printBoard();
+		 }
 		// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Level 2
+		//reset vector
+		entidades.removeAllElements();
 		System.out.print("Level 2\n");
+		System.out.print("Contra quantos ogres pretende jogar?\n");
+		try{
+		noOgres = s.nextInt();}
+		catch (Exception e){
+			System.out.println("Valor invalido numero de ogres definido com o valor 1.");
+			noOgres = 1;
+		}		
 		b = new Board(level2);
 		b.setName("level2");
 		// Entidades
-		Ogre ogre = new Ogre(5, 1, 'O');
-		Ogre ogre1 = new Ogre(3, 1, 'O');
 		hero = new Hero(1, 7, 'A');
-		// Map
-		entidades = new Vector<Entidade>();
-		entidades.add(ogre1);
-		entidades.add(ogre);
+		for(int i=0; i<noOgres;i++){
+			entidades.addElement(new Ogre(4, 1, 'O'));
+		}
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);

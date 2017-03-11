@@ -163,7 +163,7 @@ public class Ogre extends Entidade {
 					b.set(x, y + 1, '$');
 				else
 					b.set(x, y + 1, '*');
-				return ;
+				return;
 			case 'w':
 				if (b.get(x, y - 1) == 'x' | b.get(x, y - 1) == 'i'|b.get(x, y - 1) == 'O') {
 					break;
