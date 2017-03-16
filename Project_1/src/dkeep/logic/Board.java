@@ -5,35 +5,38 @@ import java.util.Vector;
 public class Board {
 	char board[/* y */][/* x */];
 	String name;
+	String output[]= new String[1];
 
 	public Board(char[][] layout) {
 		board = layout;
 	}
 
-	public void print(Vector<Entidade> map, boolean endFlag[]) {
+	public String print(Vector<Entidade> map, boolean endFlag[]) {
+		output[0]="";
 		for (int y = 0; y < board.length; y++) {
 			for (int x = 0; x < board[0].length; x++) {
-				if (this.printEntidade(x, y, map, endFlag)) {
-					System.out.print(' ');
+				if (this.printEntidade(x, y, map, endFlag,output)) {
+					output[0]+=' ';
 					continue;
 				}
-				System.out.print(board[y][x]);
-				System.out.print(' ');
+				output[0]+=(board[y][x]);
+				output[0]+=' ';
 			}
-			System.out.println();
+			output[0]+="\n";
 		}
+		return output[0];
 	}
 
-	private boolean printEntidade(int x, int y, Vector<Entidade> map, boolean endFlag[]) {
+	private boolean printEntidade(int x, int y, Vector<Entidade> map, boolean endFlag[],String output[]) {
 		boolean flag = false;
 		if (map == null)
 			return flag;
 		for (Entidade temp : map) {
 			if (temp.x == x && temp.y == y) {
 				if (endFlag[0]) {
-					temp.print(this.name, temp.current, this);
+					temp.print(this.name, temp.current, this, output);
 				} else {
-					endFlag[0] = temp.print(this.name, temp.current, this);
+					endFlag[0] = temp.print(this.name, temp.current, this, output);
 				}
 				flag = true;
 			}
@@ -102,5 +105,9 @@ public class Board {
 		if(name== "testlevel2"){
 			board[2][0] = 's';
 		}
+	}
+
+	public String getName() {
+		return name;
 	}
 }

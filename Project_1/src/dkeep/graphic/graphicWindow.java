@@ -11,12 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import dkeep.logic.Board;
-import dkeep.logic.Entidade;
-import dkeep.logic.Game;
-import dkeep.logic.Guarda;
-import dkeep.logic.Hero;
-import dkeep.logic.Ogre;
+import dkeep.logic.*;
+//import dkeep.logic.Board;
+//import dkeep.logic.Entidade;
+//import dkeep.logic.Game;
+//import dkeep.logic.Guarda;
+//import dkeep.logic.Hero;
+//import dkeep.logic.Ogre;
 
 import java.awt.event.ActionListener;
 import java.util.Scanner;
@@ -32,6 +33,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class graphicWindow {
 
@@ -63,7 +66,13 @@ public class graphicWindow {
 			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
 			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
 			{ 'x', /* h */' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
-	private JTextField textField;
+
+	JTextArea GameInterface;
+	JLabel GameState;
+	JButton UP, DOWN, LEFT, RIGHT, StartGame;
+	JComboBox GuardType;
+
+	private JTextField NoOgres;
 
 	/**
 	 * Launch the application.
@@ -72,7 +81,7 @@ public class graphicWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					graphicWindow window = new graphicWindow();	
+					graphicWindow window = new graphicWindow();
 					window.frmDungeonKeepGame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -93,90 +102,222 @@ public class graphicWindow {
 	 */
 	private void initialize() {
 		frmDungeonKeepGame = new JFrame();
-		frmDungeonKeepGame.setIconImage(Toolkit.getDefaultToolkit().getImage(graphicWindow.class.getResource("/resources/DD-Transparent.png")));
+		frmDungeonKeepGame.setIconImage(
+				Toolkit.getDefaultToolkit().getImage(graphicWindow.class.getResource("/resources/DD-Transparent.png")));
 		frmDungeonKeepGame.setTitle("Dungeon Keep Game");
 		frmDungeonKeepGame.setBounds(100, 100, 689, 533);
 		frmDungeonKeepGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDungeonKeepGame.getContentPane().setLayout(null);
-		
+
 		JLabel NumberOfOgres = new JLabel("Number of Ogres");
 		NumberOfOgres.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		NumberOfOgres.setHorizontalAlignment(SwingConstants.CENTER);
 		NumberOfOgres.setBounds(30, 15, 90, 20);
 		frmDungeonKeepGame.getContentPane().add(NumberOfOgres);
-		
-		JLabel lblGuardPersonality = new JLabel("Guard Personality");
-		lblGuardPersonality.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		lblGuardPersonality.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGuardPersonality.setBounds(30, 46, 90, 20);
-		frmDungeonKeepGame.getContentPane().add(lblGuardPersonality);
-		
-		JLabel GameState = new JLabel("");
+
+		JLabel GuardPersonality = new JLabel("Guard Personality");
+		GuardPersonality.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		GuardPersonality.setHorizontalAlignment(SwingConstants.CENTER);
+		GuardPersonality.setBounds(30, 46, 90, 20);
+		frmDungeonKeepGame.getContentPane().add(GuardPersonality);
+
+		GameState = new JLabel("");
 		GameState.setHorizontalAlignment(SwingConstants.CENTER);
 		GameState.setBounds(30, 366, 350, 38);
 		frmDungeonKeepGame.getContentPane().add(GameState);
-		
-		textField = new JTextField();
-		textField.setBounds(130, 15, 40, 20);
-		frmDungeonKeepGame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Rookie", "Suspicious", "Drunken"}));
-		comboBox.setBounds(130, 46, 90, 20);
-		frmDungeonKeepGame.getContentPane().add(comboBox);
-		
-		JTextArea txtrGameInterface = new JTextArea();
-		txtrGameInterface.setFont(new Font("Courier New", Font.PLAIN, 20));
-		txtrGameInterface.setText("Start Game");
-		txtrGameInterface.setBounds(30, 80, 350, 275);
-		frmDungeonKeepGame.getContentPane().add(txtrGameInterface);
-		
-		JButton btnUP = new JButton("UP");
-		btnUP.setEnabled(false);
-		btnUP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+
+		NoOgres = new JTextField();
+		NoOgres.addFocusListener(new FocusAdapter() {
+			public void focusLost(FocusEvent arg0) {
+				try {
+					Integer.parseInt(NoOgres.getText());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+					GameState.setText("Invalid number of Ogres");
+					NoOgres.setText("0");
+					return;
+				}
+				if (Integer.parseInt(NoOgres.getText()) > 5) {
+					NoOgres.setText("5");
+					noOgres = 5;
+				}
+				if (Integer.parseInt(NoOgres.getText()) < 1) {
+					NoOgres.setText("1");
+					noOgres = 1;
+				}
+				noOgres = Integer.parseInt(NoOgres.getText());
 			}
 		});
-		btnUP.setBounds(460, 130, 70, 30);
-		frmDungeonKeepGame.getContentPane().add(btnUP);
-		
-		JButton btnDOWN = new JButton("DOWN");
-		btnDOWN.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnDOWN.setEnabled(false);
-		btnDOWN.setBounds(460, 218, 70, 30);
-		frmDungeonKeepGame.getContentPane().add(btnDOWN);
-		
-		JButton btnRIGHT = new JButton("RIGHT");
-		btnRIGHT.setEnabled(false);
-		btnRIGHT.setBounds(500, 175, 70, 30);
-		frmDungeonKeepGame.getContentPane().add(btnRIGHT);
-		
-		JButton btnLEFT = new JButton("LEFT");
-		btnLEFT.setEnabled(false);
-		btnLEFT.setBounds(420, 175, 70, 30);
-		frmDungeonKeepGame.getContentPane().add(btnLEFT);
-		
-		JButton btnStartGame = new JButton("Start Game");
-		btnStartGame.setBounds(450, 80, 90, 40);
-		frmDungeonKeepGame.getContentPane().add(btnStartGame);
-		btnStartGame.addActionListener(new ActionListener() {
+		NoOgres.setBounds(130, 15, 40, 20);
+		frmDungeonKeepGame.getContentPane().add(NoOgres);
+		NoOgres.setColumns(1);
+
+		GuardType = new JComboBox();
+		GuardType.setModel(new DefaultComboBoxModel(new String[] { "Rookie", "Suspicious", "Drunken" }));
+		GuardType.setBounds(130, 46, 90, 20);
+		frmDungeonKeepGame.getContentPane().add(GuardType);
+
+		GameInterface = new JTextArea();
+		GameInterface.setFont(new Font("Courier New", Font.PLAIN, 20));
+		GameInterface.setText("Start Game");
+		GameInterface.setBounds(30, 80, 350, 275);
+		frmDungeonKeepGame.getContentPane().add(GameInterface);
+
+		UP = new JButton("UP");
+		UP.setEnabled(false);
+		UP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				btnUP.setEnabled(true);
-				btnDOWN.setEnabled(true);
-				btnLEFT.setEnabled(true);
-				btnRIGHT.setEnabled(true);
+				game.Move('w');
+				GameInterface.setText(game.printBoard());
+				if (game.end()) {
+					if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
+						reset();
+						loadLvl2();
+					}
+					if (game.getEndStatus() == 1) {
+						GameState.setText("GG WP nice try EZ PZ");
+						GameInterface.setText("Start Game");
+
+					}
+
+				}
 			}
 		});
-		
-		JButton btnExit = new JButton("Exit Game");
-		btnExit.addActionListener(new ActionListener() {
+		UP.setBounds(460, 130, 70, 30);
+		frmDungeonKeepGame.getContentPane().add(UP);
+
+		DOWN = new JButton("DOWN");
+		DOWN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.Move('s');
+				GameInterface.setText(game.printBoard());
+				if (game.end()) {
+					if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
+						reset();
+						loadLvl2();
+					}
+					if (game.getEndStatus() == 1) {
+						GameState.setText("GG WP nice try EZ PZ");
+					}
+
+				}
+			}
+		});
+		DOWN.setEnabled(false);
+		DOWN.setBounds(460, 218, 70, 30);
+		frmDungeonKeepGame.getContentPane().add(DOWN);
+
+		RIGHT = new JButton("RIGHT");
+		RIGHT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				game.Move('d');
+				GameInterface.setText(game.printBoard());
+				if (game.end()) {
+					if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
+						reset();
+						loadLvl2();
+					}
+					if (game.getEndStatus() == 1) {
+						GameState.setText("GG WP nice try EZ PZ");
+					}
+
+				}
+			}
+		});
+		RIGHT.setEnabled(false);
+		RIGHT.setBounds(500, 175, 70, 30);
+		frmDungeonKeepGame.getContentPane().add(RIGHT);
+
+		LEFT = new JButton("LEFT");
+		LEFT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				game.Move('a');
+				GameInterface.setText(game.printBoard());
+				if (game.end()) {
+					if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
+						reset();
+						loadLvl2();
+					}
+					if (game.getEndStatus() == 1) {
+						GameState.setText("GG WP nice try EZ PZ");
+					}
+
+				}
+			}
+		});
+		LEFT.setEnabled(false);
+		LEFT.setBounds(420, 175, 70, 30);
+		frmDungeonKeepGame.getContentPane().add(LEFT);
+
+		StartGame = new JButton("Start Game");
+		StartGame.setBounds(450, 80, 90, 40);
+		frmDungeonKeepGame.getContentPane().add(StartGame);
+		StartGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UP.setEnabled(true);
+				DOWN.setEnabled(true);
+				LEFT.setEnabled(true);
+				RIGHT.setEnabled(true);
+				reset();
+				loadLvl1();
+			}
+		});
+
+		JButton Exit = new JButton("Exit Game");
+		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		btnExit.setBounds(450, 325, 90, 30);
-		frmDungeonKeepGame.getContentPane().add(btnExit);
-		
+		Exit.setBounds(450, 325, 90, 30);
+		frmDungeonKeepGame.getContentPane().add(Exit);
+
 	}
+
+	public void loadLvl2() {
+		GameState.setText("Level 2");
+		b = new Board(level2);
+		b.setName("level2");
+		// Entidades
+		hero = new Hero(1, 7, 'A');
+		for (int i = 0; i < noOgres; i++) {
+			entidades.addElement(new Ogre(4, 1, 'O'));
+		}
+		entidades.add(hero);
+		// Game
+		game = new Game(b, entidades);
+		GameInterface.setText(game.printBoard());
+	}
+
+	public void loadLvl1() {
+		GameState.setText("Level 1");
+		b = new Board(level1);
+		b.setName("level1");
+		// Entidades
+		if (GuardType.getSelectedItem() == "Rookie") {
+			guarda = new Rookie(8, 1, 'G', level1_mov);
+		} else if (GuardType.getSelectedItem() == "Suspicious") {
+			guarda = new Suspicious(8, 1, 'G', level1_mov);
+		} else {
+			guarda = new Drunken(8, 1, 'G', level1_mov);
+		}
+		hero = new Hero(1, 1, 'H');
+		// Map
+		entidades = new Vector<Entidade>();
+		entidades.add(guarda);
+		entidades.add(hero);
+		// Game
+		game = new Game(b, entidades);
+		GameInterface.setText(game.printBoard());
+	}
+
+	public void reset() {
+		b = null;
+		// Map
+		entidades.removeAllElements();
+		// Game
+		game = new Game(b, entidades);
+		GameInterface.setText("Reseting");
+	}
+
 }

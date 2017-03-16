@@ -1,5 +1,6 @@
 package dkeep.logic;
 
+import java.awt.Component;
 import java.util.Vector;
 
 import dkeep.test.CellPosition;
@@ -51,8 +52,8 @@ public class Game {
 		}
 	}
 
-	public void printBoard() {
-		board.print(map, endLevel);
+	public String printBoard() {
+		return board.print(map, endLevel);
 	}
 
 	public boolean end() {
@@ -94,6 +95,10 @@ public class Game {
 	public int getEndStatus() {
 		// TODO Auto-generated method stub
 		return finalstatus;
+	}
+
+	public Board getBoard() {
+		return board;
 	}
 
 }

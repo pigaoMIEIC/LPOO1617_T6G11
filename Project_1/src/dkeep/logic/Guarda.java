@@ -9,19 +9,19 @@ public abstract class Guarda extends Entidade {
 		compGuarda = new ComportamentoGuarda(mov);
 	}
 
-	public boolean print(String level, char current, Board b) {
+	public boolean print(String level, char current, Board b,String output[]) {
 		if (level == "level1")
-			System.out.print(tag);
+			output[0]+=(tag);
 		if (level == "level2") {
 			switch (current) {
 			case 'k':
-				System.out.print('$');
+				output[0]+=('$');
 				break;
 			case 'A':
-				System.out.print(tag);
+				output[0]+=(tag);
 				break;
 			default:
-				System.out.print(tag);
+				output[0]+=(tag);
 			}
 		}
 		return false;

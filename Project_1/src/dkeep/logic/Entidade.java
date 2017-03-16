@@ -43,7 +43,7 @@ public abstract class Entidade {
 		this.current = current;
 	}
 
-	public abstract boolean print(String level,char current,Board b);
+	public abstract boolean print(String level,char current,Board b, String output[]);
 	
 	public abstract void move(char direction, Board b);
 

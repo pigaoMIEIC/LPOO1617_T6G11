@@ -18,15 +18,15 @@ public class Hero extends Entidade {
 		super(x, y, tag);
 	}
 
-	public boolean print(String level, char current, Board b) {
+	public boolean print(String level, char current, Board b, String output[]) {
 		if (level == "level1" && current != ' ') {
 			switch (current) {
 			case 'k':
 				b.openDoors();
-				System.out.print(tag);
+				output[0]+=(tag);
 				break;
 			case 's':
-				System.out.print(tag);
+				output[0]+=(tag);
 				return true;
 			}
 		} else if (level == "level2" && current != ' ') {
@@ -34,14 +34,14 @@ public class Hero extends Entidade {
 			case 'k':
 				this.setTag('K');
 				this.setState('K');
-				System.out.print(tag);
+				output[0]+=(tag);
 				break;
 			case 's':
-				System.out.print(tag);
+				output[0]+=(tag);
 				return true;
 			}
 		} else if(b.get(x, y)==tag|b.get(x, y)==' '){
-			System.out.print(tag);
+			output[0]+=(tag);
 		}
 
 		return false;

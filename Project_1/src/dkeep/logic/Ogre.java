@@ -44,12 +44,12 @@ public class Ogre extends Entidade {
 	}	
 	
 	
-	public boolean print(String level, char current, Board b) {
+	public boolean print(String level, char current, Board b, String output[]) {
 		isStunned();
 		if (level == "level2") {
 			switch (current) {
 			case 'k':
-				System.out.print('$');
+				output[0]+=('$');
 				break;
 			case 'O':
 				this.current=' ';
@@ -58,7 +58,7 @@ public class Ogre extends Entidade {
 				this.current='k';
 				break;
 			default:
-				System.out.print(tag);
+				output[0]+=(tag);
 			}
 		}
 		return false;
