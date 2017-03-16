@@ -100,11 +100,13 @@ public class graphicWindow {
 		frmDungeonKeepGame.getContentPane().setLayout(null);
 		
 		JLabel NumberOfOgres = new JLabel("Number of Ogres");
+		NumberOfOgres.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		NumberOfOgres.setHorizontalAlignment(SwingConstants.CENTER);
 		NumberOfOgres.setBounds(30, 15, 90, 20);
 		frmDungeonKeepGame.getContentPane().add(NumberOfOgres);
 		
 		JLabel lblGuardPersonality = new JLabel("Guard Personality");
+		lblGuardPersonality.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		lblGuardPersonality.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGuardPersonality.setBounds(30, 46, 90, 20);
 		frmDungeonKeepGame.getContentPane().add(lblGuardPersonality);
@@ -140,6 +142,7 @@ public class graphicWindow {
 		frmDungeonKeepGame.getContentPane().add(btnUP);
 		
 		JButton btnDOWN = new JButton("DOWN");
+		btnDOWN.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		btnDOWN.setEnabled(false);
 		btnDOWN.setBounds(460, 218, 70, 30);
 		frmDungeonKeepGame.getContentPane().add(btnDOWN);
