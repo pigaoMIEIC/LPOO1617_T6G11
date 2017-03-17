@@ -37,14 +37,31 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.awt.Window.Type;
 import javax.swing.JInternalFrame;
 import java.awt.GridLayout;
+
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import net.miginfocom.swing.MigLayout;
 import java.awt.GridBagLayout;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import java.awt.SystemColor;
+import javax.swing.JTabbedPane;
+import javax.swing.JDesktopPane;
+import javax.swing.Box;
 
 public class enhacedWindow {
 
@@ -54,7 +71,6 @@ public class enhacedWindow {
 	
 	private static Scanner s = new Scanner(System.in);
 	static Board b;
-	static int noOgres;
 	static Vector<Entidade> entidades = new Vector<Entidade>();
 	static Hero hero;
 	static Ogre ogre;
@@ -62,6 +78,10 @@ public class enhacedWindow {
 	static Guarda guarda;
 
 	static char input;
+	static int noOgres=-1;
+	static String guardType_str=null;
+	static String[] personalities = { "Rookie", "Suspicious", "Drunken" };
+	static String[] numbers = {"1","2","3","4","5"};
 
 	static char level1[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
 			{ 'x', /* 'h' */' ', ' ', ' ', 'i', ' ', 'x', ' ', /* 'g' */' ', 'x' },
@@ -80,11 +100,13 @@ public class enhacedWindow {
 			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
 			{ 'x', /* h */' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
 	
-	private JLabel GameState;
+	
+	//:::::::::::::::::JFRAME OBJECTS::::::::::::::::::::::
+	private JLabel GameState, numberOgres, guardType;
 	private JButton StartGame;
-	private JComboBox GuardType;
-	private JTextField NoOgres;
 	private GameInterface gameInterface;
+	private JMenuBar menuBar;
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	/**
 	 * Launch the application.
@@ -127,114 +149,166 @@ public class enhacedWindow {
 			    }
 			}
 		});
-		
-
+		frmDungeonKeepGame.setFocusable(true);
 		frmDungeonKeepGame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(enhacedWindow.class.getResource("/resources/DD-Transparent.png")));
 		frmDungeonKeepGame.setTitle("Dungeon Keep Game");
-		frmDungeonKeepGame.setBounds(100, 100, 689, 533);
+		frmDungeonKeepGame.setBounds(100, 100, 850, 800);
 		frmDungeonKeepGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmDungeonKeepGame.getContentPane().setLayout(null);
+		frmDungeonKeepGame.getContentPane().setLayout(null);		
+		
+//		JLabel NumberOfOgres = new JLabel("Number of Ogres");
+//		NumberOfOgres.setFont(new Font("Tahoma", Font.PLAIN, 9));
+//		NumberOfOgres.setHorizontalAlignment(SwingConstants.CENTER);
+//		NumberOfOgres.setBounds(30, 15, 90, 20);
+//		frmDungeonKeepGame.getContentPane().add(NumberOfOgres);
+//
+//		JLabel GuardPersonality = new JLabel("Guard Personality");
+//		GuardPersonality.setFont(new Font("Tahoma", Font.PLAIN, 9));
+//		GuardPersonality.setHorizontalAlignment(SwingConstants.CENTER);
+//		GuardPersonality.setBounds(30, 46, 90, 20);
+//		frmDungeonKeepGame.getContentPane().add(GuardPersonality);
+
+//		NoOgres = new JTextField();
+//		NoOgres.addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				int keyCode = e.getKeyCode();
+//				if(keyCode == KeyEvent.VK_ENTER){
+//					frmDungeonKeepGame.requestFocusInWindow();
+//				}
+//				
+//			}
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				int keyCode = e.getKeyCode();
+//				if(keyCode == KeyEvent.VK_ENTER){
+//					frmDungeonKeepGame.requestFocusInWindow();
+//				}
+//			}
+//		});
+//		NoOgres.addFocusListener(new FocusAdapter() {
+//			public void focusLost(FocusEvent arg0) {
+//				try {
+//					Integer.parseInt(NoOgres.getText());
+//				} catch (NumberFormatException e) {
+//					e.printStackTrace();
+//					GameState.setText("Invalid number of Ogres");
+//					NoOgres.setText("0");
+//					return;
+//				}
+//				if (Integer.parseInt(NoOgres.getText()) > 5) {
+//					NoOgres.setText("5");
+//					noOgres = 5;
+//				}
+//				if (Integer.parseInt(NoOgres.getText()) < 1) {
+//					NoOgres.setText("1");
+//					noOgres = 1;
+//				}
+//				noOgres = Integer.parseInt(NoOgres.getText());
+//			}
+//		});
+//		NoOgres.setBounds(130, 15, 40, 20);
+//		NoOgres.setColumns(1);
+//		frmDungeonKeepGame.getContentPane().add(NoOgres);
+		
+
+//		GuardType = new JComboBox();
+//		GuardType.setModel(new DefaultComboBoxModel(new String[] { "Rookie", "Suspicious", "Drunken" }));
+//		GuardType.setBounds(130, 46, 90, 20);
+//		frmDungeonKeepGame.getContentPane().add(GuardType);
 		
 		
-		JLabel NumberOfOgres = new JLabel("Number of Ogres");
-		NumberOfOgres.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		NumberOfOgres.setHorizontalAlignment(SwingConstants.CENTER);
-		NumberOfOgres.setBounds(30, 15, 90, 20);
-		frmDungeonKeepGame.getContentPane().add(NumberOfOgres);
-
-		JLabel GuardPersonality = new JLabel("Guard Personality");
-		GuardPersonality.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		GuardPersonality.setHorizontalAlignment(SwingConstants.CENTER);
-		GuardPersonality.setBounds(30, 46, 90, 20);
-		frmDungeonKeepGame.getContentPane().add(GuardPersonality);
-
-		GameState = new JLabel("");
-		GameState.setHorizontalAlignment(SwingConstants.CENTER);
-		GameState.setBounds(40, 375, 350, 38);
-		frmDungeonKeepGame.getContentPane().add(GameState);
-
-		NoOgres = new JTextField();
-		NoOgres.addKeyListener(new KeyAdapter() {
+		//::::::::::::::::MENU & MENU LABELS::::::::::::::::::::::
+		menuBar = new JMenuBar();
+		frmDungeonKeepGame.setJMenuBar(menuBar);		
+		
+		guardType = new JLabel("Guard Personality");
+		guardType.setHorizontalAlignment(SwingConstants.CENTER);
+		guardType.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		guardType.addMouseListener(new MouseAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				int keyCode = e.getKeyCode();
-				if(keyCode == KeyEvent.VK_ENTER){
-					frmDungeonKeepGame.requestFocusInWindow();
-				}
-				
+			public void mouseClicked(MouseEvent arg0) {
+				guardType_str = (String)JOptionPane.showInputDialog(frmDungeonKeepGame, "Which Guard would you like to face in Level 1", "Guard Personality", JOptionPane.QUESTION_MESSAGE, null, personalities, null);
+				System.out.println(guardType_str);
 			}
 			@Override
-			public void keyPressed(KeyEvent e) {
-				int keyCode = e.getKeyCode();
-				if(keyCode == KeyEvent.VK_ENTER){
-					frmDungeonKeepGame.requestFocusInWindow();
-				}
+			public void mouseEntered(MouseEvent e) {
+				guardType.setForeground(SystemColor.activeCaption);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				guardType.setForeground(Color.BLACK);
 			}
 		});
-		NoOgres.addFocusListener(new FocusAdapter() {
-			public void focusLost(FocusEvent arg0) {
-				try {
-					Integer.parseInt(NoOgres.getText());
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-					GameState.setText("Invalid number of Ogres");
-					NoOgres.setText("0");
-					return;
-				}
-				if (Integer.parseInt(NoOgres.getText()) > 5) {
-					NoOgres.setText("5");
-					noOgres = 5;
-				}
-				if (Integer.parseInt(NoOgres.getText()) < 1) {
-					NoOgres.setText("1");
-					noOgres = 1;
-				}
-				noOgres = Integer.parseInt(NoOgres.getText());
+		menuBar.add(guardType);
+		
+		numberOgres = new JLabel("Number of Ogres");
+		numberOgres.setHorizontalAlignment(SwingConstants.CENTER);
+		numberOgres.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		numberOgres.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				noOgres = Integer.parseInt((String)JOptionPane.showInputDialog(frmDungeonKeepGame, "How many Ogres would you like to face in Level 2", "Number of Ogres", JOptionPane.QUESTION_MESSAGE, null, numbers, null));
+				System.out.println(noOgres);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				numberOgres.setForeground(SystemColor.activeCaption);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				numberOgres.setForeground(Color.BLACK);
 			}
 		});
-		NoOgres.setBounds(130, 15, 40, 20);
-		frmDungeonKeepGame.getContentPane().add(NoOgres);
-		NoOgres.setColumns(1);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		menuBar.add(horizontalStrut);
+		menuBar.add(numberOgres);
+		// :::::::::::::::::::::::::::::::::::::::::::::::::
 
-		GuardType = new JComboBox();
-		GuardType.setModel(new DefaultComboBoxModel(new String[] { "Rookie", "Suspicious", "Drunken" }));
-		GuardType.setBounds(130, 46, 90, 20);
-		frmDungeonKeepGame.getContentPane().add(GuardType);
-
+		// ::::::::::::::GAME INTERFACE:::::::::::::::::::::
 		StartGame = new JButton("Start Game");
-		StartGame.setBounds(450, 80, 90, 40);
-		frmDungeonKeepGame.getContentPane().add(StartGame);
+		StartGame.setBounds(640, 80, 169, 40);
 		StartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				reset();
+				if(guardType_str==null){
+					JOptionPane.showMessageDialog(frmDungeonKeepGame, "Please choose a valid personality for the Guard in Level 1", "Guard has no personality!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(noOgres<0){
+					JOptionPane.showMessageDialog(frmDungeonKeepGame, "Please choose a valid number of Ogres", "Invalid number of Ogres!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				loadLvl1();
 				StartGame.setEnabled(false);
-//				UP.setEnabled(true);
-//				DOWN.setEnabled(true);
-//				LEFT.setEnabled(true);
-//				RIGHT.setEnabled(true);
-				NoOgres.setEnabled(false);
-				GuardType.setEnabled(false);
-				frmDungeonKeepGame.setFocusable(true);
+				numberOgres.setEnabled(false);
+				guardType.setEnabled(false);
 				frmDungeonKeepGame.requestFocusInWindow();
 			}
 		});
+		frmDungeonKeepGame.getContentPane().add(StartGame);
 
+		GameState = new JLabel("");
+		GameState.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		GameState.setBounds(30, 640, 576, 61);
+		GameState.setHorizontalAlignment(SwingConstants.CENTER);
+		frmDungeonKeepGame.getContentPane().add(GameState);
+
+		gameInterface = new GameInterface();
+		gameInterface.setBounds(40, 80, 550, 550);
+		frmDungeonKeepGame.getContentPane().add(gameInterface);
+		// :::::::::::::::::::::::::::::::::::::::::::::::::
+		
 		JButton Exit = new JButton("Exit Game");
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		Exit.setBounds(450, 325, 90, 30);
+		Exit.setBounds(640, 643, 169, 48);
 		frmDungeonKeepGame.getContentPane().add(Exit);
-		
-		gameInterface = new GameInterface();
-		gameInterface.setBounds(40, 80, 400, 274);
-		frmDungeonKeepGame.getContentPane().add(gameInterface);
-		
-		
 
 	}
 
@@ -242,7 +316,7 @@ public class enhacedWindow {
 		game.clearAttack();
 		game.Move(input);
 		game.attack();
-		//GameInterface.setText(game.printBoard());
+		gameInterface.updatePrint(game.printBoard());
 		if (game.end()) {
 			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
 				reset();
@@ -251,21 +325,20 @@ public class enhacedWindow {
 			if (game.getEndStatus() == 1) {
 				GameState.setText("Perdeu. :(");
 				reset();
-				//GameInterface.setText("Start Game");
+				gameInterface.updatePrint(null);
 				StartGame.setEnabled(true);
 			}
 			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level2") {
 				reset();
 				GameState.setText("Parabens Ganhou! :)");
-				//GameInterface.setText("Start Game");
+				gameInterface.updatePrint(null);
 			}
 		}
 	}
 
 	public void loadLvl2() {
-		currentLevel=level2.clone();
 		GameState.setText("Level 2");
-		b = new Board(currentLevel);
+		b = new Board(level2);
 		b.setName("level2");
 		// Entidades
 		hero = new Hero(1, 7, 'A');
@@ -278,12 +351,8 @@ public class enhacedWindow {
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-//		GameInterface.setText(game.printBoard());
-//		StartGame.setEnabled(false);
-//		UP.setEnabled(true);
-//		DOWN.setEnabled(true);
-//		LEFT.setEnabled(true);
-//		RIGHT.setEnabled(true);
+		gameInterface.updatePrint(game.printBoard());
+		StartGame.setEnabled(false);
 	}
 
 	public void loadLvl1() {
@@ -291,9 +360,9 @@ public class enhacedWindow {
 		b = new Board(level1);
 		b.setName("level1");
 		// Entidades
-		if (GuardType.getSelectedItem() == "Rookie") {
+		if (guardType_str == "Rookie") {
 			guarda = new Rookie(8, 1, 'G', level1_mov);
-		} else if (GuardType.getSelectedItem() == "Suspicious") {
+		} else if (guardType_str == "Suspicious") {
 			guarda = new Suspicious(8, 1, 'G', level1_mov);
 		} else {
 			guarda = new Drunken(8, 1, 'G', level1_mov);
@@ -305,7 +374,7 @@ public class enhacedWindow {
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		//GameInterface.setText(game.printBoard());
+		gameInterface.updatePrint(game.printBoard());
 		StartGame.setEnabled(false);
 	}
 
@@ -318,13 +387,26 @@ public class enhacedWindow {
 		entidades.removeAllElements();
 		// Game
 		game = new Game(b, entidades);
-//		GameInterface.setText("Reseting");
-//		StartGame.setEnabled(true);
-//		UP.setEnabled(false);
-//		DOWN.setEnabled(false);
-//		LEFT.setEnabled(false);
-//		RIGHT.setEnabled(false);
-		NoOgres.setEnabled(true);
-		GuardType.setEnabled(true);
+		gameInterface.updatePrint(null);
+		StartGame.setEnabled(true);
+		numberOgres.setEnabled(true);
+		guardType.setEnabled(true);
 	}
+//	private static void addPopup(Component component, final JPopupMenu popup) {
+//		component.addMouseListener(new MouseAdapter() {
+//			public void mousePressed(MouseEvent e) {
+//				if (e.isPopupTrigger()) {
+//					showMenu(e);
+//				}
+//			}
+//			public void mouseReleased(MouseEvent e) {
+//				if (e.isPopupTrigger()) {
+//					showMenu(e);
+//				}
+//			}
+//			private void showMenu(MouseEvent e) {
+//				popup.show(e.getComponent(), e.getX(), e.getY());
+//			}
+//		});
+//	}
 }

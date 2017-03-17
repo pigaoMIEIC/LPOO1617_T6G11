@@ -27,23 +27,28 @@ public class GameInterface extends JPanel {
 	private BufferedImage attack;
 	private BufferedImage key;
 	private BufferedImage defaulti;
+	private BufferedImage stunnedOgre;
+	private BufferedImage entry;
 
 	public GameInterface(){
 		super();
+		this.print = print;
 		try {
-			wall = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			ogre = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			hero = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			armedHero = ImageIO.read(new File("src/resources/DD-Transparent.png"));
+			wall = ImageIO.read(new File("src/resources/wall.jpg"));
+			ogre = ImageIO.read(new File("src/resources/ogre.jpg"));
+			stunnedOgre = ImageIO.read(new File("src/resources/sleepogre.jpg"));
+			hero = ImageIO.read(new File("src/resources/hero.jpg"));
+			armedHero = ImageIO.read(new File("src/resources/armed.jpg"));
 			keyHero = ImageIO.read(new File("src/resources/DD-Transparent.png"));
 			guard = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			sleepGuard = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			closedDoor = ImageIO.read(new File("src/resources/DD-Transparent.png"));
+			sleepGuard = ImageIO.read(new File("src/resources/sleepguard.jpg"));
+			closedDoor = ImageIO.read(new File("src/resources/door.jpg"));
 			openDoor = ImageIO.read(new File("src/resources/DD-Transparent.png"));
 			key = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			attack = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			floor = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			defaulti = ImageIO.read(new File("src/resources/DD-Transparent.png"));
+			attack = ImageIO.read(new File("src/resources/attack.jpg"));
+			floor = ImageIO.read(new File("src/resources/floor.jpg"));
+			defaulti = ImageIO.read(new File("src/resources/default.jpg"));
+			entry = ImageIO.read(new File("src/resources/entry.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
@@ -51,15 +56,26 @@ public class GameInterface extends JPanel {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		int j=0;
+		int j=0,x=0;
 		super.paintComponent(g);
+		if(print==null){
+			g.drawImage(entry,0,0,null);
+			return;
+		}
 		for(int i =0;i<print.length();i++){
 			if(print.charAt(i)=='\n'){
 				j++;
+				x=0;
 				continue;
 			}
-			g.drawImage(getImage(print.charAt(i)),i*10,j*10,10,10,null);
+			g.drawImage(getImage(print.charAt(i)),x*55,j*55,55,55,null);
+			x++;
 		}
+	}
+	
+	public void updatePrint(String print){
+		this.print=print;
+		repaint();
 	}
 
 	private Image getImage(char c) {
@@ -75,6 +91,7 @@ public class GameInterface extends JPanel {
 		case 'k': return key;
 		case 'K': return keyHero;
 		case '*': return attack;
+		case '8': return stunnedOgre;
 		case ' ': return floor;
 		default: return defaulti;
 		}
