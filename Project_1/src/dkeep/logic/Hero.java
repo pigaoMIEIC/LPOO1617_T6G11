@@ -40,8 +40,11 @@ public class Hero extends Entidade {
 				output[0]+=(tag);
 				return true;
 			}
-		} else if(b.get(x, y)==tag|b.get(x, y)==' '){
+		}else if(b.get(x, y)==tag|b.get(x, y)==' '){
 			output[0]+=(tag);
+		}
+		if(b.get(x, y)=='*'){
+			output[0]+='*';
 		}
 
 		return false;

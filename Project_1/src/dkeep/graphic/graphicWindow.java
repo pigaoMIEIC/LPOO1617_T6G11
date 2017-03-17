@@ -40,11 +40,14 @@ public class graphicWindow {
 
 	private JFrame frmDungeonKeepGame;
 
+	char currentLevel[][];
+	
 	private static Scanner s = new Scanner(System.in);
 	static Board b;
 	static int noOgres;
 	static Vector<Entidade> entidades = new Vector<Entidade>();
 	static Hero hero;
+	static Ogre ogre;
 	static Game game;
 	static Guarda guarda;
 
@@ -167,20 +170,7 @@ public class graphicWindow {
 		UP.setEnabled(false);
 		UP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				game.Move('w');
-				GameInterface.setText(game.printBoard());
-				if (game.end()) {
-					if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
-						reset();
-						loadLvl2();
-					}
-					if (game.getEndStatus() == 1) {
-						GameState.setText("GG WP nice try EZ PZ");
-						GameInterface.setText("Start Game");
-
-					}
-
-				}
+				buttonEvent('w');
 			}
 		});
 		UP.setBounds(460, 130, 70, 30);
@@ -189,18 +179,7 @@ public class graphicWindow {
 		DOWN = new JButton("DOWN");
 		DOWN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.Move('s');
-				GameInterface.setText(game.printBoard());
-				if (game.end()) {
-					if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
-						reset();
-						loadLvl2();
-					}
-					if (game.getEndStatus() == 1) {
-						GameState.setText("GG WP nice try EZ PZ");
-					}
-
-				}
+				buttonEvent('s');
 			}
 		});
 		DOWN.setEnabled(false);
@@ -210,18 +189,7 @@ public class graphicWindow {
 		RIGHT = new JButton("RIGHT");
 		RIGHT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				game.Move('d');
-				GameInterface.setText(game.printBoard());
-				if (game.end()) {
-					if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
-						reset();
-						loadLvl2();
-					}
-					if (game.getEndStatus() == 1) {
-						GameState.setText("GG WP nice try EZ PZ");
-					}
-
-				}
+				buttonEvent('d');
 			}
 		});
 		RIGHT.setEnabled(false);
@@ -231,18 +199,7 @@ public class graphicWindow {
 		LEFT = new JButton("LEFT");
 		LEFT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				game.Move('a');
-				GameInterface.setText(game.printBoard());
-				if (game.end()) {
-					if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
-						reset();
-						loadLvl2();
-					}
-					if (game.getEndStatus() == 1) {
-						GameState.setText("GG WP nice try EZ PZ");
-					}
-
-				}
+				buttonEvent('a');
 			}
 		});
 		LEFT.setEnabled(false);
@@ -254,12 +211,13 @@ public class graphicWindow {
 		frmDungeonKeepGame.getContentPane().add(StartGame);
 		StartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				reset();
+				loadLvl1();
+				StartGame.setEnabled(false);
 				UP.setEnabled(true);
 				DOWN.setEnabled(true);
 				LEFT.setEnabled(true);
 				RIGHT.setEnabled(true);
-				reset();
-				loadLvl1();
 			}
 		});
 
@@ -274,24 +232,58 @@ public class graphicWindow {
 
 	}
 
+	public void buttonEvent(char input) {
+		game.clearAttack();
+		game.Move(input);
+		game.attack();
+		GameInterface.setText(game.printBoard());
+		if (game.end()) {
+			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
+				reset();
+				loadLvl2();
+			}
+			if (game.getEndStatus() == 1) {
+				GameState.setText("Perdeu. :(");
+				reset();
+				GameInterface.setText("Start Game");
+				StartGame.setEnabled(true);
+			}
+			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level2") {
+				reset();
+				GameState.setText("Parabens Ganhou! :)");
+				GameInterface.setText("Start Game");
+			}
+		}
+	}
+
 	public void loadLvl2() {
+		currentLevel=level2.clone();
 		GameState.setText("Level 2");
-		b = new Board(level2);
+		b = new Board(currentLevel);
 		b.setName("level2");
 		// Entidades
 		hero = new Hero(1, 7, 'A');
-		for (int i = 0; i < noOgres; i++) {
-			entidades.addElement(new Ogre(4, 1, 'O'));
+		entidades.addElement(new Ogre(4, 1, 'O'));
+		for (int i = 0; i < noOgres-1; i++) {
+			ogre = new Ogre(4, 1, 'O');
+			ogre.setCurrent('O');
+			entidades.addElement(ogre);
 		}
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
 		GameInterface.setText(game.printBoard());
+		StartGame.setEnabled(false);
+		UP.setEnabled(true);
+		DOWN.setEnabled(true);
+		LEFT.setEnabled(true);
+		RIGHT.setEnabled(true);
 	}
 
 	public void loadLvl1() {
+		currentLevel=level1.clone();
 		GameState.setText("Level 1");
-		b = new Board(level1);
+		b = new Board(currentLevel);
 		b.setName("level1");
 		// Entidades
 		if (GuardType.getSelectedItem() == "Rookie") {
@@ -309,15 +301,24 @@ public class graphicWindow {
 		// Game
 		game = new Game(b, entidades);
 		GameInterface.setText(game.printBoard());
+		StartGame.setEnabled(false);
 	}
 
 	public void reset() {
 		b = null;
+		hero=null;
+		guarda=null;
+		ogre = null;
 		// Map
 		entidades.removeAllElements();
 		// Game
 		game = new Game(b, entidades);
 		GameInterface.setText("Reseting");
+		StartGame.setEnabled(true);
+		UP.setEnabled(false);
+		DOWN.setEnabled(false);
+		LEFT.setEnabled(false);
+		RIGHT.setEnabled(false);
 	}
 
 }
