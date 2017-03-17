@@ -35,8 +35,18 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.Window.Type;
+import javax.swing.JInternalFrame;
+import java.awt.GridLayout;
+import javax.swing.BoxLayout;
+import net.miginfocom.swing.MigLayout;
+import java.awt.GridBagLayout;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
-public class graphicWindow {
+public class enhacedWindow {
 
 	private JFrame frmDungeonKeepGame;
 
@@ -69,13 +79,12 @@ public class graphicWindow {
 			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
 			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' },
 			{ 'x', /* h */' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
-
-	JTextArea GameInterface;
-	JLabel GameState;
-	JButton UP, DOWN, LEFT, RIGHT, StartGame;
-	JComboBox GuardType;
-
+	
+	private JLabel GameState;
+	private JButton StartGame;
+	private JComboBox GuardType;
 	private JTextField NoOgres;
+	private GameInterface gameInterface;
 
 	/**
 	 * Launch the application.
@@ -84,7 +93,7 @@ public class graphicWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					graphicWindow window = new graphicWindow();
+					enhacedWindow window = new enhacedWindow();
 					window.frmDungeonKeepGame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -96,7 +105,7 @@ public class graphicWindow {
 	/**
 	 * Create the application.
 	 */
-	public graphicWindow() {
+	public enhacedWindow() {
 		initialize();
 	}
 
@@ -105,13 +114,29 @@ public class graphicWindow {
 	 */
 	private void initialize() {
 		frmDungeonKeepGame = new JFrame();
+		frmDungeonKeepGame.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				int keyCode = e.getKeyCode();
+			    switch( keyCode ) { 
+			        case KeyEvent.VK_UP: buttonEvent('w'); break;
+			        case KeyEvent.VK_DOWN: buttonEvent('s'); break;
+			        case KeyEvent.VK_RIGHT: buttonEvent('d'); break;
+			        case KeyEvent.VK_LEFT: buttonEvent('a'); break;
+			    }
+			}
+		});
+		
+
 		frmDungeonKeepGame.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(graphicWindow.class.getResource("/resources/DD-Transparent.png")));
+				Toolkit.getDefaultToolkit().getImage(enhacedWindow.class.getResource("/resources/DD-Transparent.png")));
 		frmDungeonKeepGame.setTitle("Dungeon Keep Game");
 		frmDungeonKeepGame.setBounds(100, 100, 689, 533);
 		frmDungeonKeepGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDungeonKeepGame.getContentPane().setLayout(null);
-
+		
+		
 		JLabel NumberOfOgres = new JLabel("Number of Ogres");
 		NumberOfOgres.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		NumberOfOgres.setHorizontalAlignment(SwingConstants.CENTER);
@@ -126,10 +151,27 @@ public class graphicWindow {
 
 		GameState = new JLabel("");
 		GameState.setHorizontalAlignment(SwingConstants.CENTER);
-		GameState.setBounds(30, 366, 350, 38);
+		GameState.setBounds(40, 375, 350, 38);
 		frmDungeonKeepGame.getContentPane().add(GameState);
 
 		NoOgres = new JTextField();
+		NoOgres.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				if(keyCode == KeyEvent.VK_ENTER){
+					frmDungeonKeepGame.requestFocusInWindow();
+				}
+				
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				if(keyCode == KeyEvent.VK_ENTER){
+					frmDungeonKeepGame.requestFocusInWindow();
+				}
+			}
+		});
 		NoOgres.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent arg0) {
 				try {
@@ -160,52 +202,6 @@ public class graphicWindow {
 		GuardType.setBounds(130, 46, 90, 20);
 		frmDungeonKeepGame.getContentPane().add(GuardType);
 
-		GameInterface = new JTextArea();
-		GameInterface.setFont(new Font("Courier New", Font.PLAIN, 20));
-		GameInterface.setText("Start Game");
-		GameInterface.setBounds(30, 80, 350, 275);
-		frmDungeonKeepGame.getContentPane().add(GameInterface);
-
-		UP = new JButton("UP");
-		UP.setEnabled(false);
-		UP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buttonEvent('w');
-			}
-		});
-		UP.setBounds(460, 130, 70, 30);
-		frmDungeonKeepGame.getContentPane().add(UP);
-
-		DOWN = new JButton("DOWN");
-		DOWN.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonEvent('s');
-			}
-		});
-		DOWN.setEnabled(false);
-		DOWN.setBounds(460, 218, 70, 30);
-		frmDungeonKeepGame.getContentPane().add(DOWN);
-
-		RIGHT = new JButton("RIGHT");
-		RIGHT.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buttonEvent('d');
-			}
-		});
-		RIGHT.setEnabled(false);
-		RIGHT.setBounds(500, 175, 70, 30);
-		frmDungeonKeepGame.getContentPane().add(RIGHT);
-
-		LEFT = new JButton("LEFT");
-		LEFT.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				buttonEvent('a');
-			}
-		});
-		LEFT.setEnabled(false);
-		LEFT.setBounds(420, 175, 70, 30);
-		frmDungeonKeepGame.getContentPane().add(LEFT);
-
 		StartGame = new JButton("Start Game");
 		StartGame.setBounds(450, 80, 90, 40);
 		frmDungeonKeepGame.getContentPane().add(StartGame);
@@ -214,10 +210,14 @@ public class graphicWindow {
 				reset();
 				loadLvl1();
 				StartGame.setEnabled(false);
-				UP.setEnabled(true);
-				DOWN.setEnabled(true);
-				LEFT.setEnabled(true);
-				RIGHT.setEnabled(true);
+//				UP.setEnabled(true);
+//				DOWN.setEnabled(true);
+//				LEFT.setEnabled(true);
+//				RIGHT.setEnabled(true);
+				NoOgres.setEnabled(false);
+				GuardType.setEnabled(false);
+				frmDungeonKeepGame.setFocusable(true);
+				frmDungeonKeepGame.requestFocusInWindow();
 			}
 		});
 
@@ -229,6 +229,12 @@ public class graphicWindow {
 		});
 		Exit.setBounds(450, 325, 90, 30);
 		frmDungeonKeepGame.getContentPane().add(Exit);
+		
+		gameInterface = new GameInterface();
+		gameInterface.setBounds(40, 80, 400, 274);
+		frmDungeonKeepGame.getContentPane().add(gameInterface);
+		
+		
 
 	}
 
@@ -236,7 +242,7 @@ public class graphicWindow {
 		game.clearAttack();
 		game.Move(input);
 		game.attack();
-		GameInterface.setText(game.printBoard());
+		//GameInterface.setText(game.printBoard());
 		if (game.end()) {
 			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
 				reset();
@@ -245,13 +251,13 @@ public class graphicWindow {
 			if (game.getEndStatus() == 1) {
 				GameState.setText("Perdeu. :(");
 				reset();
-				GameInterface.setText("Start Game");
+				//GameInterface.setText("Start Game");
 				StartGame.setEnabled(true);
 			}
 			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level2") {
 				reset();
 				GameState.setText("Parabens Ganhou! :)");
-				GameInterface.setText("Start Game");
+				//GameInterface.setText("Start Game");
 			}
 		}
 	}
@@ -272,12 +278,12 @@ public class graphicWindow {
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		GameInterface.setText(game.printBoard());
-		StartGame.setEnabled(false);
-		UP.setEnabled(true);
-		DOWN.setEnabled(true);
-		LEFT.setEnabled(true);
-		RIGHT.setEnabled(true);
+//		GameInterface.setText(game.printBoard());
+//		StartGame.setEnabled(false);
+//		UP.setEnabled(true);
+//		DOWN.setEnabled(true);
+//		LEFT.setEnabled(true);
+//		RIGHT.setEnabled(true);
 	}
 
 	public void loadLvl1() {
@@ -299,7 +305,7 @@ public class graphicWindow {
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		GameInterface.setText(game.printBoard());
+		//GameInterface.setText(game.printBoard());
 		StartGame.setEnabled(false);
 	}
 
@@ -312,12 +318,13 @@ public class graphicWindow {
 		entidades.removeAllElements();
 		// Game
 		game = new Game(b, entidades);
-		GameInterface.setText("Reseting");
-		StartGame.setEnabled(true);
-		UP.setEnabled(false);
-		DOWN.setEnabled(false);
-		LEFT.setEnabled(false);
-		RIGHT.setEnabled(false);
+//		GameInterface.setText("Reseting");
+//		StartGame.setEnabled(true);
+//		UP.setEnabled(false);
+//		DOWN.setEnabled(false);
+//		LEFT.setEnabled(false);
+//		RIGHT.setEnabled(false);
+		NoOgres.setEnabled(true);
+		GuardType.setEnabled(true);
 	}
-
 }

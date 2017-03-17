@@ -8,7 +8,17 @@ public class Board {
 	String output[]= new String[1];
 
 	public Board(char[][] layout) {
-		board = layout;
+		board = copy(layout);
+	}
+
+	private char[][] copy(char[][] layout) {
+		char[][] copy = new char[layout.length][layout[0].length];
+		for(int i=0;i<layout.length;i++){
+			for(int j=0; j<layout[0].length;j++){
+				copy[i][j]=layout[i][j];
+			}
+		}
+		return copy;
 	}
 
 	public String print(Vector<Entidade> map, boolean endFlag[]) {
@@ -16,11 +26,11 @@ public class Board {
 		for (int y = 0; y < board.length; y++) {
 			for (int x = 0; x < board[0].length; x++) {
 				if (this.printEntidade(x, y, map, endFlag,output)) {
-					output[0]+=' ';
+					//output[0]+=' ';
 					continue;
 				}
 				output[0]+=(board[y][x]);
-				output[0]+=' ';
+				//output[0]+=' ';
 			}
 			output[0]+="\n";
 		}
