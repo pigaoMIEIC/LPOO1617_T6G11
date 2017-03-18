@@ -270,6 +270,8 @@ public class enhacedWindow {
 		menuBar.add(horizontalStrut_1);
 		
 		lblEditor = new JLabel("Editor");
+		lblEditor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEditor.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblEditor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -278,8 +280,14 @@ public class enhacedWindow {
 				frmDungeonKeepGame.setVisible(false);
 				System.out.println("editor pressed");
 			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblEditor.setForeground(SystemColor.activeCaption);
+			}
+			public void mouseExited(MouseEvent e) {
+				lblEditor.setForeground(Color.BLACK);
+			}
 		});
-		lblEditor.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		menuBar.add(lblEditor);
 		// :::::::::::::::::::::::::::::::::::::::::::::::::
 

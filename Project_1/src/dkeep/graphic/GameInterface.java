@@ -14,6 +14,7 @@ public class GameInterface extends JPanel {
 	
 	String print;
 
+	
 	private BufferedImage wall;
 	private BufferedImage ogre;
 	private BufferedImage hero;
