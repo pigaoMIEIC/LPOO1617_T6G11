@@ -32,7 +32,7 @@ public class GameInterface extends JPanel {
 
 	public GameInterface(){
 		super();
-		this.print = print;
+		this.print = null;
 		try {
 			wall = ImageIO.read(new File("src/resources/wall.jpg"));
 			ogre = ImageIO.read(new File("src/resources/ogre.jpg"));
@@ -51,7 +51,8 @@ public class GameInterface extends JPanel {
 			entry = ImageIO.read(new File("src/resources/entry.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+			System.out.println("load de imagens não funcionou");
+		}
 	}
 	
 	@Override

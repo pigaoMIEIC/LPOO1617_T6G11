@@ -66,8 +66,7 @@ import javax.swing.Box;
 public class enhacedWindow {
 
 	private JFrame frmDungeonKeepGame;
-
-	char currentLevel[][];
+	private static LevelEditor editor;
 	
 	private static Scanner s = new Scanner(System.in);
 	static Board b;
@@ -106,6 +105,7 @@ public class enhacedWindow {
 	private JButton StartGame;
 	private GameInterface gameInterface;
 	private JMenuBar menuBar;
+	private JLabel lblEditor;
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	/**
@@ -265,6 +265,22 @@ public class enhacedWindow {
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		menuBar.add(horizontalStrut);
 		menuBar.add(numberOgres);
+		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		menuBar.add(horizontalStrut_1);
+		
+		lblEditor = new JLabel("Editor");
+		lblEditor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				editor = new LevelEditor(frmDungeonKeepGame);
+				editor.setVisible(true);
+				frmDungeonKeepGame.setVisible(false);
+				System.out.println("editor pressed");
+			}
+		});
+		lblEditor.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		menuBar.add(lblEditor);
 		// :::::::::::::::::::::::::::::::::::::::::::::::::
 
 		// ::::::::::::::GAME INTERFACE:::::::::::::::::::::
@@ -392,21 +408,4 @@ public class enhacedWindow {
 		numberOgres.setEnabled(true);
 		guardType.setEnabled(true);
 	}
-//	private static void addPopup(Component component, final JPopupMenu popup) {
-//		component.addMouseListener(new MouseAdapter() {
-//			public void mousePressed(MouseEvent e) {
-//				if (e.isPopupTrigger()) {
-//					showMenu(e);
-//				}
-//			}
-//			public void mouseReleased(MouseEvent e) {
-//				if (e.isPopupTrigger()) {
-//					showMenu(e);
-//				}
-//			}
-//			private void showMenu(MouseEvent e) {
-//				popup.show(e.getComponent(), e.getX(), e.getY());
-//			}
-//		});
-//	}
 }
