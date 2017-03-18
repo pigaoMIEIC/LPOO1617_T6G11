@@ -36,15 +36,15 @@ public class GameInterface extends JPanel {
 		try {
 			wall = ImageIO.read(new File("src/resources/wall.jpg"));
 			ogre = ImageIO.read(new File("src/resources/ogre.jpg"));
-			stunnedOgre = ImageIO.read(new File("src/resources/sleepogre.jpg"));
+			stunnedOgre = ImageIO.read(new File("src/resources/sleepOgre.jpg"));
 			hero = ImageIO.read(new File("src/resources/hero.jpg"));
 			armedHero = ImageIO.read(new File("src/resources/armed.jpg"));
 			keyHero = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			guard = ImageIO.read(new File("src/resources/DD-Transparent.png"));
+			guard = ImageIO.read(new File("src/resources/guard.png"));
 			sleepGuard = ImageIO.read(new File("src/resources/sleepguard.jpg"));
 			closedDoor = ImageIO.read(new File("src/resources/door.jpg"));
-			openDoor = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			key = ImageIO.read(new File("src/resources/DD-Transparent.png"));
+			openDoor = ImageIO.read(new File("src/resources/opendoor.jpg"));
+			key = ImageIO.read(new File("src/resources/key.jpg"));
 			attack = ImageIO.read(new File("src/resources/attack.jpg"));
 			floor = ImageIO.read(new File("src/resources/floor.jpg"));
 			defaulti = ImageIO.read(new File("src/resources/default.jpg"));
