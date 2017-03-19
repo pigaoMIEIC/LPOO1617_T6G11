@@ -10,6 +10,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import dkeep.logic.Game;
+
 public class GameInterface extends JPanel {
 	
 	String print;
@@ -30,6 +32,10 @@ public class GameInterface extends JPanel {
 	private BufferedImage defaulti;
 	private BufferedImage stunnedOgre;
 	private BufferedImage entry;
+
+
+	private int xSize;
+	private int ySize;
 
 	public GameInterface(){
 		super();
@@ -70,13 +76,19 @@ public class GameInterface extends JPanel {
 				x=0;
 				continue;
 			}
-			g.drawImage(getImage(print.charAt(i)),x*55,j*55,55,55,null);
+			g.drawImage(getImage(print.charAt(i)),x*xSize,j*ySize,xSize,ySize,null);
 			x++;
 		}
 	}
 	
-	public void updatePrint(String print){
-		this.print=print;
+	public void updatePrint(Game g){
+		try{
+		ySize=(int) (this.getBounds().getHeight()/g.getBoard().getBoard().length);
+		xSize=(int) (this.getBounds().getHeight()/g.getBoard().getBoard()[0].length);
+		this.print=g.printBoard();}
+		catch (Exception e){
+			this.print=null;
+		}
 		repaint();
 	}
 

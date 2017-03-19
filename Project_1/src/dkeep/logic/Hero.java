@@ -128,7 +128,7 @@ public class Hero extends Entidade {
 	
 	public boolean checkSurround(Board b, char enemy) {
 		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy
-				| b.get(x, y - 1) == enemy| current==enemy) {
+				| b.get(x, y - 1) == enemy| b.get(x, y)==enemy) {
 			return true;
 		} else
 			return false;

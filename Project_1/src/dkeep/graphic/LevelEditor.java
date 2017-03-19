@@ -39,13 +39,15 @@ import javax.swing.ButtonGroup;
 public class LevelEditor extends JFrame {
 	
 	JFrame parent;
-
+	
+	private static String PATH = "userLevels/";
 	private int noColumns, noRows;
 	private String filename;
 	protected BufferedWriter out;
 	private int xSize=0,ySize=0;
 	private char[][] editorBoard;
 	private char selectedTile;
+	private static File directory=new File(PATH);
 	
 	//:::::::::::::::::::PANEL ELEMENTS::::::::::::::::::::
 	private JComboBox rows, columns;
@@ -55,7 +57,9 @@ public class LevelEditor extends JFrame {
 	private final ButtonGroup tileButton = new ButtonGroup();
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-	public LevelEditor(JFrame parent) throws HeadlessException {
+	public LevelEditor(JFrame parent) {
+		if(!directory.exists())
+			directory.mkdir();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setTitle("Level Editor");
@@ -181,7 +185,7 @@ public class LevelEditor extends JFrame {
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name.getText()), "utf-16"));
+					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(PATH+name.getText()+".txt"), "utf-8"));
 				} catch (UnsupportedEncodingException | FileNotFoundException e1) {
 					System.out.println("erro a abrir a file");
 					JOptionPane.showMessageDialog(parent, "That Level Name is not valid", "Invalid Level Name!",
@@ -210,6 +214,7 @@ public class LevelEditor extends JFrame {
 				System.out.println("i=" + i);
 				System.out.println("tile=" + selectedTile);
 				editorPanel.getComponents()[(i+(j*noColumns))].getGraphics().drawImage(getImage(selectedTile), 0, 0, xSize-1,ySize-1, editorPanel);
+				editorPanel.revalidate();
 				editorBoard[j][i] = selectedTile;
 			}
 		});
@@ -224,6 +229,12 @@ public class LevelEditor extends JFrame {
 		JButton btnExitAndSave = new JButton("Exit and Save");
 		btnExitAndSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					saveLevel();
+				} catch (IOException e1) {
+					System.out.println("não conseguiu guardar o nivel");
+					e1.printStackTrace();
+				}
 				exit();
 			}
 		});
@@ -271,7 +282,7 @@ public class LevelEditor extends JFrame {
 			out.write((String) rows.getSelectedItem());
 			out.write(' ');
 			out.write((String) columns.getSelectedItem());
-			out.write('\n');
+			out.newLine();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -300,6 +311,16 @@ public class LevelEditor extends JFrame {
 		}
 		intro.setVisible(false);
 		editorPanel.setVisible(true);
+	}
+	
+	public void saveLevel() throws IOException{
+		for(int i = 0; i<editorBoard.length;i++){
+			for(int j=0;j<editorBoard[0].length;j++){
+				out.write(editorBoard[i][j]);
+			}
+			out.newLine();
+		}
+		
 	}
 	
 	protected Image getImage(char c) {

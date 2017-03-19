@@ -38,6 +38,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.awt.Window.Type;
 import javax.swing.JInternalFrame;
 import java.awt.GridLayout;
@@ -75,12 +76,15 @@ public class enhacedWindow {
 	static Ogre ogre;
 	static Game game;
 	static Guarda guarda;
-
+	
+	
+	
 	static char input;
 	static int noOgres=-1;
 	static String guardType_str=null;
 	static String[] personalities = { "Rookie", "Suspicious", "Drunken" };
 	static String[] numbers = {"1","2","3","4","5"};
+	private static String PATH = "userLevels/";
 
 	static char level1[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
 			{ 'x', /* 'h' */' ', ' ', ' ', 'i', ' ', 'x', ' ', /* 'g' */' ', 'x' },
@@ -269,9 +273,46 @@ public class enhacedWindow {
 		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
 		menuBar.add(horizontalStrut_1);
 		
+		JMenu mnLevelEditing = new JMenu("Level Editing");
+		mnLevelEditing.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				mnLevelEditing.setForeground(SystemColor.activeCaption);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				mnLevelEditing.setForeground(Color.BLACK);
+			}
+		});
+		mnLevelEditing.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		menuBar.add(mnLevelEditing);
+		
 		lblEditor = new JLabel("Editor");
+		mnLevelEditing.add(lblEditor);
 		lblEditor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEditor.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		
+		JLabel loadLevel = new JLabel("Load Level");
+		loadLevel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String levelName;
+				File folder = new File(PATH);
+				File [] levels = folder.listFiles();
+				if(levels.length==0){
+					JOptionPane.showMessageDialog(frmDungeonKeepGame, "There are no levels available yet. Try out the level editor in order for your level to show up here.", "No available levels.", JOptionPane.ERROR_MESSAGE);
+				}
+				String [] levels_str = new String[levels.length];
+				for(int i = 0;i<levels.length;i++){
+					levels_str[i]=levels[i].getName();
+				}
+				levelName = (String)JOptionPane.showInputDialog(frmDungeonKeepGame, "Which level would you like to play?", "Choose a Level", JOptionPane.QUESTION_MESSAGE, null, levels_str, null);
+				loadLevel(levelName);
+			}
+		});
+		loadLevel.setHorizontalAlignment(SwingConstants.CENTER);
+		loadLevel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		mnLevelEditing.add(loadLevel);
 		lblEditor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -288,7 +329,6 @@ public class enhacedWindow {
 				lblEditor.setForeground(Color.BLACK);
 			}
 		});
-		menuBar.add(lblEditor);
 		// :::::::::::::::::::::::::::::::::::::::::::::::::
 
 		// ::::::::::::::GAME INTERFACE:::::::::::::::::::::
@@ -296,6 +336,11 @@ public class enhacedWindow {
 		StartGame.setBounds(640, 80, 169, 40);
 		StartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(StartGame.getText()=="Continue"){
+					reset();
+					return;
+				}
+				frmDungeonKeepGame.setFocusable(true);
 				reset();
 				if(guardType_str==null){
 					JOptionPane.showMessageDialog(frmDungeonKeepGame, "Please choose a valid personality for the Guard in Level 1", "Guard has no personality!", JOptionPane.ERROR_MESSAGE);
@@ -306,9 +351,9 @@ public class enhacedWindow {
 					return;
 				}
 				loadLvl1();
-				StartGame.setEnabled(false);
 				numberOgres.setEnabled(false);
 				guardType.setEnabled(false);
+				lblEditor.setEnabled(false);
 				frmDungeonKeepGame.requestFocusInWindow();
 			}
 		});
@@ -336,11 +381,42 @@ public class enhacedWindow {
 
 	}
 
+	protected void loadLevel(String levelName) {
+		char[][] newBoard;
+		try {
+			Scanner inputF = new Scanner(new File(PATH + levelName));
+			int rows = inputF.nextInt();
+			int columns = inputF.nextInt();
+			newBoard = new char[rows][columns];
+			String row;
+			inputF.nextLine();
+			for (int i = 0; i < rows; i++) {
+				row = inputF.nextLine();
+				char[] newRow = row.toCharArray();
+				newBoard[i] = newRow;
+				System.out.println(newRow);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Damn it I couldnt find the file.");
+			return;
+		}
+		b = new Board(newBoard);
+		b.setName("level2");
+		entidades = b.readBoard();
+		game = new Game(b, entidades);
+		gameInterface.updatePrint(game);
+		frmDungeonKeepGame.setFocusable(true);
+		numberOgres.setEnabled(false);
+		guardType.setEnabled(false);
+		lblEditor.setEnabled(false);
+		frmDungeonKeepGame.requestFocusInWindow();
+	}
+
 	public void buttonEvent(char input) {
 		game.clearAttack();
 		game.Move(input);
 		game.attack();
-		gameInterface.updatePrint(game.printBoard());
+		gameInterface.updatePrint(game);
 		if (game.end()) {
 			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
 				reset();
@@ -348,14 +424,18 @@ public class enhacedWindow {
 			}
 			if (game.getEndStatus() == 1) {
 				GameState.setText("Perdeu. :(");
-				reset();
-				gameInterface.updatePrint(null);
+				frmDungeonKeepGame.setFocusable(false);
 				StartGame.setEnabled(true);
+				StartGame.setText("Continue");
+//				reset();
+//				StartGame.setEnabled(true);
 			}
 			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level2") {
-				reset();
 				GameState.setText("Parabens Ganhou! :)");
-				gameInterface.updatePrint(null);
+				frmDungeonKeepGame.setFocusable(false);
+				StartGame.setEnabled(true);
+				StartGame.setText("Continue");
+//				reset();
 			}
 		}
 	}
@@ -375,8 +455,10 @@ public class enhacedWindow {
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		gameInterface.updatePrint(game.printBoard());
-		StartGame.setEnabled(false);
+		gameInterface.updatePrint(game);
+		numberOgres.setEnabled(false);
+		guardType.setEnabled(false);
+		lblEditor.setEnabled(false);
 	}
 
 	public void loadLvl1() {
@@ -398,8 +480,11 @@ public class enhacedWindow {
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		gameInterface.updatePrint(game.printBoard());
-		StartGame.setEnabled(false);
+		gameInterface.updatePrint(game);
+		numberOgres.setEnabled(false);
+		guardType.setEnabled(false);
+		lblEditor.setEnabled(false);
+
 	}
 
 	public void reset() {
@@ -412,8 +497,11 @@ public class enhacedWindow {
 		// Game
 		game = new Game(b, entidades);
 		gameInterface.updatePrint(null);
+		StartGame.setText("Start Game");
+		GameState.setText("");
 		StartGame.setEnabled(true);
 		numberOgres.setEnabled(true);
 		guardType.setEnabled(true);
+		lblEditor.setEnabled(true);
 	}
 }

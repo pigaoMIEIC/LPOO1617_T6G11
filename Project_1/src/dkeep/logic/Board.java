@@ -4,6 +4,8 @@ import java.util.Vector;
 
 public class Board {
 	char board[/* y */][/* x */];
+	
+
 	String name;
 	String output[]= new String[1];
 
@@ -11,6 +13,10 @@ public class Board {
 		board = copy(layout);
 	}
 
+	public char[][] getBoard() {
+		return board;
+	}
+	
 	private char[][] copy(char[][] layout) {
 		char[][] copy = new char[layout.length][layout[0].length];
 		for(int i=0;i<layout.length;i++){
@@ -106,7 +112,13 @@ public class Board {
 			board[6][0] = 's';
 		}
 		if (name == "level2") {
-			board[1][0] = 's';
+			for (int y = 0; y < board.length; y++) {
+				for (int x = 0; x < board[0].length; x++) {
+					if(board[y][x]=='i'){
+						board[y][x]='s';
+					}
+				}
+			}
 		}
 		if(name== "testlevel"){
 			board[2][0] = 's';
@@ -119,5 +131,26 @@ public class Board {
 
 	public String getName() {
 		return name;
+	}
+
+	public Vector<Entidade> readBoard() {
+		Hero hero=null;
+		boolean hasDoor=false, hasKey=false;
+		Vector<Entidade> temp = new Vector<Entidade>();
+		for (int y = 0; y < board.length; y++) {
+			for (int x = 0; x < board[0].length; x++) {
+				switch(board[y][x]){
+				case 'A':hero=new Hero(x,y,'A'); break;
+				case 'O':temp.add(new Ogre(x,y,'O')); break;
+				case 'i':hasDoor=true;
+				case 'k':hasKey=true;
+				}
+			}
+		}
+		if(!(hasKey&&hasDoor&&!temp.isEmpty())){
+			return temp=null;
+		}
+		temp.add(hero);
+		return temp;
 	}
 }
