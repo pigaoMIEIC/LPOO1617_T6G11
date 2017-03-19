@@ -140,15 +140,19 @@ public class Board {
 		for (int y = 0; y < board.length; y++) {
 			for (int x = 0; x < board[0].length; x++) {
 				switch(board[y][x]){
-				case 'A':hero=new Hero(x,y,'A'); break;
+				case 'A':
+					if(hero!=null)
+						return null;
+					hero=new Hero(x,y,'A');
+					break;
 				case 'O':temp.add(new Ogre(x,y,'O')); break;
 				case 'i':hasDoor=true;
 				case 'k':hasKey=true;
 				}
 			}
 		}
-		if(!(hasKey&&hasDoor&&!temp.isEmpty())){
-			return temp=null;
+		if(!(hasKey&&hasDoor&&!temp.isEmpty()&&hero!=null)){
+			return null;
 		}
 		temp.add(hero);
 		return temp;

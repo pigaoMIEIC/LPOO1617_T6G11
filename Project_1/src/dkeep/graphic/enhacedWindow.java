@@ -37,8 +37,13 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.awt.Window.Type;
 import javax.swing.JInternalFrame;
 import java.awt.GridLayout;
@@ -68,8 +73,9 @@ public class enhacedWindow {
 
 	private JFrame frmDungeonKeepGame;
 	private static LevelEditor editor;
+	private BufferedWriter out;
+	private Scanner inputFile;
 	
-	private static Scanner s = new Scanner(System.in);
 	static Board b;
 	static Vector<Entidade> entidades = new Vector<Entidade>();
 	static Hero hero;
@@ -85,6 +91,8 @@ public class enhacedWindow {
 	static String[] personalities = { "Rookie", "Suspicious", "Drunken" };
 	static String[] numbers = {"1","2","3","4","5"};
 	private static String PATH = "userLevels/";
+	private static String SAVE = "savedGames/";
+	private static File directory=new File(SAVE);
 
 	static char level1[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
 			{ 'x', /* 'h' */' ', ' ', ' ', 'i', ' ', 'x', ' ', /* 'g' */' ', 'x' },
@@ -106,10 +114,11 @@ public class enhacedWindow {
 	
 	//:::::::::::::::::JFRAME OBJECTS::::::::::::::::::::::
 	private JLabel GameState, numberOgres, guardType;
-	private JButton StartGame;
+	private JButton StartGame, saveGame;
 	private GameInterface gameInterface;
 	private JMenuBar menuBar;
-	private JLabel lblEditor;
+	private JLabel lblEditor,lblloadLevel;
+	private JButton loadGame;
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	/**
@@ -139,6 +148,8 @@ public class enhacedWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		if(!directory.exists())
+			directory.mkdir();
 		frmDungeonKeepGame = new JFrame();
 		frmDungeonKeepGame.addKeyListener(new KeyAdapter() {
 			@Override
@@ -289,30 +300,6 @@ public class enhacedWindow {
 		
 		lblEditor = new JLabel("Editor");
 		mnLevelEditing.add(lblEditor);
-		lblEditor.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEditor.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		
-		JLabel loadLevel = new JLabel("Load Level");
-		loadLevel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String levelName;
-				File folder = new File(PATH);
-				File [] levels = folder.listFiles();
-				if(levels.length==0){
-					JOptionPane.showMessageDialog(frmDungeonKeepGame, "There are no levels available yet. Try out the level editor in order for your level to show up here.", "No available levels.", JOptionPane.ERROR_MESSAGE);
-				}
-				String [] levels_str = new String[levels.length];
-				for(int i = 0;i<levels.length;i++){
-					levels_str[i]=levels[i].getName();
-				}
-				levelName = (String)JOptionPane.showInputDialog(frmDungeonKeepGame, "Which level would you like to play?", "Choose a Level", JOptionPane.QUESTION_MESSAGE, null, levels_str, null);
-				loadLevel(levelName);
-			}
-		});
-		loadLevel.setHorizontalAlignment(SwingConstants.CENTER);
-		loadLevel.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		mnLevelEditing.add(loadLevel);
 		lblEditor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -329,6 +316,44 @@ public class enhacedWindow {
 				lblEditor.setForeground(Color.BLACK);
 			}
 		});
+		lblEditor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEditor.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		
+		lblloadLevel = new JLabel("Load Level");
+		mnLevelEditing.add(lblloadLevel);
+		lblloadLevel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String levelName;
+				File folder = new File(PATH);
+				File [] levels = folder.listFiles();
+				if(levels.length==0){
+					JOptionPane.showMessageDialog(frmDungeonKeepGame, "There are no levels available yet. Try out the level editor in order for your level to show up here.", "No available levels.", JOptionPane.ERROR_MESSAGE);
+				}
+				String [] levels_str = new String[levels.length];
+				for(int i = 0;i<levels.length;i++){
+					levels_str[i]=levels[i].getName();
+				}
+				levelName = (String)JOptionPane.showInputDialog(frmDungeonKeepGame, "Which level would you like to play?", "Choose a Level", JOptionPane.QUESTION_MESSAGE, null, levels_str, null);
+				try {
+					inputFile = new Scanner(new File(PATH + levelName));
+				} catch (FileNotFoundException e1) {
+					System.out.println("File not found in load.");
+					return;
+				}
+				loadLevel(levelName,"level2");
+				inputFile.close();
+			}
+			public void mouseEntered(MouseEvent e) {
+				lblloadLevel.setForeground(SystemColor.activeCaption);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblloadLevel.setForeground(Color.BLACK);
+			}
+		});
+		lblloadLevel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblloadLevel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		// :::::::::::::::::::::::::::::::::::::::::::::::::
 
 		// ::::::::::::::GAME INTERFACE:::::::::::::::::::::
@@ -378,38 +403,112 @@ public class enhacedWindow {
 		});
 		Exit.setBounds(640, 643, 169, 48);
 		frmDungeonKeepGame.getContentPane().add(Exit);
+		
+		saveGame = new JButton("Save Game");
+		saveGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = (String)JOptionPane.showInputDialog(frmDungeonKeepGame, "Choose a nama for you save.", "Save Level", JOptionPane.QUESTION_MESSAGE, null,null, null);
+				if(new File(SAVE+name+".txt").exists()){
+					JOptionPane.showMessageDialog(frmDungeonKeepGame, "That Level Name is already in use.", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				try {
+					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(SAVE+name+".txt"), "utf-8"));
+				} catch (UnsupportedEncodingException | FileNotFoundException e1) {
+					System.out.println("erro a abrir a file");
+					JOptionPane.showMessageDialog(frmDungeonKeepGame, "That Level Name is not valid", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				try {
+					out.write(game.getBoard().getName());
+					out.newLine();
+					out.write(""+game.getBoard().getBoard().length);
+					out.write(' ');
+					out.write(""+game.getBoard().getBoard()[0].length);
+					out.newLine();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					saveState();
+					out.close();
+				} catch (IOException e1) {
+					System.out.println("could not save the state");
+					return;
+				}
+				saveGame.setEnabled(false);
+			}
+		});
+		saveGame.setEnabled(false);
+		saveGame.setBounds(640, 139, 169, 40);
+		frmDungeonKeepGame.getContentPane().add(saveGame);
+		
+		loadGame = new JButton("Load Game");
+		loadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String levelName;
+				File folder = new File(SAVE);
+				File [] levels = folder.listFiles();
+				if(levels.length==0){
+					JOptionPane.showMessageDialog(frmDungeonKeepGame, "There are no levels available yet. Click the save game button so you can play it later here.", "No available levels.", JOptionPane.ERROR_MESSAGE);
+				}
+				String [] levels_str = new String[levels.length];
+				for(int i = 0;i<levels.length;i++){
+					levels_str[i]=levels[i].getName();
+				}
+				levelName = (String)JOptionPane.showInputDialog(frmDungeonKeepGame, "Which level would you like load?", "Choose a Level", JOptionPane.QUESTION_MESSAGE, null, levels_str, null);
+				try {
+					inputFile = new Scanner(new File(SAVE + levelName));
+				} catch (FileNotFoundException e1) {
+					System.out.println("File not found in load.");
+					return;
+				}
+				loadLevel(levelName,inputFile.nextLine());
+				inputFile.close();
+			}
+		});
+		loadGame.setBounds(640, 198, 169, 40);
+		frmDungeonKeepGame.getContentPane().add(loadGame);
 
 	}
 
-	protected void loadLevel(String levelName) {
+	protected void loadLevel(String levelName,String name) {
 		char[][] newBoard;
-		try {
-			Scanner inputF = new Scanner(new File(PATH + levelName));
-			int rows = inputF.nextInt();
-			int columns = inputF.nextInt();
-			newBoard = new char[rows][columns];
-			String row;
-			inputF.nextLine();
-			for (int i = 0; i < rows; i++) {
-				row = inputF.nextLine();
-				char[] newRow = row.toCharArray();
-				newBoard[i] = newRow;
-				System.out.println(newRow);
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println("Damn it I couldnt find the file.");
-			return;
+		int rows = inputFile.nextInt();
+		int columns = inputFile.nextInt();
+		newBoard = new char[rows][columns];
+		String row;
+		inputFile.nextLine();
+		for (int i = 0; i < rows; i++) {
+			row = inputFile.nextLine();
+			char[] newRow = row.toCharArray();
+			newBoard[i] = newRow;
+			System.out.println(newRow);
 		}
-		b = new Board(newBoard);
-		b.setName("level2");
-		entidades = b.readBoard();
-		game = new Game(b, entidades);
+		setGame(newBoard, name);
 		gameInterface.updatePrint(game);
 		frmDungeonKeepGame.setFocusable(true);
 		numberOgres.setEnabled(false);
 		guardType.setEnabled(false);
 		lblEditor.setEnabled(false);
+		lblloadLevel.setEnabled(false);
 		frmDungeonKeepGame.requestFocusInWindow();
+	}
+	
+	public void saveState() throws IOException{
+		for(int i = 0; i<game.getBoard().getBoard().length;i++){
+			for(int j=0;j<game.getBoard().getBoard()[0].length;j++){
+				out.write(game.getBoard().getBoard()[i][j]);
+			}
+			out.newLine();
+		}		
+	}
+	
+	public void setGame(char[][] newBoard,String name){
+		b=new Board(newBoard);
+		b.setName(name);
+		entidades = b.readBoard();
+		game= new Game(b,entidades);
 	}
 
 	public void buttonEvent(char input) {
@@ -438,6 +537,10 @@ public class enhacedWindow {
 //				reset();
 			}
 		}
+		if(game.getBoard().getName()=="level2"){
+			saveGame.setEnabled(true);
+		}
+		
 	}
 
 	public void loadLvl2() {
@@ -503,5 +606,6 @@ public class enhacedWindow {
 		numberOgres.setEnabled(true);
 		guardType.setEnabled(true);
 		lblEditor.setEnabled(true);
+		lblloadLevel.setEnabled(true);
 	}
 }

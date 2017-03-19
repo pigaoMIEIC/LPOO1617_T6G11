@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,10 +33,17 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+import dkeep.logic.Board;
+
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
+import java.awt.Canvas;
+import javax.swing.JTextPane;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class LevelEditor extends JFrame {
 	
@@ -55,6 +64,7 @@ public class LevelEditor extends JFrame {
 	private JPanel editorPanel, editorPart, intro;
 	private JButton hero,wall,key,ogre,floor,door;
 	private final ButtonGroup tileButton = new ButtonGroup();
+	private Canvas canvas;
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	public LevelEditor(JFrame parent) {
@@ -184,12 +194,15 @@ public class LevelEditor extends JFrame {
 		JButton start = new JButton("Start");
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(new File(PATH+name.getText()+".txt").exists()){
+					JOptionPane.showMessageDialog(btnExit.getParent(), "That Level Name is already in use.", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				try {
 					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(PATH+name.getText()+".txt"), "utf-8"));
 				} catch (UnsupportedEncodingException | FileNotFoundException e1) {
 					System.out.println("erro a abrir a file");
-					JOptionPane.showMessageDialog(parent, "That Level Name is not valid", "Invalid Level Name!",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(btnExit.getParent(), "That Level Name is not valid", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				start();
@@ -210,9 +223,6 @@ public class LevelEditor extends JFrame {
 				int i = 0, j = 0;
 				i = e.getX() / xSize;
 				j = e.getY() / ySize;
-				System.out.println("j=" + j);
-				System.out.println("i=" + i);
-				System.out.println("tile=" + selectedTile);
 				editorPanel.getComponents()[(i+(j*noColumns))].getGraphics().drawImage(getImage(selectedTile), 0, 0, xSize-1,ySize-1, editorPanel);
 				editorPanel.revalidate();
 				editorBoard[j][i] = selectedTile;
@@ -229,7 +239,13 @@ public class LevelEditor extends JFrame {
 		JButton btnExitAndSave = new JButton("Exit and Save");
 		btnExitAndSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Board b = new Board(editorBoard);
 				try {
+					
+					if(b.readBoard()==null){
+						JOptionPane.showMessageDialog(btnExitAndSave.getParent(), "The current board is not a complete one, please place at least one Hero, one key, one Ogre and one door.", "Invalid Level Board!",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					saveLevel();
 				} catch (IOException e1) {
 					System.out.println("não conseguiu guardar o nivel");
@@ -242,21 +258,25 @@ public class LevelEditor extends JFrame {
 		getContentPane().add(btnExitAndSave);
 		
 		JButton btnExitWithoutSaving = new JButton("Exit without Saving");
+		btnExitWithoutSaving.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				exit();
+			}
+		});
 		btnExitWithoutSaving.setBounds(30, 646, 212, 43);
 		getContentPane().add(btnExitWithoutSaving);
-		editorPanel.setVisible(false);
+		
+		JTextPane txtpnanyBlankCells = new JTextPane();
+		txtpnanyBlankCells.setText("-Any blank cells are automatticly filled with the floor tile.\r\n-Press one of the buttons on the right to select a tile.\r\n-A valid game board has one hero, one key and at least\r\n one ogre and one door. \r\n");
+		txtpnanyBlankCells.setEditable(false);
+		txtpnanyBlankCells.setBounds(259, 584, 498, 105);
+		getContentPane().add(txtpnanyBlankCells);
 	}
 
 	//:::::::::::::::::::::::EXIT AND START::::::::::::::::
 	@Override
 	public void dispose() {
 		super.dispose();
-		try {
-			out.close();
-		} catch (IOException e) {
-			System.out.println("file nao fechou");
-			e.printStackTrace();
-		}
 		parent.setVisible(true);
 	}
 	
@@ -265,7 +285,6 @@ public class LevelEditor extends JFrame {
 			try {
 				out.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -288,8 +307,9 @@ public class LevelEditor extends JFrame {
 		}
 		xSize=500/noColumns;
 		ySize=500/noRows;
-		loadEditor();
 		editorBoard = new char[noRows][noColumns];
+		initializeBoard();
+		loadEditor();
 		hero.setEnabled(true);
 		ogre.setEnabled(true);
 		door.setEnabled(true);
@@ -319,8 +339,15 @@ public class LevelEditor extends JFrame {
 				out.write(editorBoard[i][j]);
 			}
 			out.newLine();
+		}		
+	}
+	
+	public void initializeBoard(){
+		for(int i = 0; i<editorBoard.length;i++){
+			for(int j=0;j<editorBoard[0].length;j++){
+				editorBoard[i][j]=' ';
+			}
 		}
-		
 	}
 	
 	protected Image getImage(char c) {
