@@ -45,16 +45,16 @@ public class GameInterface extends JPanel {
 			ogre = ImageIO.read(new File("src/resources/ogre.jpg"));
 			stunnedOgre = ImageIO.read(new File("src/resources/sleepOgre.jpg"));
 			hero = ImageIO.read(new File("src/resources/hero.jpg"));
-			armedHero = ImageIO.read(new File("src/resources/armed.jpg"));
-			keyHero = ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			guard = ImageIO.read(new File("src/resources/guard.png"));
+			armedHero = ImageIO.read(new File("src/resources/heroArmed.jpg"));
+			keyHero = ImageIO.read(new File("src/resources/heroArmedKey.jpg"));
+			guard = ImageIO.read(new File("src/resources/guard.jpg"));
 			sleepGuard = ImageIO.read(new File("src/resources/sleepguard.jpg"));
 			closedDoor = ImageIO.read(new File("src/resources/door.jpg"));
 			openDoor = ImageIO.read(new File("src/resources/opendoor.jpg"));
 			key = ImageIO.read(new File("src/resources/key.jpg"));
 			attack = ImageIO.read(new File("src/resources/attack.jpg"));
 			floor = ImageIO.read(new File("src/resources/floor.jpg"));
-			defaulti = ImageIO.read(new File("src/resources/default.jpg"));
+			defaulti = ImageIO.read(new File("src/resources/dollar-sign.png"));
 			entry = ImageIO.read(new File("src/resources/entry.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
