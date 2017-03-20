@@ -68,6 +68,7 @@ import java.awt.SystemColor;
 import javax.swing.JTabbedPane;
 import javax.swing.JDesktopPane;
 import javax.swing.Box;
+import javax.swing.border.LineBorder;
 
 public class enhacedWindow {
 
@@ -391,6 +392,7 @@ public class enhacedWindow {
 		frmDungeonKeepGame.getContentPane().add(GameState);
 
 		gameInterface = new GameInterface();
+		gameInterface.setBorder(new LineBorder(new Color(0, 0, 0)));
 		gameInterface.setBounds(40, 80, 550, 550);
 		frmDungeonKeepGame.getContentPane().add(gameInterface);
 		// :::::::::::::::::::::::::::::::::::::::::::::::::
