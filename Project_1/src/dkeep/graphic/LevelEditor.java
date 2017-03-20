@@ -64,12 +64,12 @@ public class LevelEditor extends JFrame {
 	private JPanel editorPanel, editorPart, intro;
 	private JButton hero,wall,key,ogre,floor,door;
 	private final ButtonGroup tileButton = new ButtonGroup();
-	private Canvas canvas;
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	public LevelEditor(JFrame parent) {
 		if(!directory.exists())
 			directory.mkdir();
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setTitle("Level Editor");
@@ -271,6 +271,7 @@ public class LevelEditor extends JFrame {
 		txtpnanyBlankCells.setEditable(false);
 		txtpnanyBlankCells.setBounds(259, 584, 498, 105);
 		getContentPane().add(txtpnanyBlankCells);
+		
 	}
 
 	//:::::::::::::::::::::::EXIT AND START::::::::::::::::
