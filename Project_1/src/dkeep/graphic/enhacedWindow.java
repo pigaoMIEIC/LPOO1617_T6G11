@@ -451,6 +451,7 @@ public class enhacedWindow {
 				File [] levels = folder.listFiles();
 				if(levels.length==0){
 					JOptionPane.showMessageDialog(frmDungeonKeepGame, "There are no levels available yet. Click the save game button so you can play it later here.", "No available levels.", JOptionPane.ERROR_MESSAGE);
+					return;
 				}
 				String [] levels_str = new String[levels.length];
 				for(int i = 0;i<levels.length;i++){

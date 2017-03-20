@@ -276,11 +276,6 @@ public class LevelEditor extends JFrame {
 	//:::::::::::::::::::::::EXIT AND START::::::::::::::::
 	@Override
 	public void dispose() {
-		super.dispose();
-		parent.setVisible(true);
-	}
-	
-	protected void exit() {
 		if (out != null) {
 			try {
 				out.close();
@@ -288,7 +283,11 @@ public class LevelEditor extends JFrame {
 				e.printStackTrace();
 			}
 		}
-		this.setVisible(false);
+		super.dispose();
+		parent.setVisible(true);
+	}
+	
+	protected void exit() {
 		dispose();
 	}
 
