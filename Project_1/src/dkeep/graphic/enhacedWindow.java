@@ -485,8 +485,9 @@ public class enhacedWindow implements Serializable,WindowInfo{
             c.printStackTrace();
             return;
          }
-		game.setEntidades(entidades);
-		game.setBoard(b);
+//		game.setEntidades(entidades);
+//		game.setBoard(b);
+		this.game = new Game(b,entidades);
 		gameInterface.updatePrint(game);
         frmDungeonKeepGame.requestFocusInWindow();
         frmDungeonKeepGame.repaint();
@@ -531,7 +532,7 @@ public class enhacedWindow implements Serializable,WindowInfo{
 		game.attack();
 		gameInterface.updatePrint(game);
 		if (game.end()) {
-			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level1") {
+			if (game.getEndStatus() == 0 && game.getBoard().getName().equals("level1")) {
 				reset();
 				loadLvl2();
 			}
@@ -543,7 +544,7 @@ public class enhacedWindow implements Serializable,WindowInfo{
 //				reset();
 //				StartGame.setEnabled(true);
 			}
-			if (game.getEndStatus() == 0 && game.getBoard().getName() == "level2") {
+			if (game.getEndStatus() == 0 && game.getBoard().getName().equals("level2")) {
 				GameState.setText("Parabens Ganhou! :)");
 				frmDungeonKeepGame.setFocusable(false);
 				StartGame.setEnabled(true);

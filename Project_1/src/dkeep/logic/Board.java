@@ -108,11 +108,11 @@ public class Board implements Serializable{
 	}
 
 	public void openDoors() {
-		if (name == "level1") {
+		if (name.equals("level1")) {
 			board[5][0] = 's';
 			board[6][0] = 's';
 		}
-		if (name == "level2") {
+		if (name.equals("level2")) {
 			for (int y = 0; y < board.length; y++) {
 				for (int x = 0; x < board[0].length; x++) {
 					if(board[y][x]=='i'){
@@ -121,11 +121,11 @@ public class Board implements Serializable{
 				}
 			}
 		}
-		if(name== "testlevel"){
+		if(name.equals("testlevel")){
 			board[2][0] = 's';
 			board[3][0] = 's';
 		}
-		if(name== "testlevel2"){
+		if(name.equals("testlevel2")){
 			board[2][0] = 's';
 		}
 	}

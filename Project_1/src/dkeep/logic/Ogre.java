@@ -46,7 +46,7 @@ public class Ogre extends Entidade {
 	
 	public boolean print(String level, char current, Board b, String output[]) {
 		isStunned();
-		if (level == "level2") {
+		if (level.equals("level2")) {
 			switch (current) {
 			case 'k':
 				output[0]+=('$');

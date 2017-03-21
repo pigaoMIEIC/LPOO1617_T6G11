@@ -19,7 +19,7 @@ public class Hero extends Entidade {
 	}
 
 	public boolean print(String level, char current, Board b, String output[]) {
-		if (level == "level1" && current != ' ') {
+		if (level.equals("level1") && current != ' ') {
 			switch (current) {
 			case 'k':
 				b.openDoors();
@@ -29,7 +29,7 @@ public class Hero extends Entidade {
 				output[0]+=(tag);
 				return true;
 			}
-		} else if (level == "level2" && current != ' ') {
+		} else if (level.equals("level2") && current != ' ') {
 			switch (current) {
 			case 'k':
 				this.setTag('K');
@@ -62,11 +62,11 @@ public class Hero extends Entidade {
 				break;
 			}
 			current = b.refresh(x, y + 1, input, tag, current);
-			if(current=='k'&& b.name=="testlevel"){
+			if(current=='k'&& b.name.equals("testlevel")){
 				state='K';
 				b.openDoors();
 			}
-			if(current=='k'&& b.name=="testlevel2"){
+			if(current=='k'&& b.name.equals("testlevel2")){
 				state='K';
 				tag='K';
 			}
