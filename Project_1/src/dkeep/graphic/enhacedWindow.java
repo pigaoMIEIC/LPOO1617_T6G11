@@ -39,10 +39,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.awt.Window.Type;
 import javax.swing.JInternalFrame;
@@ -70,7 +74,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.Box;
 import javax.swing.border.LineBorder;
 
-public class enhacedWindow {
+public class enhacedWindow implements Serializable,WindowInfo{
 
 	private JFrame frmDungeonKeepGame;
 	private static LevelEditor editor;
@@ -84,16 +88,8 @@ public class enhacedWindow {
 	static Game game;
 	static Guarda guarda;
 	
-	
-	
-	static char input;
-	static int noOgres=-1;
+	static Integer noOgres=-1;
 	static String guardType_str=null;
-	static String[] personalities = { "Rookie", "Suspicious", "Drunken" };
-	static String[] numbers = {"1","2","3","4","5"};
-	private static String PATH = "userLevels/";
-	private static String SAVE = "savedGames/";
-	private static File directory=new File(SAVE);
 
 	static char level1[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
 			{ 'x', /* 'h' */' ', ' ', ' ', 'i', ' ', 'x', ' ', /* 'g' */' ', 'x' },
@@ -115,11 +111,10 @@ public class enhacedWindow {
 	
 	//:::::::::::::::::JFRAME OBJECTS::::::::::::::::::::::
 	private JLabel GameState, numberOgres, guardType;
-	private JButton StartGame, saveGame;
+	private JButton StartGame;
 	private GameInterface gameInterface;
 	private JMenuBar menuBar;
 	private JLabel lblEditor,lblloadLevel;
-	private JButton loadGame;
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	/**
@@ -151,6 +146,8 @@ public class enhacedWindow {
 	private void initialize() {
 		if(!directory.exists())
 			directory.mkdir();
+		if(!states.exists())
+			states.mkdir();
 		frmDungeonKeepGame = new JFrame();
 		frmDungeonKeepGame.addKeyListener(new KeyAdapter() {
 			@Override
@@ -355,6 +352,49 @@ public class enhacedWindow {
 		});
 		lblloadLevel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblloadLevel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		menuBar.add(horizontalStrut_2);
+		
+		JMenu mnLoadSave = new JMenu("Game Saves");
+		mnLoadSave.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		menuBar.add(mnLoadSave);
+		
+		JLabel lblLoadSave = new JLabel("Load Save");
+		lblLoadSave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				lblLoadSave.setForeground(SystemColor.activeCaption);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblLoadSave.setForeground(Color.BLACK);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				loadState();
+			}
+		});
+		lblLoadSave.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		mnLoadSave.add(lblLoadSave);
+		
+		JLabel lblSaveState = new JLabel("Save State");
+		lblSaveState.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				lblSaveState.setForeground(SystemColor.activeCaption);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblSaveState.setForeground(Color.BLACK);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				saveState();
+			}
+		});
+		lblSaveState.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		mnLoadSave.add(lblSaveState);
 		// :::::::::::::::::::::::::::::::::::::::::::::::::
 
 		// ::::::::::::::GAME INTERFACE:::::::::::::::::::::
@@ -405,75 +445,51 @@ public class enhacedWindow {
 		});
 		Exit.setBounds(640, 643, 169, 48);
 		frmDungeonKeepGame.getContentPane().add(Exit);
-		
-		saveGame = new JButton("Save Game");
-		saveGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String name = (String)JOptionPane.showInputDialog(frmDungeonKeepGame, "Choose a nama for you save.", "Save Level", JOptionPane.QUESTION_MESSAGE, null,null, null);
-				if(new File(SAVE+name+".txt").exists()){
-					JOptionPane.showMessageDialog(frmDungeonKeepGame, "That Level Name is already in use.", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				try {
-					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(SAVE+name+".txt"), "utf-8"));
-				} catch (UnsupportedEncodingException | FileNotFoundException e1) {
-					System.out.println("erro a abrir a file");
-					JOptionPane.showMessageDialog(frmDungeonKeepGame, "That Level Name is not valid", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				try {
-					out.write(game.getBoard().getName());
-					out.newLine();
-					out.write(""+game.getBoard().getBoard().length);
-					out.write(' ');
-					out.write(""+game.getBoard().getBoard()[0].length);
-					out.newLine();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				try {
-					saveState();
-					out.close();
-				} catch (IOException e1) {
-					System.out.println("could not save the state");
-					return;
-				}
-				saveGame.setEnabled(false);
-			}
-		});
-		saveGame.setEnabled(false);
-		saveGame.setBounds(640, 139, 169, 40);
-		frmDungeonKeepGame.getContentPane().add(saveGame);
-		
-		loadGame = new JButton("Load Game");
-		loadGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String levelName;
-				File folder = new File(SAVE);
-				File [] levels = folder.listFiles();
-				if(levels.length==0){
-					JOptionPane.showMessageDialog(frmDungeonKeepGame, "There are no levels available yet. Click the save game button so you can play it later here.", "No available levels.", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				String [] levels_str = new String[levels.length];
-				for(int i = 0;i<levels.length;i++){
-					levels_str[i]=levels[i].getName();
-				}
-				levelName = (String)JOptionPane.showInputDialog(frmDungeonKeepGame, "Which level would you like load?", "Choose a Level", JOptionPane.QUESTION_MESSAGE, null, levels_str, null);
-				try {
-					inputFile = new Scanner(new File(SAVE + levelName));
-				} catch (FileNotFoundException e1) {
-					System.out.println("File not found in load.");
-					return;
-				}
-				loadLevel(levelName,inputFile.nextLine());
-				inputFile.close();
-			}
-		});
-		loadGame.setBounds(640, 198, 169, 40);
-		frmDungeonKeepGame.getContentPane().add(loadGame);
 
 	}
+
+	protected void saveState() {
+		FileOutputStream fileOut;
+        try {
+            fileOut = new FileOutputStream(SAVE+"saveGame.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(game);
+            out.writeObject(noOgres);
+            out.close();
+            fileOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception w){
+            w.printStackTrace();
+        }
+        game=null;
+        frmDungeonKeepGame.requestFocusInWindow();
+
+	}
+	
+	protected void loadState() {
+		try {
+            FileInputStream fileIn = new FileInputStream(SAVE+"saveGame.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            game = (Game) in.readObject();
+            noOgres = (int)in.readObject();
+            in.close();
+            fileIn.close();
+         }catch(IOException i) {
+            i.printStackTrace();
+            return;
+         }catch(ClassNotFoundException c) {
+            System.out.println("Employee class not found");
+            c.printStackTrace();
+            return;
+         }
+		b = game.getBoard();
+		gameInterface.updatePrint(game);
+        frmDungeonKeepGame.requestFocusInWindow();
+        frmDungeonKeepGame.repaint();
+	}
+	
+	
 
 	protected void loadLevel(String levelName,String name) {
 		char[][] newBoard;
@@ -498,15 +514,7 @@ public class enhacedWindow {
 		frmDungeonKeepGame.requestFocusInWindow();
 	}
 	
-	public void saveState() throws IOException{
-		for(int i = 0; i<game.getBoard().getBoard().length;i++){
-			for(int j=0;j<game.getBoard().getBoard()[0].length;j++){
-				out.write(game.getBoard().getBoard()[i][j]);
-			}
-			out.newLine();
-		}		
-	}
-	
+
 	public void setGame(char[][] newBoard,String name){
 		b=new Board(newBoard);
 		b.setName(name);
@@ -539,9 +547,6 @@ public class enhacedWindow {
 				StartGame.setText("Continue");
 //				reset();
 			}
-		}
-		if(game.getBoard().getName()=="level2"){
-			saveGame.setEnabled(true);
 		}
 		
 	}
