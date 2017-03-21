@@ -1,8 +1,9 @@
 package dkeep.logic;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class Board {
+public class Board implements Serializable{
 	char board[/* y */][/* x */];
 	
 

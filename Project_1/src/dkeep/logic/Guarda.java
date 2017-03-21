@@ -9,6 +9,7 @@ public abstract class Guarda extends Entidade {
 		compGuarda = new ComportamentoGuarda(mov);
 	}
 
+	@Override
 	public boolean print(String level, char current, Board b,String output[]) {
 		if (level == "level1")
 			output[0]+=(tag);

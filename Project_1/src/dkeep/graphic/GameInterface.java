@@ -6,10 +6,12 @@ import java.awt.LayoutManager;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import dkeep.logic.Entidade;
 import dkeep.logic.Game;
 
 public class GameInterface extends JPanel {
@@ -85,7 +87,9 @@ public class GameInterface extends JPanel {
 		try{
 		ySize=(int) (this.getBounds().getHeight()/g.getBoard().getBoard().length);
 		xSize=(int) (this.getBounds().getHeight()/g.getBoard().getBoard()[0].length);
-		this.print=g.printBoard();}
+		char [][] temp = g.getBoard().getBoard();
+		Vector<Entidade> entidades=g.getEntidades();
+ 		this.print=g.printBoard();}
 		catch (Exception e){
 			this.print=null;
 		}

@@ -107,4 +107,8 @@ public class Game implements java.io.Serializable{
 		Game.map = map;
 	}
 
+	public void setBoard(Board b) {
+		Game.board=b;
+	}
+
 }

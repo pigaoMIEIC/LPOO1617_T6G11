@@ -1,6 +1,8 @@
 package dkeep.logic;
 
-public abstract class Entidade {
+import java.io.Serializable;
+
+public abstract class Entidade implements Serializable{
 	int x,y;
 	char tag=' ';
 	char current=' ';

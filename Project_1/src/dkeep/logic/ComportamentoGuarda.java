@@ -1,6 +1,8 @@
 package dkeep.logic;
 
-public class ComportamentoGuarda {
+import java.io.Serializable;
+
+public class ComportamentoGuarda implements Serializable{
 	char mov[];
 	int i = 0;
 

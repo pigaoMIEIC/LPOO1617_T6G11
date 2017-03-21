@@ -85,7 +85,7 @@ public class enhacedWindow implements Serializable,WindowInfo{
 	static Vector<Entidade> entidades = new Vector<Entidade>();
 	static Hero hero;
 	static Ogre ogre;
-	static Game game;
+	Game game;
 	static Guarda guarda;
 	
 	static Integer noOgres=-1;
@@ -453,7 +453,8 @@ public class enhacedWindow implements Serializable,WindowInfo{
         try {
             fileOut = new FileOutputStream(SAVE+"saveGame.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(game);
+            out.writeObject(b);
+            out.writeObject(entidades);
             out.writeObject(noOgres);
             out.close();
             fileOut.close();
@@ -462,8 +463,8 @@ public class enhacedWindow implements Serializable,WindowInfo{
         } catch (Exception w){
             w.printStackTrace();
         }
-        game=null;
         frmDungeonKeepGame.requestFocusInWindow();
+        System.out.println("game saved");
 
 	}
 	
@@ -471,7 +472,8 @@ public class enhacedWindow implements Serializable,WindowInfo{
 		try {
             FileInputStream fileIn = new FileInputStream(SAVE+"saveGame.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            game = (Game) in.readObject();
+            b = (Board)in.readObject();
+            entidades = (Vector<Entidade>)in.readObject();
             noOgres = (int)in.readObject();
             in.close();
             fileIn.close();
@@ -483,7 +485,8 @@ public class enhacedWindow implements Serializable,WindowInfo{
             c.printStackTrace();
             return;
          }
-		b = game.getBoard();
+		game.setEntidades(entidades);
+		game.setBoard(b);
 		gameInterface.updatePrint(game);
         frmDungeonKeepGame.requestFocusInWindow();
         frmDungeonKeepGame.repaint();
