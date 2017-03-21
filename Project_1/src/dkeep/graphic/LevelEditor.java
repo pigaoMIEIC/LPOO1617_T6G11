@@ -44,6 +44,7 @@ import java.awt.Canvas;
 import javax.swing.JTextPane;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+import java.awt.event.MouseMotionAdapter;
 
 public class LevelEditor extends JFrame {
 	
@@ -217,6 +218,17 @@ public class LevelEditor extends JFrame {
 		//:::::::::::::::::EDITOR PANEL::::::::::::::::::::
 
 		editorPanel = new JPanel();
+		editorPanel.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent arg0) {
+				int i = 0, j = 0;
+				i = arg0.getX() / xSize;
+				j = arg0.getY() / ySize;
+				editorPanel.getComponents()[(i+(j*noColumns))].getGraphics().drawImage(getImage(selectedTile), 0, 0, xSize-1,ySize-1, editorPanel);
+				editorPanel.revalidate();
+				editorBoard[j][i] = selectedTile;
+			}
+		});
 		editorPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
