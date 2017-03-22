@@ -2,7 +2,9 @@ package dkeep.logic;
 
 import java.util.Random;
 import java.util.Scanner;
-
+/**  
+* Ogre.java - A subclass of Entidade representing the ogre character.
+*/
 public class Ogre extends Entidade {
 
 	private static Scanner s = new Scanner(System.in);
@@ -10,13 +12,21 @@ public class Ogre extends Entidade {
 	int lastAttack[] = new int [2];
 	Random rand = new Random();
 	int stunned = 0;
-
+	
+	/**  
+	* Constructor of the class Ogre.
+	* @param x X position of the Entidade.
+	* @param y Y position of the Entidade.
+	* @param tag The simple graphic representation of the Entidade.
+	*/ 
 	public Ogre(int x, int y, char tag) {
 		super(x, y, tag);
 		lastAttack[0]=x;
 		lastAttack[1]=y;
 	}
-
+	/**  
+	* stuns the Ogre
+	*/ 
 	public void stun() {
 			stunned = 2;
 	}

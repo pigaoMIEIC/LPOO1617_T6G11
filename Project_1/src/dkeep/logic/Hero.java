@@ -158,10 +158,10 @@ public class Hero extends Entidade {
 	}
 	
 	public boolean moveCondition(int x,int y,Board b){
-		if (b.get(x, y + 1) == 'x') {
+		if (b.get(x, y) == 'x') {
 			return false;
 		}
-		if (b.get(x, y + 1) == 'i') {
+		if (b.get(x, y) == 'i') {
 			if (state == 'K')
 				b.openDoors();
 			return false;
