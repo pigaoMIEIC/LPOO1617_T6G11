@@ -28,13 +28,6 @@ public abstract class Guarda extends Entidade {
 		return false;
 	}
 
-	public boolean checkSurround(Board b, char enemy) {
-		if (b.get(x + 1, y) == enemy || b.get(x - 1, y) == enemy || b.get(x, y + 1) == enemy
-				|| b.get(x, y - 1) == enemy) {
-			return true;
-		} else
-			return false;
-
-	}
+	
 
 }
