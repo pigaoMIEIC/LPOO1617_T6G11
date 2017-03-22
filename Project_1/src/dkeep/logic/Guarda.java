@@ -12,17 +12,17 @@ public abstract class Guarda extends Entidade {
 	@Override
 	public boolean print(String level, char current, Board b,String output[]) {
 		if (level.equals("level1"))
-			output[0]+=(tag);
+			output[0]+=(getTag());
 		if (level.equals("level2")) {
 			switch (current) {
 			case 'k':
 				output[0]+=('$');
 				break;
 			case 'A':
-				output[0]+=(tag);
+				output[0]+=(getTag());
 				break;
 			default:
-				output[0]+=(tag);
+				output[0]+=(getTag());
 			}
 		}
 		return false;

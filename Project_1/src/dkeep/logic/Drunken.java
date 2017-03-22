@@ -16,11 +16,11 @@ public class Drunken extends Guarda {
 	public void move(char direction, Board b) {
 		int i = rd.nextInt(10);
 		if (i < 3) {
-			tag = 'g';
+			setTag('g');
 			return;
 		} else {
-			if (tag == 'g') {
-				tag = 'G';
+			if (getTag() == 'g') {
+				setTag('G');
 				i = rd.nextInt(10);
 				if (i < 3) {
 					dir = !dir;

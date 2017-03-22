@@ -60,7 +60,7 @@ public class Game implements java.io.Serializable{
 //			finalstatus = win;
 //			return true;
 //		}
-		if (getEntidades().lastElement().current=='s') {
+		if (getEntidades().lastElement().getCurrent()=='s') {
 			System.out.print("Parabéns passou o nível!!\n");
 			finalstatus = win;
 			return true;

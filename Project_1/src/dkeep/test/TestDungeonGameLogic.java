@@ -11,8 +11,11 @@ import dkeep.logic.*;
 public class TestDungeonGameLogic {
 	char a = '1';
 
-	char[][] map = { { 'x', 'x', 'x', 'x', 'x' }, { 'x', /* H */' ', ' ', /* G */' ', 'x' },
-			{ 'i', ' ', ' ', ' ', 'x' }, { 'i', 'k', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x' } };
+	char[][] map = { { 'x', 'x', 'x', 'x', 'x' }, 
+			{ 'x', /* H */' ', ' ', /* G */' ', 'x' },
+			{ 'i', ' ', ' ', ' ', 'x' }, 
+			{ 'i', 'k', ' ', ' ', 'x' }, 
+			{ 'x', 'x', 'x', 'x', 'x' } };
 
 	char[][] map1 = { { 'x', 'x', 'x', 'x', 'x' }, { 'x', /* H */' ', ' ', /* O */' ', 'x' },
 			{ 'i', ' ', ' ', ' ', 'x' }, { 'x', 'k', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x' } };
@@ -74,7 +77,7 @@ public class TestDungeonGameLogic {
 		hero.move('d', gameMap);// move hero to the right
 		assertTrue(game.end());
 		assertEquals(Game.DEFEAT, game.getEndStatus());
-		gameMap.print(entidades, flag);
+		//gameMap.print(entidades, flag);
 	}
 
 	@Test

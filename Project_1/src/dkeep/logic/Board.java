@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.Vector;
 
 public class Board implements Serializable{
-	char board[/* y */][/* x */];
+	private char board[/* y */][/* x */];
 	
 
-	String name;
-	String output[]= new String[1];
+	private String name;
+	private String output[]= new String[1];
 
 	public Board(char[][] layout) {
 		board = copy(layout);
@@ -51,9 +51,9 @@ public class Board implements Serializable{
 		for (Entidade temp : map) {
 			if (temp.x == x && temp.y == y) {
 				if (endFlag[0]) {
-					temp.print(this.name, temp.current, this, output);
+					temp.print(this.name, temp.getCurrent(), this, output);
 				} else {
-					endFlag[0] = temp.print(this.name, temp.current, this, output);
+					endFlag[0] = temp.print(this.name, temp.getCurrent(), this, output);
 				}
 				flag = true;
 			}

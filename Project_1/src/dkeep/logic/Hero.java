@@ -23,10 +23,10 @@ public class Hero extends Entidade {
 			switch (current) {
 			case 'k':
 				b.openDoors();
-				output[0]+=(tag);
+				output[0]+=(this.getTag());
 				break;
 			case 's':
-				output[0]+=(tag);
+				output[0]+=(this.getTag());
 				return true;
 			}
 		} else if (level.equals("level2") && current != ' ') {
@@ -34,14 +34,14 @@ public class Hero extends Entidade {
 			case 'k':
 				this.setTag('K');
 				this.setState('K');
-				output[0]+=(tag);
+				output[0]+=(this.getTag());
 				break;
 			case 's':
-				output[0]+=(tag);
+				output[0]+=(this.getTag());
 				return true;
 			}
-		}else if(b.get(x, y)==tag|b.get(x, y)==' '){
-			output[0]+=(tag);
+		}else if(b.get(x, y)==this.getTag()|b.get(x, y)==' '){
+			output[0]+=(this.getTag());
 		}
 		if(b.get(x, y)=='*'){
 			output[0]+='*';
@@ -61,14 +61,14 @@ public class Hero extends Entidade {
 					b.openDoors();
 				break;
 			}
-			current = b.refresh(x, y + 1, input, tag, current);
-			if(current=='k'&& b.name.equals("testlevel")){
+			setCurrent((char) b.refresh(x, y + 1, input, getTag(), getCurrent()));
+			if(getCurrent()=='k'&& b.getName().equals("testlevel")){
 				state='K';
 				b.openDoors();
 			}
-			if(current=='k'&& b.name.equals("testlevel2")){
+			if(getCurrent()=='k'&& b.getName().equals("testlevel2")){
 				state='K';
-				tag='K';
+				setTag('K');
 			}
 			y++;
 			break;
@@ -81,7 +81,7 @@ public class Hero extends Entidade {
 					b.openDoors();
 				break;
 			}
-			current = b.refresh(x, y - 1, input, tag, current);
+			setCurrent((char) b.refresh(x, y - 1, input, getTag(), getCurrent()));
 			y--;
 			break;
 		case 'd':
@@ -93,7 +93,7 @@ public class Hero extends Entidade {
 					b.openDoors();
 				break;
 			}
-			current = b.refresh(x + 1, y, input, tag, current);
+			setCurrent((char) b.refresh(x + 1, y, input, getTag(), getCurrent()));
 			this.x++;
 			break;
 		case 'a':
@@ -105,7 +105,7 @@ public class Hero extends Entidade {
 					b.openDoors();
 				break;
 			}
-			current = b.refresh(x - 1, y, input, tag, current);
+			setCurrent((char) b.refresh(x - 1, y, input, getTag(), getCurrent()));
 			this.x--;
 			break;
 		default:
@@ -115,7 +115,7 @@ public class Hero extends Entidade {
 
 	public boolean checkSurround(char enemy, Vector<Entidade> map) {
 		for (Entidade temp : map) {
-			if (temp.tag == enemy) {
+			if (temp.getTag() == enemy) {
 				if ((temp.x == x + 1 && temp.y == y) | (temp.x == x - 1 && temp.y == y)
 						| (temp.x == x && temp.y == y + 1) | (temp.x == x && temp.y == y - 1)
 						| (temp.x == x && temp.y == y))
@@ -140,7 +140,7 @@ public class Hero extends Entidade {
 		}
 		for(Entidade temp: map){
 			if(temp instanceof Ogre){
-				if(((Ogre) temp).checkSurround(b, tag)){
+				if(((Ogre) temp).checkSurround(b, getTag())){
 					((Ogre)temp).stun();
 				}
 			}

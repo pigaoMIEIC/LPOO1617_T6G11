@@ -6,9 +6,9 @@ import java.io.Serializable;
 * Entidade.java - A class to store moving parts of the game.
 */ 
 public abstract class Entidade implements Serializable{
-	int x,y;
-	char tag=' ';
-	char current=' ';
+	protected int x,y;
+	private char tag=' ';
+	private char current=' ';
 	
 	
 	/**  
