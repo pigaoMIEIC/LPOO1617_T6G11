@@ -137,7 +137,7 @@ public class Game implements java.io.Serializable{
 
 	/**  
 	* Getter for the field map.
-	* @return Vector<Entidade> data type.
+	* @return Vector of Entidade's data type.
 	* @see Entidade
 	*/
 	public Vector<Entidade> getEntidades() {
@@ -146,7 +146,7 @@ public class Game implements java.io.Serializable{
 
 	/**  
 	* Setter for the field map.
-	* @param map Vector<Entidade> data type.
+	* @param map Vector of Entidade's data type.
 	* @see Entidade
 	*/
 	public static void setEntidades(Vector<Entidade> map) {
