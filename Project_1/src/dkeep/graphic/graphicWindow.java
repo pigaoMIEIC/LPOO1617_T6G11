@@ -38,7 +38,7 @@ import java.awt.event.FocusEvent;
 
 public class graphicWindow implements MapsInterface {
 
-	private JFrame frmDungeonKeepGame;
+	/*private JFrame frmDungeonKeepGame;
 
 	char currentLevel[][];
 	
@@ -64,7 +64,7 @@ public class graphicWindow implements MapsInterface {
 
 	/**
 	 * Launch the application.
-	 */
+	 *//*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -80,14 +80,14 @@ public class graphicWindow implements MapsInterface {
 
 	/**
 	 * Create the application.
-	 */
+	 *//*
 	public graphicWindow() {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
-	 */
+	 *//*
 	private void initialize() {
 		frmDungeonKeepGame = new JFrame();
 		frmDungeonKeepGame.setIconImage(
@@ -303,6 +303,6 @@ public class graphicWindow implements MapsInterface {
 		DOWN.setEnabled(false);
 		LEFT.setEnabled(false);
 		RIGHT.setEnabled(false);
-	}
+	}*/
 
 }
