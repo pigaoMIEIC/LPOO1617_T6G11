@@ -27,6 +27,8 @@ public class TestDungeonGameLogic {
 			{ 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x' }, { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' } };
 
 	char[][] map2 = { { 'x', 'x', 'x' }, { 'i', ' ', 'x' }, { 'x', 'x', 'x' } };
+	
+	char[][] errorMap = { { 'x', 'x', 'x' }, { 'i', 'h', 'x' }, { 'h', 'x', 'x' } };
 
 	char[] mov = { 's', 'w' };
 
@@ -60,6 +62,7 @@ public class TestDungeonGameLogic {
 		assertEquals(new CellPosition(0, 3), game.getHeroPosition());// test 1.6
 		assertTrue(game.end());// test 1.6
 		assertEquals(Game.win, game.getEndStatus());// test 1.6
+		gameMap.print(entidades, flag);
 
 	}
 
@@ -68,6 +71,7 @@ public class TestDungeonGameLogic {
 		entidades.removeAllElements();
 		flag[0] = false;
 		Board gameMap = new Board(map);
+		gameMap.setName("level1");
 		Hero hero = new Hero(1, 1, 'H');
 		Guarda guarda = new Rookie(3, 1, 'G', mov);
 		entidades.add(guarda);
@@ -77,7 +81,7 @@ public class TestDungeonGameLogic {
 		hero.move('d', gameMap);// move hero to the right
 		assertTrue(game.end());
 		assertEquals(Game.DEFEAT, game.getEndStatus());
-		//gameMap.print(entidades, flag);
+		gameMap.print(entidades, flag);
 	}
 
 	@Test
@@ -91,9 +95,10 @@ public class TestDungeonGameLogic {
 		entidades.addElement(hero);
 		Game game = new Game(gameMap, entidades);
 		assertFalse(game.end());
-		hero.move('d', gameMap);// move hero to the right
+		hero.move('d',gameMap);// move hero to the right
 		assertTrue(game.end());
 		assertEquals(Game.DEFEAT, game.getEndStatus());
+		
 	}
 
 	@Test
@@ -108,9 +113,10 @@ public class TestDungeonGameLogic {
 		entidades.addElement(hero);
 		Game game = new Game(gameMap, entidades);
 		assertFalse(game.end());
-		hero.move('s', gameMap);
-		hero.move('s', gameMap);// move hero to the right
+		game.Move('s');
+		game.Move('s');// move hero to the right
 		assertEquals(hero.getTag(), 'K');
+		gameMap.print(entidades, flag);
 	}
 
 	@Test
@@ -125,8 +131,8 @@ public class TestDungeonGameLogic {
 		entidades.addElement(hero);
 		Game game = new Game(gameMap, entidades);
 		assertFalse(game.end());
-		hero.move('s', gameMap);// move hero down
-		hero.move('a', gameMap);// move hero to the left
+		game.Move('s');// move hero down
+		game.Move('a');// move hero to the left
 		assertEquals(gameMap.get(0, 2), 'i');
 	}
 
@@ -142,25 +148,25 @@ public class TestDungeonGameLogic {
 		entidades.addElement(hero);
 		Game game = new Game(gameMap, entidades);
 		assertFalse(game.end());
-		hero.move('s', gameMap);
-		hero.move('s', gameMap);
+		game.Move('s');
+		game.Move('s');
 		assertEquals(hero.getTag(), 'K');
-		hero.move('w', gameMap);
-		hero.move('a', gameMap);
+		game.Move('w');
+		game.Move('a');
 		assertEquals(gameMap.get(0, 2), 's');
-		hero.move('a', gameMap);
+		game.Move('a');
 		assertTrue(game.end());
 		assertEquals(Game.win, game.getEndStatus());
 	}
 
-	@Test(timeout = 1000)
+	@Test //(timeout = 1000)
 	public void testSomeRandomBehaviour() {
 		flag[0] = false;
 		entidades.removeAllElements();
 		boolean outcome1 = false, outcome2 = false, outcome3 = false, outcome4 = false;
 		int x1, x2, y1, y2;
 		Board gameMap = new Board(level2);
-		gameMap.setName("testlevel2");
+		gameMap.setName("level2");
 		Hero hero = new Hero(1, 1, 'H');
 		Ogre ogre = new Ogre(1, 3, 'O');
 		entidades.add(ogre);
@@ -206,7 +212,7 @@ public class TestDungeonGameLogic {
 		while (!outcome1 || !outcome2 || !outcome3 || !outcome4) {
 			x1 = ogre.getX();
 			y1 = ogre.getY();
-			ogre.attack(gameMap);
+			game.attack();
 			x2 = ogre.getLastAttack()[0];
 			y2 = ogre.getLastAttack()[1];
 			if (x2 == x1 + 1 && y1 == y2) // attacked to the right
@@ -235,7 +241,7 @@ public class TestDungeonGameLogic {
 		flag[0] = false;
 		char[] move = { 'a', 's', 'd', 'w' };
 		Board gameMap = new Board(level2);
-		gameMap.setName("testlevel2");
+		gameMap.setName("level2");
 		Guarda guarda = new Rookie(2, 1, 'G', move);
 		Guarda guarda1 = new Suspicious(4, 1, 'G', move);
 		Guarda guarda2 = new Drunken(2, 4, 'G', move);
@@ -266,6 +272,7 @@ public class TestDungeonGameLogic {
 		assertTrue(outcome1);
 		assertTrue(outcome2);
 		assertTrue(outcome3);
+		gameMap.print(entidades, flag);
 	}
 
 	@Test
@@ -295,6 +302,21 @@ public class TestDungeonGameLogic {
 			}
 			i++;
 		}
+		
+		
 	}
-
+	@Test
+	public void readBoard() {
+		boolean fail = false;
+		entidades.removeAllElements();
+		flag[0] = false;
+		char[] move = { 'a', 's', 'd', 'w' };
+		Board gameMap = new Board(errorMap);
+		gameMap.setName("errorMap");
+		Guarda guarda = new Rookie(1, 1, 'G', move);
+		entidades.addElement(guarda);
+		
+		assertNull(gameMap.readBoard());
+		
+	}
 }

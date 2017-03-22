@@ -40,7 +40,8 @@ public class Hero extends Entidade {
 				output[0]+=(this.getTag());
 				return true;
 			}
-		}else if(b.get(x, y)==this.getTag()|b.get(x, y)==' '){
+		}else 
+				if(b.get(x, y)==this.getTag()|b.get(x, y)==' '){
 			output[0]+=(this.getTag());
 		}
 		if(b.get(x, y)=='*'){
@@ -62,12 +63,12 @@ public class Hero extends Entidade {
 				break;
 			}
 			setCurrent((char) b.refresh(x, y + 1, input, getTag(), getCurrent()));
-			if(getCurrent()=='k'&& b.getName().equals("testlevel")){
-				state='K';
+			if (getCurrent() == 'k' && b.getName().equals("testlevel")) {
+				state = 'K';
 				b.openDoors();
 			}
-			if(getCurrent()=='k'&& b.getName().equals("testlevel2")){
-				state='K';
+			if (getCurrent() == 'k' && b.getName().equals("testlevel2")) {
+				state = 'K';
 				setTag('K');
 			}
 			y++;
@@ -125,23 +126,23 @@ public class Hero extends Entidade {
 		}
 		return false;
 	}
-	
+
 	public boolean checkSurround(Board b, char enemy) {
-		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy
-				| b.get(x, y - 1) == enemy| b.get(x, y)==enemy) {
+		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy | b.get(x, y - 1) == enemy
+				| b.get(x, y) == enemy) {
 			return true;
 		} else
 			return false;
 	}
-	
-	public boolean stun(Board b,Vector<Entidade> map){
+
+	public boolean stun(Board b, Vector<Entidade> map) {
 		if (!((Hero) map.lastElement()).checkSurround('O', map)) {
 			return false;
 		}
-		for(Entidade temp: map){
-			if(temp instanceof Ogre){
-				if(((Ogre) temp).checkSurround(b, getTag())){
-					((Ogre)temp).stun();
+		for (Entidade temp : map) {
+			if (temp instanceof Ogre) {
+				if (((Ogre) temp).checkSurround(b, getTag())) {
+					((Ogre) temp).stun();
 				}
 			}
 		}
