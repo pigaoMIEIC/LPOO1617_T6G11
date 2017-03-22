@@ -9,7 +9,7 @@ import dkeep.logic.Entidade;
 import dkeep.logic.Game;
 import dkeep.logic.Guarda;
 import dkeep.logic.Hero;
-import dkeep.logic.MapsInterface;
+import dkeep.graphic.MapsInterface;
 import dkeep.logic.Ogre;
 import dkeep.logic.Rookie;
 import dkeep.logic.Suspicious;

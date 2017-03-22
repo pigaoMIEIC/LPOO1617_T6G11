@@ -1,4 +1,4 @@
-package dkeep.logic;
+package dkeep.graphic;
 
 public interface MapsInterface {
 	static char level1[][] = { { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x' },
