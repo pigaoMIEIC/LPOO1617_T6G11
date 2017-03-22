@@ -2,22 +2,47 @@ package dkeep.logic;
 
 import java.util.Vector;
 
+
+/**  
+* Entidade.java - A class to store moving parts of the game.
+*/ 
 public class Hero extends Entidade {
 
 	private char state = ' ';
 
+	/**
+	 * Getter for the field state.
+	 * @return
+	 */
 	public char getState() {
 		return state;
 	}
 
+	/**
+	 * Setter for the field state.
+	 * @param state
+	 */
 	public void setState(char state) {
 		this.state = state;
 	}
 
+	/**  
+	* Constructor of the class Hero.
+	* @param x X position of the Entidade.
+	* @param y Y position of the Entidade.
+	* @param tag The simple graphic representation of the Entidade.
+	*/ 
 	public Hero(int x, int y, char tag) {
 		super(x, y, tag);
 	}
-
+	
+	/**
+	 * @param level Name of the current level for game mechanics purposes.
+	 * @param current Game board key the hero is currently.
+	 * @param b Game Board  to print. 
+	 * @param output One element array of Sting to save the output of the Game state.
+	 * @return Returns true if game has ended in victory, false otherwise.
+	 */
 	public boolean print(String level, char current, Board b, String output[]) {
 		if (level.equals("level1") && current != ' ') {
 			switch (current) {
@@ -50,7 +75,13 @@ public class Hero extends Entidade {
 
 		return false;
 	}
-
+	
+	/**
+	 * Method responsible for moving the Hero in the game Board.
+	 * @param b Game Board  to print. 
+	 * @param output One element array of Sting to save the output of the Game state.
+	 * @return Returns true if game has ended in victory. False otherwise.
+	 */
 	public void move(char input, Board b) {
 		switch (input) {
 		case 's':
