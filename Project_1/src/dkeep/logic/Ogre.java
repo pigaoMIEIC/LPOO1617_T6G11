@@ -2,33 +2,39 @@ package dkeep.logic;
 
 import java.util.Random;
 import java.util.Scanner;
-/**  
-* Ogre.java - A subclass of Entidade representing the ogre character.
-*/
+
+/**
+ * Ogre.java - A subclass of Entidade representing the ogre character.
+ */
 public class Ogre extends Entidade {
 
 	private static Scanner s = new Scanner(System.in);
 	static char moves[] = { 'a', 's', 'd', 'w' };
-	int lastAttack[] = new int [2];
+	int lastAttack[] = new int[2];
 	Random rand = new Random();
 	int stunned = 0;
-	
-	/**  
-	* Constructor of the class Ogre.
-	* @param x X position of the Entidade.
-	* @param y Y position of the Entidade.
-	* @param tag The simple graphic representation of the Entidade.
-	*/ 
+
+	/**
+	 * Constructor of the class Ogre.
+	 * 
+	 * @param x
+	 *            X position of the Entidade.
+	 * @param y
+	 *            Y position of the Entidade.
+	 * @param tag
+	 *            The simple graphic representation of the Entidade.
+	 */
 	public Ogre(int x, int y, char tag) {
 		super(x, y, tag);
-		lastAttack[0]=x;
-		lastAttack[1]=y;
+		lastAttack[0] = x;
+		lastAttack[1] = y;
 	}
-	/**  
-	* stuns the Ogre
-	*/ 
+
+	/**
+	 * stuns the Ogre
+	 */
 	public void stun() {
-			stunned = 2;
+		stunned = 2;
 	}
 
 	public boolean isStunned() {
@@ -40,26 +46,25 @@ public class Ogre extends Entidade {
 			return true;
 		}
 	}
-	
+
 	public int[] getLastAttack() {
 		return lastAttack;
 	}
-	
-	public boolean checkSurround(Board b, char enemy){
-		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy
-				| b.get(x, y - 1) == enemy| getCurrent()==enemy) {
+
+	public boolean checkSurround(Board b, char enemy) {
+		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy | b.get(x, y - 1) == enemy
+				| getCurrent() == enemy) {
 			return true;
 		} else
 			return false;
-	}	
-	
-	
+	}
+
 	public boolean print(String level, char current, Board b, String output[]) {
 		isStunned();
 		if (level == "level2") {
 			switch (current) {
 			case 'k':
-				output[0]+=('$');
+				output[0] += ('$');
 				break;
 			case 'O':
 				this.setCurrent(' ');
@@ -68,15 +73,15 @@ public class Ogre extends Entidade {
 				this.setCurrent('k');
 				break;
 			default:
-				output[0]+=(getTag());
+				output[0] += (getTag());
 			}
 		}
 		return false;
 	}
 
 	public void move(char direction, Board b) {
-		char input = 'w'; //initializing cause eclipse
-		
+		char input = 'w'; // initializing cause eclipse
+
 		if (isStunned()) {
 			stunned--;
 			return;
@@ -84,7 +89,7 @@ public class Ogre extends Entidade {
 			while (true) {
 				// input = s.next().charAt(0); //manual input
 
-				int random, max = 4, min = 1;      ///random input
+				int random, max = 4, min = 1; /// random input
 				random = rand.nextInt(max - min + 1) + min;
 				switch (random) {
 				case 1:
@@ -112,7 +117,7 @@ public class Ogre extends Entidade {
 					}
 					setCurrent((char) b.refresh(x, y + 1, input, getTag(), getCurrent()));
 					y++;
-					if(getCurrent()=='k')
+					if (getCurrent() == 'k')
 						setTag('$');
 					return;
 				case 'w':
@@ -124,7 +129,7 @@ public class Ogre extends Entidade {
 					}
 					setCurrent((char) b.refresh(x, y - 1, input, getTag(), getCurrent()));
 					y--;
-					if(getCurrent()=='k')
+					if (getCurrent() == 'k')
 						setTag('$');
 					return;
 				case 'd':
@@ -136,7 +141,7 @@ public class Ogre extends Entidade {
 					}
 					setCurrent((char) b.refresh(x + 1, y, input, getTag(), getCurrent()));
 					x++;
-					if(getCurrent()=='k')
+					if (getCurrent() == 'k')
 						setTag('$');
 					return;
 				case 'a':
@@ -148,7 +153,7 @@ public class Ogre extends Entidade {
 					}
 					setCurrent((char) b.refresh(x - 1, y, input, getTag(), getCurrent()));
 					x--;
-					if(getCurrent()=='k')
+					if (getCurrent() == 'k')
 						setTag('$');
 					return;
 				default:
@@ -158,59 +163,60 @@ public class Ogre extends Entidade {
 		}
 	}
 
-	
-
-	public void attack(Board b) {
-		while (true) {
-			switch (moves[rand.nextInt(4)]) {
-			case 's':
-				if (b.get(x, y + 1) == 'x' | b.get(x, y + 1) == 'i'|b.get(x, y + 1) == 'O') {
-					break;
-				}
-				lastAttack[0] = x;
-				lastAttack[1] = y + 1;
-				if (b.get(x, y + 1) == 'k'|b.get(x, y + 1) == '$')
-					b.set(x, y + 1, '$');
-				else
-					b.set(x, y + 1, '*');
-				return;
-			case 'w':
-				if (b.get(x, y - 1) == 'x' | b.get(x, y - 1) == 'i'|b.get(x, y - 1) == 'O') {
-					break;
-				}
-				lastAttack[0] = x;
-				lastAttack[1] = y - 1;
-				if (b.get(x, y - 1) == 'k'|b.get(x, y - 1) == '$')
-					b.set(x, y - 1, '$');
-				else
-					b.set(x, y - 1, '*');
-				return;
-			case 'd':
-				if (b.get(x + 1, y) == 'x' | b.get(x + 1, y) == 'i'|b.get(x+ 1, y ) == 'O') {
-					break;
-				}
-				lastAttack[0] = x + 1;
-				lastAttack[1] = y;
-				if (b.get(x + 1, y) == 'k'|b.get(x+ 1, y ) == '$')
-					b.set(x + 1, y, '$');
-				else
-					b.set(x + 1, y, '*');
-				return;
-			case 'a':
-				if (b.get(x - 1, y) == 'x' | b.get(x - 1, y) == 'i'|b.get(x- 1, y ) == 'O') {
-					break;
-				}
-				lastAttack[0] = x - 1;
-				lastAttack[1] = y;
-				if (b.get(x - 1, y) == 'k'|b.get(x- 1, y ) == '$') {
-					b.set(x - 1, y, '$');
-				} else
-					b.set(x - 1, y, '*');
-				return;
-			default:
-				System.out.println("default attack");
+	public char attack(Board b) {
+		switch (moves[rand.nextInt(4)]) {
+		case 's':
+			lastAttack[0] = x;
+			lastAttack[1] = y + 1;
+			if (b.get(x, y + 1) == 'x' | b.get(x, y + 1) == 'i' | b.get(x, y + 1) == 'O') {
+				return 'x';
 			}
+			
+			if (b.get(x, y + 1) == 'k' | b.get(x, y + 1) == '$')
+				b.set(x, y + 1, '$');
+			else
+				b.set(x, y + 1, '*');
+			return 's';
+		case 'w':
+			lastAttack[0] = x;
+			lastAttack[1] = y - 1;
+			if (b.get(x, y - 1) == 'x' | b.get(x, y - 1) == 'i' | b.get(x, y - 1) == 'O') {
+				return 'x';
+			}
+			
+			if (b.get(x, y - 1) == 'k' | b.get(x, y - 1) == '$')
+				b.set(x, y - 1, '$');
+			else
+				b.set(x, y - 1, '*');
+			return 'w';
+		case 'd':
+			lastAttack[0] = x + 1;
+			lastAttack[1] = y;
+			if (b.get(x + 1, y) == 'x' | b.get(x + 1, y) == 'i' | b.get(x + 1, y) == 'O') {
+				return 'x';
+			}
+			
+			if (b.get(x + 1, y) == 'k' | b.get(x + 1, y) == '$')
+				b.set(x + 1, y, '$');
+			else
+				b.set(x + 1, y, '*');
+			return 'd';
+		case 'a':
+			lastAttack[0] = x - 1;
+			lastAttack[1] = y;
+			if (b.get(x - 1, y) == 'x' | b.get(x - 1, y) == 'i' | b.get(x - 1, y) == 'O') {
+				return 'x';
+			}
+			
+			if (b.get(x - 1, y) == 'k' | b.get(x - 1, y) == '$') {
+				b.set(x - 1, y, '$');
+			} else
+				b.set(x - 1, y, '*');
+			return 'a';
+		default:
+			System.out.println("default attack");
 		}
+		return ' ';
 	}
 
 	public void clearAttack(Board b) {
