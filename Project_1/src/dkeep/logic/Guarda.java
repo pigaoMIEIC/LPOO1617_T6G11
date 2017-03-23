@@ -4,6 +4,14 @@ public abstract class Guarda extends Entidade {
 
 	ComportamentoGuarda compGuarda;
 
+	/**
+	 * Constructor of the class Guarda
+	 * @param x x coordinate.
+	 * @param y y coordinate.
+	 * @param tag char for the Guarda representation.
+	 * @param mov char array for the Guarda movement.
+	 * @see ComportamentoGuarda
+	 */
 	public Guarda(int x, int y, char tag, char mov[]) {
 		super(x, y, tag);
 		compGuarda = new ComportamentoGuarda(mov);
