@@ -1,15 +1,27 @@
 package dkeep.logic;
 
 import java.io.Serializable;
-
+/**
+ * ComportamentoGuarda.java - Class that is responsible for storing a guard movement routine and moving him.
+ */
 public class ComportamentoGuarda implements Serializable{
 	char mov[];
 	int i = 0;
 
+	/**
+	 * Constructor of the class ComportamentoGuarda.
+	 * @param mov Array of chars that represents the Guarda movement.
+	 */
 	public ComportamentoGuarda(char mov[]) {
 		this.mov = mov;
 	}
 
+	/**
+	 * Method responsible for moving a Guarda.
+	 * @param dir Flag to indicate the direction the Guarda is taking in its movement array.
+	 * @param guarda Guard that is going to move.
+	 * @param b Board in which the to move the Guarda.
+	 */
 	public void move(boolean dir, Guarda guarda, Board b) {
 		char input = mov[i];
 		if (!dir) {
