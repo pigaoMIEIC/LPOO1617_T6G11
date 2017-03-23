@@ -319,4 +319,25 @@ public class TestDungeonGameLogic {
 		assertNull(gameMap.readBoard());
 		
 	}
+	
+	@Test
+	public void testString(){
+		entidades.removeAllElements();
+		Board gameMap = new Board(level2);
+		assertTrue(stringIsSameSize(gameMap.print(entidades, flag),gameMap));
+		
+	}
+	
+	boolean stringIsSameSize(String board,Board b){
+		char bod [][] = b.getBoard();
+
+		int l = bod[0].length;
+		int h = bod.length;
+		int sizeBod = l*h;
+		
+		int sizeString = board.length() - bod.length;
+		System.out.print("" + sizeString);
+		System.out.print("" + sizeBod);
+		return sizeBod == sizeString;
+	}
 }
