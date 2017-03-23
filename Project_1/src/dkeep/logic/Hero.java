@@ -153,6 +153,12 @@ public class Hero extends Entidade {
 		}
 	}
 
+	/**
+	 * Verifies if the Hero has an enemy in his surrounding positions.
+	 * @param enemy char data type that represents the enemy to be looked for.
+	 * @param map Vector of Entidade's where the enemy will be looked for.
+	 * @return True if the enemy is in the Hero surroundings, False otherwise.
+	 */
 	public boolean checkSurround(char enemy, Vector<Entidade> map) {
 		for (Entidade temp : map) {
 			if (temp.getTag() == enemy) {
@@ -166,6 +172,12 @@ public class Hero extends Entidade {
 		return false;
 	}
 
+	/**
+	 * Verifies if the Hero has an enemy in his surrounding positions.
+	 * @param b Board where the enemy will be looked for.
+	 * @param enemy char data type that represents the enemy to be looked for.
+	 * @return True if the enemy is in the Hero surroundings, False otherwise.
+	 */
 	public boolean checkSurround(Board b, char enemy) {
 		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy | b.get(x, y - 1) == enemy
 				| b.get(x, y) == enemy) {
@@ -174,6 +186,7 @@ public class Hero extends Entidade {
 			return false;
 	}
 
+	
 	public boolean stun(Board b, Vector<Entidade> map) {
 		if (!((Hero) map.lastElement()).checkSurround('O', map)) {
 			return false;
