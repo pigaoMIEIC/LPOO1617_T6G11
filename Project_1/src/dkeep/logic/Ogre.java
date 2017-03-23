@@ -184,6 +184,10 @@ public class Ogre extends Entidade {
 		}
 	}
 
+	/**
+	 * Method to make the Ogre randomly attack its surroundings.
+	 * @param b Board which will be modified with the Ogre attack.
+	 */
 	public char attack(Board b) {
 		switch (moves[rand.nextInt(4)]) {
 		case 's':
@@ -240,6 +244,10 @@ public class Ogre extends Entidade {
 		return ' ';
 	}
 
+	/**
+	 * Method to clear the Ogre last attack.
+	 * @param b Board in which the attack will be cleared.
+	 */
 	public void clearAttack(Board b) {
 		if (b.get(lastAttack[0], lastAttack[1]) == '$') {
 			b.set(lastAttack[0], lastAttack[1], 'k');
