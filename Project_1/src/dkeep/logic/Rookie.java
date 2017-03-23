@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 /**  
-* Drunken.java - A subclass of Guard to represent a personality.
+* Rookie.java - A subclass of Guard to represent a personality.
 */
 public class Rookie extends Guarda {
 

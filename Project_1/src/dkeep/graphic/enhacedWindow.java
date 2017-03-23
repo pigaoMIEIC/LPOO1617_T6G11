@@ -429,6 +429,46 @@ public class enhacedWindow implements Serializable,WindowInfo,MapsInterface{
 		});
 		Exit.setBounds(640, 643, 169, 48);
 		frmDungeonKeepGame.getContentPane().add(Exit);
+		
+		JButton btnLeft = new JButton("Left");
+		btnLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonEvent('a');
+				frmDungeonKeepGame.requestFocusInWindow();
+			}
+		});
+		btnLeft.setBounds(600, 263, 89, 23);
+		frmDungeonKeepGame.getContentPane().add(btnLeft);
+		
+		JButton btnUp = new JButton("Up");
+		btnUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buttonEvent('w');
+				frmDungeonKeepGame.requestFocusInWindow();
+			}
+		});
+		btnUp.setBounds(661, 229, 89, 23);
+		frmDungeonKeepGame.getContentPane().add(btnUp);
+		
+		JButton btnRight = new JButton("Right");
+		btnRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonEvent('d');
+				frmDungeonKeepGame.requestFocusInWindow();
+			}
+		});
+		btnRight.setBounds(735, 263, 89, 23);
+		frmDungeonKeepGame.getContentPane().add(btnRight);
+		
+		JButton btnDown = new JButton("Down");
+		btnDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonEvent('s');
+				frmDungeonKeepGame.requestFocusInWindow();
+			}
+		});
+		btnDown.setBounds(661, 297, 89, 23);
+		frmDungeonKeepGame.getContentPane().add(btnDown);
 
 	}
 
