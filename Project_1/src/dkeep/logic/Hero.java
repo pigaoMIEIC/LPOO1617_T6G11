@@ -85,14 +85,6 @@ public class Hero extends Entidade {
 	public void move(char input, Board b) {
 		switch (input) {
 		case 's':
-//			if (b.get(x, y + 1) == 'x') {
-//				break;
-//			}
-//			if (b.get(x, y + 1) == 'i') {
-//				if (state == 'K')
-//					b.openDoors();
-//				break;
-//			}
 			if(!moveCondition(x,y+1,b))
 				break;
 			setCurrent((char) b.refresh(x, y + 1, input, getTag(), getCurrent()));
@@ -107,42 +99,18 @@ public class Hero extends Entidade {
 			y++;
 			break;
 		case 'w':
-//			if (b.get(x, y - 1) == 'x') {
-//				break;
-//			}
-//			if (b.get(x, y - 1) == 'i') {
-//				if (state == 'K')
-//					b.openDoors();
-//				break;
-//			}
 			if(!moveCondition(x,y-1,b))
 				break;
 			setCurrent((char) b.refresh(x, y - 1, input, getTag(), getCurrent()));
 			y--;
 			break;
 		case 'd':
-//			if (b.get(x + 1, y) == 'x') {
-//				break;
-//			}
-//			if (b.get(x + 1, y) == 'i') {
-//				if (state == 'K')
-//					b.openDoors();
-//				break;
-//			}
 			if(!moveCondition(x+1,y,b))
 				break;
 			setCurrent((char) b.refresh(x + 1, y, input, getTag(), getCurrent()));
 			this.x++;
 			break;
 		case 'a':
-//			if (b.get(x - 1, y) == 'x') {
-//				break;
-//			}
-//			if (b.get(x - 1, y) == 'i') {
-//				if (state == 'K')
-//					b.openDoors();
-//				break;
-//			}
 			if(!moveCondition(x-1,y,b))
 				break;
 			setCurrent((char) b.refresh(x - 1, y, input, getTag(), getCurrent()));

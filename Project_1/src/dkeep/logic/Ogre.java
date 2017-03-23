@@ -3,7 +3,7 @@ package dkeep.logic;
 import java.util.Random;
 import java.util.Scanner;
 /**  
-* Ogre.java - A subclass of Entidade representing the ogre character.
+* Ogre.java - A subclass of Entidade representing the Ogre character.
 */
 public class Ogre extends Entidade {
 
@@ -25,12 +25,16 @@ public class Ogre extends Entidade {
 		lastAttack[1]=y;
 	}
 	/**  
-	* stuns the Ogre
+	* Stuns the Ogre.
 	*/ 
 	public void stun() {
 			stunned = 2;
 	}
 
+	/**
+	 * Checks if the Ogre is stunned and changes its tag.
+	 * @return True if stunned, False otherwise.
+	 */
 	public boolean isStunned() {
 		if (stunned == 0) {
 			setTag('O');
@@ -41,10 +45,20 @@ public class Ogre extends Entidade {
 		}
 	}
 	
+	/**
+	 * Method to get the last Ogre attack.
+	 * @return int array in the format [x coordinate, y coordinate].
+	 */
 	public int[] getLastAttack() {
 		return lastAttack;
 	}
 	
+	/**
+	 * Verifies if the Ogre has an enemy in his surrounding positions.
+	 * @param b Board where the enemy will be looked for.
+	 * @param enemy char data type that represents the enemy to be looked for.
+	 * @return True if the enemy is in the Hero surroundings, False otherwise.
+	 */
 	public boolean checkSurround(Board b, char enemy){
 		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy
 				| b.get(x, y - 1) == enemy| getCurrent()==enemy) {
@@ -53,7 +67,13 @@ public class Ogre extends Entidade {
 			return false;
 	}	
 	
-	
+	/**
+	 * Method to print the Ogre tag.
+	 * @param level Name of the game level for mechanics purposes.
+	 * @param char the Ogre is currently on.
+	 * @param b Board where the Ogre will be moved.
+	 * @param output Single String array to save the output String. 
+	 */
 	public boolean print(String level, char current, Board b, String output[]) {
 		isStunned();
 		if (level == "level2") {
@@ -74,6 +94,11 @@ public class Ogre extends Entidade {
 		return false;
 	}
 
+	/**
+	 * Method to move the the Ogre.
+	 * @param direction Not used in the class Ogre.
+	 * @param b Board in which the Ogre will move.
+	 */
 	public void move(char direction, Board b) {
 		char input = 'w'; //initializing cause eclipse
 		
@@ -159,7 +184,10 @@ public class Ogre extends Entidade {
 	}
 
 	
-
+	/**
+	 * Method to make the Ogre randomly attack its surroundings.
+	 * @param b Board which will be modified with the Ogre attack.
+	 */
 	public void attack(Board b) {
 		while (true) {
 			switch (moves[rand.nextInt(4)]) {
@@ -212,7 +240,10 @@ public class Ogre extends Entidade {
 			}
 		}
 	}
-
+	/**
+	 * Method to clear the Ogre last attack.
+	 * @param b Board in which the attack will be cleared.
+	 */
 	public void clearAttack(Board b) {
 		if (b.get(lastAttack[0], lastAttack[1]) == '$') {
 			b.set(lastAttack[0], lastAttack[1], 'k');
