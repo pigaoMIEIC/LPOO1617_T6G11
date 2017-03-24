@@ -84,10 +84,10 @@ public class GameInterface extends JPanel {
 	}
 	
 	public void updatePrint(Game g){
-		try{
-		ySize=(int) (this.getBounds().getHeight()/g.getBoard().getBoard().length);
-		xSize=(int) (this.getBounds().getHeight()/g.getBoard().getBoard()[0].length);
 		char [][] temp = g.getBoard().getBoard();
+		try{
+		ySize=(int) (this.getBounds().getHeight()/temp.length);
+		xSize=(int) (this.getBounds().getHeight()/temp[0].length);
 		Vector<Entidade> entidades=g.getEntidades();
  		this.print=g.printBoard();}
 		catch (Exception e){
