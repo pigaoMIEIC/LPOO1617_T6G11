@@ -265,7 +265,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String levelName;
-				File folder = new File(PATH);
+				File folder = new File(SAVE);
 				File[] levels = folder.listFiles();
 				if (levels.length == 0) {
 					JOptionPane.showMessageDialog(frmDungeonKeepGame,
@@ -280,7 +280,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 						"Which level would you like to play?", "Choose a Level", JOptionPane.QUESTION_MESSAGE, null,
 						levels_str, null);
 				try {
-					inputFile = new Scanner(new File(PATH + levelName));
+					inputFile = new Scanner(new File(SAVE + levelName));
 				} catch (FileNotFoundException e1) {
 					System.out.println("File not found in load.");
 					return;
@@ -382,8 +382,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 					reset();
 					return;
 				}
-				frmDungeonKeepGame.setFocusable(true);
-				reset();
+				
 				if (guardType_str == null) {
 					JOptionPane.showMessageDialog(frmDungeonKeepGame,
 							"Please choose a valid personality for the Guard in Level 1", "Guard has no personality!",
@@ -395,11 +394,14 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 							"Invalid number of Ogres!", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+//				frmDungeonKeepGame.setFocusable(true);
+//				reset();				
+//				numberOgres.setEnabled(false);
+//				guardType.setEnabled(false);
+//				lblEditor.setEnabled(false);
+//				frmDungeonKeepGame.requestFocusInWindow();
+				startGameRoutine();
 				loadLvl1();
-				numberOgres.setEnabled(false);
-				guardType.setEnabled(false);
-				lblEditor.setEnabled(false);
-				frmDungeonKeepGame.requestFocusInWindow();
 			}
 		});
 		frmDungeonKeepGame.getContentPane().add(StartGame);
@@ -470,7 +472,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	protected void saveState() {
 		FileOutputStream fileOut;
 		try {
-			fileOut = new FileOutputStream(SAVE + "saveGame.ser");
+			fileOut = new FileOutputStream(STATE + "saveGame.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(b);
 			out.writeObject(entidades);
@@ -488,8 +490,13 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	}
 
 	protected void loadState() {
+		if(new File(STATE).listFiles().length==0){
+			JOptionPane.showMessageDialog(frmDungeonKeepGame,
+					"There is no game save available", "No Saves!",
+					JOptionPane.ERROR_MESSAGE);
+		}
 		try {
-			FileInputStream fileIn = new FileInputStream(SAVE + "saveGame.ser");
+			FileInputStream fileIn = new FileInputStream(STATE + "saveGame.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			b = (Board) in.readObject();
 			entidades = (Vector<Entidade>) in.readObject();
@@ -507,7 +514,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		this.game = new Game(b, entidades);
 		gameInterface.updatePrint(game);
 		frmDungeonKeepGame.requestFocusInWindow();
-		frmDungeonKeepGame.repaint();
+		gameInterface.repaint();
 	}
 
 	protected void loadLevel(String levelName, String name) {
@@ -541,9 +548,9 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	}
 
 	public void buttonEvent(char input) {
-		game.clearAttack();
+		//game.clearAttack();
 		game.Move(input);
-		game.attack();
+		//game.attack();
 		gameInterface.updatePrint(game);
 		if (game.end()) {
 			int tempStatus = game.getEndStatus();
@@ -554,7 +561,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			}
 			if (tempStatus == 1) {
 				GameState.setText("Perdeu. :(");
-				frmDungeonKeepGame.setFocusable(false);
+				//frmDungeonKeepGame.setFocusable(false);
 				StartGame.setEnabled(true);
 				StartGame.setText("Continue");
 				// reset();
@@ -562,7 +569,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			}
 			if (tempStatus == 0 && tempName.equals("level2")) {
 				GameState.setText("Parabens Ganhou! :)");
-				frmDungeonKeepGame.setFocusable(false);
+				//frmDungeonKeepGame.setFocusable(false);
 				StartGame.setEnabled(true);
 				StartGame.setText("Continue");
 				// reset();
@@ -634,5 +641,14 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		guardType.setEnabled(true);
 		lblEditor.setEnabled(true);
 		lblloadLevel.setEnabled(true);
+	}
+	
+	public void startGameRoutine(){
+		frmDungeonKeepGame.setFocusable(true);
+		reset();				
+		numberOgres.setEnabled(false);
+		guardType.setEnabled(false);
+		lblEditor.setEnabled(false);
+		frmDungeonKeepGame.requestFocusInWindow();
 	}
 }

@@ -21,10 +21,12 @@ public class Project_1 implements MapsInterface{
 	static int noOgres;
 	static Vector<Entidade> entidades;
 	static Hero hero;
+	static Ogre ogre;
 	static Game game;
 	static Guarda guarda;
 	
 	static char input;
+	
 	
 	
 
@@ -54,7 +56,7 @@ public class Project_1 implements MapsInterface{
 						+ "Para sobreviver evite os guardas(G) e os ogres(O).\n\n");
 		// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Level 1
-		System.out.print("Level 1");
+		System.out.print("Level 1\n");
 		b = new Board(level1);
 		b.setName("level1");
 		// Entidades
@@ -70,7 +72,8 @@ public class Project_1 implements MapsInterface{
 		while (!game.end()) {
 			System.out.print("Mover para(a,s,d,w):");
 			input = s.next().charAt(0);
-			System.out.print(game.Move(input));
+			game.Move(input);
+			System.out.print(game.printBoard());
 		}
 		// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Level 2
@@ -81,25 +84,28 @@ public class Project_1 implements MapsInterface{
 		try{
 		noOgres = s.nextInt();}
 		catch (Exception e){
-			System.out.println("Valor invalido numero de ogres definido com o valor 1.");
+			System.out.println("Valor invalido, numero de ogres definido com o valor 1.");
 			noOgres = 1;
 		}		
 		b = new Board(level2);
 		b.setName("level2");
 		// Entidades
 		hero = new Hero(1, 7, 'A');
-		for(int i=0; i<noOgres;i++){
-			entidades.addElement(new Ogre(4, 1, 'O'));
+		entidades.addElement(new Ogre(4, 1, 'O'));
+		for (int i = 1; i < noOgres; i++) {
+			ogre = new Ogre(4, 1, 'O');
+			ogre.setCurrent('O');
+			entidades.addElement(ogre);
 		}
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
 		System.out.print(game.printBoard());
 		while (!game.end()) {
-			game.clearAttack();
 			System.out.print("Mover para(a,s,d,w):");
 			input = s.next().charAt(0);
-			System.out.print(game.Move(input));
+			game.Move(input);
+			System.out.print(game.printBoard());
 //			game.attack();
 //			game.printBoard();
 		}
