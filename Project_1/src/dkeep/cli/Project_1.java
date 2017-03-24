@@ -26,6 +26,7 @@ public class Project_1 implements MapsInterface{
 	static Guarda guarda;
 	
 	static char input;
+	private static boolean[] endflag = new boolean[1];
 	
 	
 	
@@ -68,12 +69,11 @@ public class Project_1 implements MapsInterface{
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		System.out.print(game.printBoard());
+		System.out.print(b.print(entidades, endflag));
 		while (!game.end()) {
 			System.out.print("Mover para(a,s,d,w):");
 			input = s.next().charAt(0);
-			game.Move(input);
-			System.out.print(game.printBoard());
+			System.out.print(game.Move(input));
 		}
 		// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Level 2
@@ -100,12 +100,11 @@ public class Project_1 implements MapsInterface{
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		System.out.print(game.printBoard());
+		System.out.print(b.print(entidades, endflag));
 		while (!game.end()) {
 			System.out.print("Mover para(a,s,d,w):");
 			input = s.next().charAt(0);
-			game.Move(input);
-			System.out.print(game.printBoard());
+			System.out.print(game.Move(input));
 //			game.attack();
 //			game.printBoard();
 		}

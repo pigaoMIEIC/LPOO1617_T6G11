@@ -512,7 +512,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			return;
 		}
 		this.game = new Game(b, entidades);
-		gameInterface.updatePrint(game);
+		gameInterface.updatePrint(null,game);
 		frmDungeonKeepGame.requestFocusInWindow();
 		gameInterface.repaint();
 	}
@@ -531,7 +531,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			System.out.println(newRow);
 		}
 		setGame(newBoard, name);
-		gameInterface.updatePrint(game);
+		gameInterface.updatePrint(null,game);
 		frmDungeonKeepGame.setFocusable(true);
 		numberOgres.setEnabled(false);
 		guardType.setEnabled(false);
@@ -548,10 +548,11 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	}
 
 	public void buttonEvent(char input) {
+		String temp;
 		//game.clearAttack();
-		game.Move(input);
+		temp = game.Move(input);
 		//game.attack();
-		gameInterface.updatePrint(game);
+		gameInterface.updatePrint(temp, game);
 		if (game.end()) {
 			int tempStatus = game.getEndStatus();
 			String tempName = game.getBoard().getName();
@@ -592,7 +593,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		gameInterface.updatePrint(game);
+		gameInterface.updatePrint(null,game);
 		numberOgres.setEnabled(false);
 		guardType.setEnabled(false);
 		lblEditor.setEnabled(false);
@@ -617,7 +618,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		gameInterface.updatePrint(game);
+		gameInterface.updatePrint(null,game);
 		numberOgres.setEnabled(false);
 		guardType.setEnabled(false);
 		lblEditor.setEnabled(false);
@@ -633,7 +634,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		entidades.removeAllElements();
 		// Game
 		game = new Game(b, entidades);
-		gameInterface.updatePrint(null);
+		gameInterface.updatePrint(null,null);
 		StartGame.setText("Start Game");
 		GameState.setText("");
 		StartGame.setEnabled(true);

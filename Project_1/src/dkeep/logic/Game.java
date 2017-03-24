@@ -45,7 +45,7 @@ public class Game implements java.io.Serializable {
 	 * @param input
 	 *            Direction in which the game Hero will move if possible.
 	 */
-	public void Move(char input) {
+	public String Move(char input) {
 		clearAttack();
 		for (Entidade temp : getEntidades()) {
 			temp.move(input, board);// input is ignored if Ogre is in random
@@ -55,7 +55,7 @@ public class Game implements java.io.Serializable {
 			}
 		}
 		attack();
-		//return printBoard();
+		return printBoard();
 	}
 
 	/**
