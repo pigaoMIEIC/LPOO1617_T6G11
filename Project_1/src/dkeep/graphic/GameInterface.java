@@ -84,6 +84,10 @@ public class GameInterface extends JPanel {
 	}
 	
 	public void updatePrint(Game g){
+		if(g == null){
+			print = null;
+			return;
+		}
 		char [][] temp = g.getBoard().getBoard();
 		try{
 		ySize=(int) (this.getBounds().getHeight()/temp.length);

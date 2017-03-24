@@ -53,8 +53,8 @@ public class Game implements java.io.Serializable {
 				((Hero) temp).stun(board, getEntidades());
 			}
 		}
-		attack();
-		return printBoard();
+		//attack();
+		return "";
 	}
 
 	/**

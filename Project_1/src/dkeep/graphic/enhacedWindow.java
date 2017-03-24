@@ -543,7 +543,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	public void buttonEvent(char input) {
 		game.clearAttack();
 		game.Move(input);
-		//game.attack();
+		game.attack();
 		gameInterface.updatePrint(game);
 		if (game.end()) {
 			int tempStatus = game.getEndStatus();
