@@ -3,6 +3,7 @@ package dkeep.logic;
 public abstract class Guarda extends Entidade {
 
 	ComportamentoGuarda compGuarda;
+	boolean dir;
 
 	/**
 	 * Constructor of the class Guarda
@@ -15,8 +16,17 @@ public abstract class Guarda extends Entidade {
 	public Guarda(int x, int y, char tag, char mov[]) {
 		super(x, y, tag);
 		compGuarda = new ComportamentoGuarda(mov);
+		dir = true;
 	}
 
+	public boolean getDir(){
+		return dir;
+	}
+	
+	public void setDir(boolean dir){
+		this.dir = dir;
+	}
+	
 	@Override
 	public boolean print(String level, char current, Board b,String output[]) {
 		if (level.equals("level1"))

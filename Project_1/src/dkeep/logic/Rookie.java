@@ -26,7 +26,7 @@ public class Rookie extends Guarda {
 	* @see ComportamentoGuarda 
 	*/
 	public void move(char direction, Board b) {
-		compGuarda.move(true,this,b);
+		compGuarda.move(this,b);
 	}
 
 }
