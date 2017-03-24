@@ -54,25 +54,24 @@ public class Project_1 implements MapsInterface{
 						+ "Para sobreviver evite os guardas(G) e os ogres(O).\n\n");
 		// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Level 1
-		 System.out.print("Level 1");
-		 b = new Board(level1);
-		 b.setName("level1");
-		 // Entidades
-		 Guarda guarda = new Drunken(8, 1, 'G', level1_mov);
-		 hero = new Hero(1, 1, 'H');
-		 // Map
-		 entidades = new Vector<Entidade>();
-		 entidades.add(guarda);
-		 entidades.add(hero);
-		 // Game
-		 game = new Game(b, entidades);
-		 game.printBoard();
-		 while (!game.end()) {
-		 System.out.print("Mover para(a,s,d,w):");
-		 input = s.next().charAt(0);
-		 game.Move(input);
-		 game.printBoard();
-		 }
+		System.out.print("Level 1");
+		b = new Board(level1);
+		b.setName("level1");
+		// Entidades
+		Guarda guarda = new Drunken(8, 1, 'G', level1_mov);
+		hero = new Hero(1, 1, 'H');
+		// Map
+		entidades = new Vector<Entidade>();
+		entidades.add(guarda);
+		entidades.add(hero);
+		// Game
+		game = new Game(b, entidades);
+		System.out.print(game.printBoard());
+		while (!game.end()) {
+			System.out.print("Mover para(a,s,d,w):");
+			input = s.next().charAt(0);
+			System.out.print(game.Move(input));
+		}
 		// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Level 2
 		//reset vector
@@ -95,14 +94,14 @@ public class Project_1 implements MapsInterface{
 		entidades.add(hero);
 		// Game
 		game = new Game(b, entidades);
-		game.printBoard();
+		System.out.print(game.printBoard());
 		while (!game.end()) {
 			game.clearAttack();
 			System.out.print("Mover para(a,s,d,w):");
 			input = s.next().charAt(0);
-			game.Move(input);
-			game.attack();
-			game.printBoard();
+			System.out.print(game.Move(input));
+//			game.attack();
+//			game.printBoard();
 		}
 	}
 }

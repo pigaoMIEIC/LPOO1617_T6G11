@@ -44,6 +44,7 @@ public class Hero extends Entidade {
 	 * @return Returns true if game has ended in victory, false otherwise.
 	 */
 	public boolean print(String level, char current, Board b, String output[]) {
+		char temp = b.get(x, y);
 		if (level.equals("level1") && current != ' ') {
 			switch (current) {
 			case 'k':
@@ -66,10 +67,10 @@ public class Hero extends Entidade {
 				return true;
 			}
 		}else 
-				if(b.get(x, y)==this.getTag()|b.get(x, y)==' '){
+				if(temp==this.getTag()|temp==' '){
 			output[0]+=(this.getTag());
 		}
-		if(b.get(x, y)=='*'){
+		if(temp=='*'){
 			output[0]+='*';
 		}
 
@@ -151,8 +152,9 @@ public class Hero extends Entidade {
 	 * @return True if the enemy is in the Hero surroundings, False otherwise.
 	 */
 	public boolean checkSurround(Board b, char enemy) {
-		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy | b.get(x, y - 1) == enemy
-				| b.get(x, y) == enemy) {
+		char[][] temp = b.getBoard();
+		if (temp[x + 1][y] == enemy | temp[x - 1][y] == enemy | temp[x][y + 1] == enemy | temp[x][y - 1] == enemy
+				| temp[x][y] == enemy) {
 			return true;
 		} else
 			return false;
