@@ -365,14 +365,14 @@ public class LevelEditor extends JFrame {
 	protected Image getImage(char c) {
 		try {
 			switch (c) {
-			case 'A':return ImageIO.read(new File("src/resources/armed.jpg"));
+			case 'A':return ImageIO.read(new File("src/resources/heroArmed.jpg"));
 			case 'x':return ImageIO.read(new File("src/resources/wall.jpg"));
 			case 'i':return ImageIO.read(new File("src/resources/door.jpg"));
 			case 'O':return ImageIO.read(new File("src/resources/ogre.jpg"));
-			case 'k':return ImageIO.read(new File("src/resources/DD-Transparent.png"));
-			case 'K':return ImageIO.read(new File("src/resources/DD-Transparent.png"));
+			case 'k':return ImageIO.read(new File("src/resources/key.jpg"));
+			case 'K':return ImageIO.read(new File("src/resources/heroArmedKey.jpg"));
 			case '*':return ImageIO.read(new File("src/resources/attack.jpg"));
-			case '8':return ImageIO.read(new File("src/resources/sleepogre.jpg"));
+			case '8':return ImageIO.read(new File("src/resources/sleepOgre.jpg"));
 			case ' ':return ImageIO.read(new File("src/resources/floor.jpg"));
 			default:return ImageIO.read(new File("src/resources/default.jpg"));
 			}

@@ -193,7 +193,7 @@ public class Ogre extends Entidade {
 		case 's':
 			lastAttack[0] = x;
 			lastAttack[1] = y + 1;
-			if (b.get(x, y + 1) == 'x' | b.get(x, y + 1) == 'i' | b.get(x, y + 1) == 'O') {
+			if (b.get(x, y + 1) == 'x' | b.get(x, y + 1) == 'i' | b.get(x, y + 1) == 'O' |b.get(x, y + 1) == 's') {
 				return 'x';
 			}
 			
@@ -205,7 +205,7 @@ public class Ogre extends Entidade {
 		case 'w':
 			lastAttack[0] = x;
 			lastAttack[1] = y - 1;
-			if (b.get(x, y - 1) == 'x' | b.get(x, y - 1) == 'i' | b.get(x, y - 1) == 'O') {
+			if (b.get(x, y - 1) == 'x' | b.get(x, y - 1) == 'i' | b.get(x, y - 1) == 'O' | b.get(x, y - 1) == 's') {
 				return 'x';
 			}
 			
@@ -217,7 +217,7 @@ public class Ogre extends Entidade {
 		case 'd':
 			lastAttack[0] = x + 1;
 			lastAttack[1] = y;
-			if (b.get(x + 1, y) == 'x' | b.get(x + 1, y) == 'i' | b.get(x + 1, y) == 'O') {
+			if (b.get(x + 1, y) == 'x' | b.get(x + 1, y) == 'i' | b.get(x + 1, y) == 'O' | b.get(x + 1, y) == 's') {
 				return 'x';
 			}
 			
@@ -229,7 +229,7 @@ public class Ogre extends Entidade {
 		case 'a':
 			lastAttack[0] = x - 1;
 			lastAttack[1] = y;
-			if (b.get(x - 1, y) == 'x' | b.get(x - 1, y) == 'i' | b.get(x - 1, y) == 'O') {
+			if (b.get(x - 1, y) == 'x' | b.get(x - 1, y) == 'i' | b.get(x - 1, y) == 'O' | b.get(x - 1, y) == 's') {
 				return 'x';
 			}
 			
