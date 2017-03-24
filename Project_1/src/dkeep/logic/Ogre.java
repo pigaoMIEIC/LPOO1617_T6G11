@@ -102,6 +102,7 @@ public class Ogre extends Entidade {
 	 */
 	public void move(char direction, Board b) {
 		char input = 'w'; // initializing cause eclipse
+		
 
 		if (isStunned()) {
 			stunned--;
@@ -136,8 +137,9 @@ public class Ogre extends Entidade {
 					if (b.get(x, y + 1) == 'i') {
 						break;
 					}
-					setCurrent((char) b.refresh(x, y + 1, input, getTag(), getCurrent()));
 					y++;
+					setCurrent((char) b.refresh(this, input));
+					
 					if (getCurrent() == 'k')
 						setTag('$');
 					return;
@@ -148,8 +150,9 @@ public class Ogre extends Entidade {
 					if (b.get(x, y - 1) == 'i') {
 						break;
 					}
-					setCurrent((char) b.refresh(x, y - 1, input, getTag(), getCurrent()));
 					y--;
+					setCurrent((char) b.refresh(this, input));
+					
 					if (getCurrent() == 'k')
 						setTag('$');
 					return;
@@ -160,8 +163,9 @@ public class Ogre extends Entidade {
 					if (b.get(x + 1, y) == 'i') {
 						break;
 					}
-					setCurrent((char) b.refresh(x + 1, y, input, getTag(), getCurrent()));
 					x++;
+					setCurrent((char) b.refresh(this, input));
+					
 					if (getCurrent() == 'k')
 						setTag('$');
 					return;
@@ -172,8 +176,9 @@ public class Ogre extends Entidade {
 					if (b.get(x - 1, y) == 'i') {
 						break;
 					}
-					setCurrent((char) b.refresh(x - 1, y, input, getTag(), getCurrent()));
 					x--;
+					setCurrent((char) b.refresh(this, input));
+					
 					if (getCurrent() == 'k')
 						setTag('$');
 					return;
@@ -256,3 +261,4 @@ public class Ogre extends Entidade {
 	}
 
 }
+

@@ -55,8 +55,9 @@ public class ComportamentoGuarda implements Serializable{
 			if (b.get(guarda.x, guarda.y + 1) == 'i') {
 				break;
 			}
-			guarda.setCurrent((char) b.refresh(guarda.x, guarda.y + 1, input, guarda.getTag(), guarda.getCurrent()));
 			guarda.y++;
+			guarda.setCurrent((char) b.refresh(guarda, input));
+			
 			break;
 		case 'w':
 			if (b.get(guarda.x, guarda.y - 1) == 'x') {
@@ -65,8 +66,9 @@ public class ComportamentoGuarda implements Serializable{
 			if (b.get(guarda.x, guarda.y - 1) == 'i') {
 				break;
 			}
-			guarda.setCurrent((char) b.refresh(guarda.x, guarda.y - 1, input, guarda.getTag(), guarda.getCurrent()));
 			guarda.y--;
+			guarda.setCurrent((char) b.refresh(guarda, input));
+			
 			break;
 		case 'd':
 			if (b.get(guarda.x + 1, guarda.y) == 'x') {
@@ -75,8 +77,9 @@ public class ComportamentoGuarda implements Serializable{
 			if (b.get(guarda.x + 1, guarda.y) == 'i') {
 				break;
 			}
-			guarda.setCurrent((char) b.refresh(guarda.x + 1, guarda.y, input, guarda.getTag(), guarda.getCurrent()));
 			guarda.x++;
+			guarda.setCurrent((char) b.refresh(guarda, input));
+			
 			break;
 		case 'a':
 			if (b.get(guarda.x - 1, guarda.y) == 'x') {
@@ -85,8 +88,9 @@ public class ComportamentoGuarda implements Serializable{
 			if (b.get(guarda.x - 1, guarda.y) == 'i') {
 				break;
 			}
-			guarda.setCurrent((char) b.refresh(guarda.x - 1, guarda.y, input, guarda.getTag(), guarda.getCurrent()));
 			guarda.x--;
+			guarda.setCurrent((char) b.refresh(guarda, input));
+			
 			break;
 		default:
 			System.out.println("default input");

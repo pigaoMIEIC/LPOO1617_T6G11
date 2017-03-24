@@ -87,7 +87,8 @@ public class Hero extends Entidade {
 		case 's':
 			if(!moveCondition(x,y+1,b))
 				break;
-			setCurrent((char) b.refresh(x, y + 1, input, getTag(), getCurrent()));
+			y++;
+			setCurrent((char) b.refresh(this, input));
 			if (getCurrent() == 'k' && b.getName().equals("testlevel")) {
 				state = 'K';
 				b.openDoors();
@@ -96,25 +97,28 @@ public class Hero extends Entidade {
 				state = 'K';
 				setTag('K');
 			}
-			y++;
+			
 			break;
 		case 'w':
 			if(!moveCondition(x,y-1,b))
 				break;
-			setCurrent((char) b.refresh(x, y - 1, input, getTag(), getCurrent()));
 			y--;
+			setCurrent((char) b.refresh(this, input));
+			
 			break;
 		case 'd':
 			if(!moveCondition(x+1,y,b))
 				break;
-			setCurrent((char) b.refresh(x + 1, y, input, getTag(), getCurrent()));
-			this.x++;
+			x++;
+			setCurrent((char) b.refresh(this,input));
+			
 			break;
 		case 'a':
 			if(!moveCondition(x-1,y,b))
 				break;
-			setCurrent((char) b.refresh(x - 1, y, input, getTag(), getCurrent()));
-			this.x--;
+			x--;
+			setCurrent((char) b.refresh(this,input));
+			
 			break;
 		default:
 			System.out.println("default input");

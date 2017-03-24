@@ -137,15 +137,22 @@ public class Board implements Serializable{
 	 * @param current Entidade field to be updated.
 	 * @return Char that is the next current  field to be set in Entidade.
 	 */
-	public char refresh(int x, int y, char dir, char tag, char current) {
-		char temp = this.get(x, y);
+	public char refresh(Entidade entidade,char dir) {
+		int y = entidade.getY();
+		int x = entidade.getX();
+		
+		char current = entidade.getCurrent();
+		
+		
+		char temp = this.get(entidade.getX(), entidade.getY());
 		if (temp == 'k' && name == "level2") {
-			switch (tag) {
+			switch (entidade.getTag()) {
 			case 'O':
-				tag = '$';
+				entidade.setTag('$');
 				break;
 			}
 		}
+		char tag = entidade.getTag();
 		switch (dir) {
 		case 's':
 			this.board[y][x] = tag;
