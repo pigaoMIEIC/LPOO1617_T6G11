@@ -71,7 +71,8 @@ public class Ogre extends Entidade {
 	 * @return True if the enemy is in the Hero surroundings, False otherwise.
 	 */
 	public boolean checkSurround(Board b, char enemy) {
-		if (b.get(x + 1, y) == enemy | b.get(x - 1, y) == enemy | b.get(x, y + 1) == enemy | b.get(x, y - 1) == enemy
+		char[][] temp = b.getBoard();
+		if (temp[x + 1][y]== enemy | temp[x - 1][y] == enemy | temp[x][y + 1] == enemy | temp[x][y - 1] == enemy
 				| getCurrent() == enemy) {
 			return true;
 		} else
@@ -338,10 +339,11 @@ public class Ogre extends Entidade {
 	}
 
 	public boolean moveCondition(int x, int y, Board b) {
-		if (b.get(x, y) == 'x') {
+		char temp = b.get(x, y);
+		if (temp == 'x') {
 			return true;
 		}
-		if (b.get(x, y) == 'i') {
+		if (temp == 'i') {
 			return true;
 		}
 		return false;
