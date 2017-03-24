@@ -46,18 +46,17 @@ import java.awt.SystemColor;
 import javax.swing.UIManager;
 import java.awt.event.MouseMotionAdapter;
 
-public class LevelEditor extends JFrame {
+public class LevelEditor extends JFrame implements WindowInfo{
 	
 	JFrame parent;
 	
-	private static String PATH = "userLevels/";
 	private int noColumns, noRows;
 	private String filename;
 	protected BufferedWriter out;
 	private int xSize=0,ySize=0;
 	private char[][] editorBoard;
 	private char selectedTile;
-	private static File directory=new File(PATH);
+	private static File directory=new File(SAVE);
 	
 	//:::::::::::::::::::PANEL ELEMENTS::::::::::::::::::::
 	private JComboBox rows, columns;
@@ -195,12 +194,12 @@ public class LevelEditor extends JFrame {
 		JButton start = new JButton("Start");
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(new File(PATH+name.getText()+".txt").exists()){
+				if(new File(SAVE+name.getText()+".txt").exists()){
 					JOptionPane.showMessageDialog(btnExit.getParent(), "That Level Name is already in use.", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				try {
-					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(PATH+name.getText()+".txt"), "utf-8"));
+					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(SAVE+name.getText()+".txt"), "utf-8"));
 				} catch (UnsupportedEncodingException | FileNotFoundException e1) {
 					System.out.println("erro a abrir a file");
 					JOptionPane.showMessageDialog(btnExit.getParent(), "That Level Name is not valid", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);

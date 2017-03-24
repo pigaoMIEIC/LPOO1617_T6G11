@@ -67,7 +67,7 @@ public class Game implements java.io.Serializable {
 	public void attack() {
 		for (Entidade temp : getEntidades()) {
 			if (temp instanceof Ogre) {
-				char a =((Ogre) temp).attack(board);
+				char a = 'x';//((Ogre) temp).attack(board);
 				while( a == 'x'){
 					a =((Ogre) temp).attack(board);
 				}

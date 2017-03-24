@@ -490,6 +490,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	}
 
 	protected void loadState() {
+		startGameRoutine();
 		if(new File(STATE).listFiles().length==0){
 			JOptionPane.showMessageDialog(frmDungeonKeepGame,
 					"There is no game save available", "No Saves!",
@@ -562,7 +563,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			}
 			if (tempStatus == 1) {
 				GameState.setText("Perdeu. :(");
-				//frmDungeonKeepGame.setFocusable(false);
+				frmDungeonKeepGame.setFocusable(false);
 				StartGame.setEnabled(true);
 				StartGame.setText("Continue");
 				// reset();
@@ -570,7 +571,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			}
 			if (tempStatus == 0 && tempName.equals("level2")) {
 				GameState.setText("Parabens Ganhou! :)");
-				//frmDungeonKeepGame.setFocusable(false);
+				frmDungeonKeepGame.setFocusable(false);
 				StartGame.setEnabled(true);
 				StartGame.setText("Continue");
 				// reset();
