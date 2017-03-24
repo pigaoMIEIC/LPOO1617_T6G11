@@ -42,10 +42,10 @@ public class Drunken extends Guarda {
 				setTag('G');
 				i = rd.nextInt(10);
 				if (i < 3) {
-					dir = !dir;
+					this.dir = !this.dir;
 				}
 			}
 		}
-		compGuarda.move(dir, this, b);
+		compGuarda.move(this, b);
 	}
 }

@@ -29,9 +29,9 @@ public class Suspicious extends Guarda {
 	public void move(char direction, Board b) {
 		int i = rd.nextInt(100);
 		if (i < 10) {
-		dir = !dir;
+			this.dir = !this.dir;
 		}
-		compGuarda.move(dir, this, b);
+		compGuarda.move(this, b);
 	}
 
 	public boolean getDir() {

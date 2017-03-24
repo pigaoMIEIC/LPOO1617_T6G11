@@ -22,7 +22,8 @@ public class ComportamentoGuarda implements Serializable{
 	 * @param guarda Guard that is going to move.
 	 * @param b Board in which the to move the Guarda.
 	 */
-	public void move(boolean dir, Guarda guarda, Board b) {
+	public void move(Guarda guarda, Board b) {
+		boolean dir = guarda.getDir();
 		char input = mov[i];
 		if (!dir) {
 			i--;
