@@ -495,8 +495,23 @@ public class TestDungeonGameLogic {
 	
 	@Test
 	public void testCheckSurround() {
+		Hero  hero = new Hero(2,2,'A');
 		entidades.removeAllElements();
-		Board gameMap = new Board(errorLoose);
+		entidades.add(new Ogre(1,2,'O'));
+		entidades.add(hero);
+		assertEquals('a', hero.checkSurround('O', entidades));
+		entidades.removeAllElements();
+		entidades.add(new Ogre(3,2,'O'));
+		entidades.add(hero);
+		assertEquals('d', hero.checkSurround('O', entidades));
+		entidades.removeAllElements();
+		entidades.add(new Ogre(2,1,'O'));
+		entidades.add(hero);
+		assertEquals('w', hero.checkSurround('O', entidades));
+		entidades.removeAllElements();
+		entidades.add(new Ogre(2,3,'O'));
+		entidades.add(hero);
+		assertEquals('s', hero.checkSurround('O', entidades));
 		
 	}
 

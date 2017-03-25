@@ -137,8 +137,8 @@ public class Hero extends Entidade {
 			if (temp.getTag() == enemy) {
 				if (temp.x == x + 1 && temp.y == y){return 'd';}
 				if (temp.x == x - 1 && temp.y == y){return 'a';}
-				if (temp.x == x && temp.y == y + 1){return 'w';}
-				if (temp.x == x && temp.y == y - 1){return 's';}
+				if (temp.x == x && temp.y == y + 1){return 's';}
+				if (temp.x == x && temp.y == y - 1){return 'w';}
 				if (temp.x == x && temp.y == y){return ' ';}
 			} else
 				return 'x';
