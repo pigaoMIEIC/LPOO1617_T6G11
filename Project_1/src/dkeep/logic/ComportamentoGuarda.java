@@ -47,6 +47,26 @@ public class ComportamentoGuarda implements Serializable{
 		return false;
 	}
 
+	private void caseStuff(char input,int x,int y){
+		switch (input) {
+		case 's':y++;break;
+		case 'w':y--;break;
+		case 'd':x++;break;
+		case 'a':x--;break;
+		default: System.out.println("default input");
+		}
+	}
+	
+	private void caseStuffGuarda(char input,Guarda g){
+		switch (input) {
+		case 's':g.y++;break;
+		case 'w':g.y--;break;
+		case 'd':g.x++;break;
+		case 'a':g.x--;break;
+		default: System.out.println("default input");
+		}
+	}
+	
 	/**
 	 * Method responsible for moving a Guarda.
 	 * @param dir Flag to indicate the direction the Guarda is taking in its movement array.
@@ -61,33 +81,12 @@ public class ComportamentoGuarda implements Serializable{
 		if (!dir) {input = invertInput(input);}
 		else {i++;}
 		if (i == mov.length){i = 0;}
-		switch (input) {
-		case 's':
-			if(moveCondition(x,y+1,temp)){break;}
-			guarda.y++;
-			guarda.setCurrent((char) b.refresh(guarda, input));
-			
-			break;
-		case 'w':
-			if(moveCondition(x,y-1,temp)){break;}
-			guarda.y--;
-			guarda.setCurrent((char) b.refresh(guarda, input));
-			
-			break;
-		case 'd':
-			if(moveCondition(x+1,y,temp)){break;}
-			guarda.x++;
-			guarda.setCurrent((char) b.refresh(guarda, input));
-			
-			break;
-		case 'a':
-			if(moveCondition(x-1,y,temp)){break;}
-			guarda.x--;
-			guarda.setCurrent((char) b.refresh(guarda, input));
-			break;
-		default:
-			System.out.println("default input");
-		}
+		caseStuffGuarda(input, guarda);
+		caseStuff(input, x, y);
+
+		if (moveCondition(x, y, temp)) {return;}
+		guarda.setCurrent((char) b.refresh(guarda, input));
+
 	}
 
 }
