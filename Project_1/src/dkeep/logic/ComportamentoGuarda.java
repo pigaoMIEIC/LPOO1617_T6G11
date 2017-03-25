@@ -47,17 +47,17 @@ public class ComportamentoGuarda implements Serializable{
 		return false;
 	}
 
-	private void caseStuff(char input,int x,int y){
+	private void caseStuff(char input,int i[]){
 		switch (input) {
-		case 's':y++;break;
-		case 'w':y--;break;
-		case 'd':x++;break;
-		case 'a':x--;break;
+		case 's':i[1]++;break;
+		case 'w':i[1]--;break;
+		case 'd':i[0]++;break;
+		case 'a':i[0]--;break;
 		default: System.out.println("default input");
 		}
 	}
 	
-	private void caseStuffGuarda(char input,Guarda g){
+	private void caseFunctionEntidade(char input,Entidade g){
 		switch (input) {
 		case 's':g.y++;break;
 		case 'w':g.y--;break;
@@ -74,17 +74,20 @@ public class ComportamentoGuarda implements Serializable{
 	 * @param b Board in which the to move the Guarda.
 	 */
 	public void move(Guarda guarda, Board b) {
-		int x= guarda.getX(),y=guarda.getY();
+		int a[] = new int [2];
+		a[0]= guarda.getX();
+		a[1]=guarda.getY();
 		boolean dir = guarda.getDir();
 		char temp[][] = b.getBoard();
 		char input = mov[i];
 		if (!dir) {input = invertInput(input);}
 		else {i++;}
 		if (i == mov.length){i = 0;}
-		caseStuffGuarda(input, guarda);
-		caseStuff(input, x, y);
+		
+		caseStuff(input,a);
 
-		if (moveCondition(x, y, temp)) {return;}
+		if (moveCondition(a[0], a[1], temp)) {return;}
+		caseFunctionEntidade(input, guarda); 
 		guarda.setCurrent((char) b.refresh(guarda, input));
 
 	}
