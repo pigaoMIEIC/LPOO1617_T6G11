@@ -272,12 +272,8 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 				loadLevel(levelName, "level2");
 				inputFile.close();
 			}
-			public void mouseEntered(MouseEvent e) {
-				lblloadLevel.setForeground(SystemColor.activeCaption);
-			}
-			public void mouseExited(MouseEvent e) {
-				lblloadLevel.setForeground(Color.BLACK);
-			}});
+			public void mouseEntered(MouseEvent e) {lblloadLevel.setForeground(SystemColor.activeCaption);}
+			public void mouseExited(MouseEvent e) {lblloadLevel.setForeground(Color.BLACK);}});
 	}
 	
 	public void loadLoadSave(){
@@ -332,26 +328,14 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		StartGame.setBounds(640, 80, 169, 40);
 		StartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (StartGame.getText() == "Continue") {
-					reset();
-					return;
-				}
-				
-				if (guardType_str == null) {
-					JOptionPane.showMessageDialog(frmDungeonKeepGame,
-							"Please choose a valid personality for the Guard in Level 1", "Guard has no personality!",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				if (noOgres < 0) {
-					JOptionPane.showMessageDialog(frmDungeonKeepGame, "Please choose a valid number of Ogres",
-							"Invalid number of Ogres!", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
+				if (StartGame.getText() == "Continue") {reset();return;}
+				if (guardType_str == null) {JOptionPane.showMessageDialog(frmDungeonKeepGame,"Please choose a valid personality for the Guard in Level 1", "Guard has no personality!",JOptionPane.ERROR_MESSAGE);
+					return;}
+				if (noOgres < 0) {JOptionPane.showMessageDialog(frmDungeonKeepGame, "Please choose a valid number of Ogres","Invalid number of Ogres!", JOptionPane.ERROR_MESSAGE);
+					return;}
 				startGameRoutine();
 				loadLvl1();
-			}
-		});
+			}});
 		frmDungeonKeepGame.getContentPane().add(StartGame);
 	}
 	
@@ -482,11 +466,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 
 	protected void loadState() {
 		startGameRoutine();
-		if(new File(STATE).listFiles().length==0){
-			JOptionPane.showMessageDialog(frmDungeonKeepGame,
-					"There is no game save available", "No Saves!",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		if(new File(STATE).listFiles().length==0){JOptionPane.showMessageDialog(frmDungeonKeepGame,"There is no game save available", "No Saves!",JOptionPane.ERROR_MESSAGE);}
 		try {
 			FileInputStream fileIn = new FileInputStream(STATE + "saveGame.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -495,17 +475,9 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			noOgres = (int) in.readObject();
 			in.close();
 			fileIn.close();
-		} catch (IOException i) {
-			i.printStackTrace();
-			return;
-		} catch (ClassNotFoundException c) {
-			System.out.println("Employee class not found");
-			c.printStackTrace();
-			return;
-		}
+		} catch (Exception i) {System.out.println("Employee class not found");i.printStackTrace();return;}
 		this.game = new Game(b, entidades);
 		gameInterface.updatePrint(null,game);
-		gameInterface.repaint();
 	}
 
 	protected void loadLevel(String levelName, String name) {
@@ -579,13 +551,9 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		b = new Board(level1);
 		b.setName("level1");
 		// Entidades
-		if (guardType_str == "Rookie") {
-			guarda = new Rookie(8, 1, 'G', level1_mov);
-		} else if (guardType_str == "Suspicious") {
-			guarda = new Suspicious(8, 1, 'G', level1_mov);
-		} else {
-			guarda = new Drunken(8, 1, 'G', level1_mov);
-		}
+		if (guardType_str == "Rookie"){guarda = new Rookie(8, 1, 'G', level1_mov);}
+		else if (guardType_str == "Suspicious") {guarda = new Suspicious(8, 1, 'G', level1_mov);}
+		else {guarda = new Drunken(8, 1, 'G', level1_mov);}
 		hero = new Hero(1, 1, 'H');
 		// Map
 		entidades = new Vector<Entidade>();

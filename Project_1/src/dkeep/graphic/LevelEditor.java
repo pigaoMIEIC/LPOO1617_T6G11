@@ -327,12 +327,9 @@ public class LevelEditor extends JFrame implements WindowInfo{
 				try {out.close();} catch (IOException e1) {e1.printStackTrace();}
 				if (new File(SAVE + name.getText() + ".txt").delete())
 					System.out.println("this path" + SAVE + name.getText() + ".txt" + " was deleted");
-				else{
-					System.out.println("no file was deleted. Path :" +SAVE + name.getText() + ".txt");
-				}
+				else{System.out.println("no file was deleted. Path :" +SAVE + name.getText() + ".txt");}
 				exit();
-			}
-		});
+			}});
 		btnExitWithoutSaving.setBounds(30, 646, 212, 43);
 		getContentPane().add(btnExitWithoutSaving);
 	}

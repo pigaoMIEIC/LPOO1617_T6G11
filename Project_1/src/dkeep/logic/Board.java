@@ -220,8 +220,7 @@ public class Board implements Serializable{
 			for (int x = 0; x < board[0].length; x++) {
 				switch(board[y][x]){
 				case 'A':
-					if(hero!=null)
-						return null;
+					if(hero!=null)return null;
 					hero=new Hero(x,y,'A');
 					break;
 				case 'O':temp.add(new Ogre(x,y,'O')); break;
@@ -230,9 +229,7 @@ public class Board implements Serializable{
 				}
 			}
 		}
-		if(!(hasKey&&hasDoor&&!temp.isEmpty()&&hero!=null)){
-			return null;
-		}
+		if(!(hasKey&&hasDoor&&!temp.isEmpty()&&hero!=null)){return null;}
 		temp.add(hero);
 		return temp;
 	}
