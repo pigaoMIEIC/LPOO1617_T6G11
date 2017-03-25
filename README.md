@@ -6,6 +6,9 @@
   -Tiago Costa Neves 201506203 up201506203@fe.up.pt
  
   -Eduardo de Mendonça Rodrigues Salgado Ramos 201505779 up201505779@fe.up.pt
+  
+### Javadoc
+[Documentation](Projec_1/doc)
 
 ### PIT Mutation test:
 ![PIT_TESTING](Pit_testing.PNG)
