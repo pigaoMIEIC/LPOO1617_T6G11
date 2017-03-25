@@ -8,7 +8,7 @@
   -Eduardo de Mendonça Rodrigues Salgado Ramos 201505779 up201505779@fe.up.pt
   
 ### Javadoc
-[Documentation](Projec_1/doc)
+[Documentation](/Project_1/doc)
 
 ### PIT Mutation test:
 ![PIT_TESTING](Pit_testing.PNG)
