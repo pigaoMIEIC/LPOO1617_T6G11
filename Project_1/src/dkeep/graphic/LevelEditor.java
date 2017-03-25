@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 
@@ -51,7 +52,6 @@ public class LevelEditor extends JFrame implements WindowInfo{
 	JFrame parent;
 	
 	private int noColumns, noRows;
-	private String filename;
 	protected BufferedWriter out;
 	private int xSize=0,ySize=0;
 	private char[][] editorBoard;
@@ -307,6 +307,7 @@ public class LevelEditor extends JFrame implements WindowInfo{
 						return;
 					}
 					saveLevel();
+					out.close();
 				} catch (IOException e1) {System.out.println("não conseguiu guardar o nivel");e1.printStackTrace();}
 				exit();
 			}};
@@ -323,6 +324,12 @@ public class LevelEditor extends JFrame implements WindowInfo{
 		btnExitWithoutSaving = new JButton("Exit without Saving");
 		btnExitWithoutSaving.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {out.close();} catch (IOException e1) {e1.printStackTrace();}
+				if (new File(SAVE + name.getText() + ".txt").delete())
+					System.out.println("this path" + SAVE + name.getText() + ".txt" + " was deleted");
+				else{
+					System.out.println("no file was deleted. Path :" +SAVE + name.getText() + ".txt");
+				}
 				exit();
 			}
 		});
@@ -362,13 +369,13 @@ public class LevelEditor extends JFrame implements WindowInfo{
 	//:::::::::::::::::::::::EXIT AND START::::::::::::::::
 	@Override
 	public void dispose() {
-		if (out != null) {
-			try {
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		if (out != null) {
+//			try {
+//				out.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		super.dispose();
 		parent.setVisible(true);
 	}

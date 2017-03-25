@@ -257,42 +257,27 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	
 	private void loadLevelEvents(){
 		lblloadLevel.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				String levelName;
 				File folder = new File(SAVE);
 				File[] levels = folder.listFiles();
-				if (levels.length == 0) {
-					JOptionPane.showMessageDialog(frmDungeonKeepGame,
-							"There are no levels available yet. Try out the level editor in order for your level to show up here.",
-							"No available levels.", JOptionPane.ERROR_MESSAGE);
-				}
+				if (levels.length == 0) {JOptionPane.showMessageDialog(frmDungeonKeepGame,"There are no levels available yet. Try out the level editor in order for your level to show up here.","No available levels.", JOptionPane.ERROR_MESSAGE);return;}
 				String[] levels_str = new String[levels.length];
 				for (int i = 0; i < levels.length; i++) {
 					levels_str[i] = levels[i].getName();
 				}
-				levelName = (String) JOptionPane.showInputDialog(frmDungeonKeepGame,
-						"Which level would you like to play?", "Choose a Level", JOptionPane.QUESTION_MESSAGE, null,
-						levels_str, null);
-				try {
-					inputFile = new Scanner(new File(SAVE + levelName));
-				} catch (FileNotFoundException e1) {
-					System.out.println("File not found in load.");
-					return;
-				}
+				levelName = (String) JOptionPane.showInputDialog(frmDungeonKeepGame,"Which level would you like to play?", "Choose a Level", JOptionPane.QUESTION_MESSAGE, null,levels_str, null);
+				try {inputFile = new Scanner(new File(SAVE + levelName));}
+				catch (FileNotFoundException e1) {System.out.println("File not found in load.");return;}
 				loadLevel(levelName, "level2");
 				inputFile.close();
 			}
-
 			public void mouseEntered(MouseEvent e) {
 				lblloadLevel.setForeground(SystemColor.activeCaption);
 			}
-
-			@Override
 			public void mouseExited(MouseEvent e) {
 				lblloadLevel.setForeground(Color.BLACK);
-			}
-		});
+			}});
 	}
 	
 	public void loadLoadSave(){
