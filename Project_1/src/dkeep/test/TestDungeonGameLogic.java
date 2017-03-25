@@ -41,6 +41,8 @@ public class TestDungeonGameLogic {
 	char[][] errorW = { { 'x', ' ', 'x' }, { 'x', ' ', 'x' }, { 'x', 'x', 'x' } };
 	char[][] errorS = { { 'x', 'x', 'x' }, { 'x', ' ', 'x' }, { 'x', ' ', 'x' } };
 	char[][] errorA = { { 'x', 'x', 'x' }, { ' ', ' ', 'x' }, { 'x', 'x', 'x' } };
+	
+	char[][] errorLoose = { { 'x', 'x', 'x', 'x', 'x' },{ 'x', ' ', ' ', ' ', 'x' },{ 'x', ' ', ' ', ' ', 'x' },{ 'x', ' ', ' ', ' ', 'x' },{ 'x', 'x', 'x', 'x', 'x' }};
 
 	char[] mov = { 's', 'w' };
 
@@ -468,20 +470,18 @@ public class TestDungeonGameLogic {
 		char[] move = { 'a', 's', 'd', 'w' };
 		Board gameMap = new Board(errorMap);
 		assertNull(gameMap.readBoard());
-
 		Board gameMap2 = new Board(errorMap2);
-		assertNull(gameMap.readBoard());
-
+		assertNull(gameMap2.readBoard());
 		Board gameMap3 = new Board(errorMap3);
-		assertNull(gameMap.readBoard());
+		assertNull(gameMap3.readBoard());
 		Board gameMap4 = new Board(errorMap4);
-		assertNull(gameMap.readBoard());
+		assertNull(gameMap4.readBoard());
 		Board gameMap5 = new Board(errorMap5);
-		assertNull(gameMap.readBoard());
+		assertNull(gameMap5.readBoard());
 		Board gameMap6 = new Board(errorMap6);
-		assertNull(gameMap.readBoard());
+		assertNull(gameMap6.readBoard());
 		Board gameMap7 = new Board(errorMap7);
-		assertNull(gameMap.readBoard());
+		assertNull(gameMap7.readBoard());
 
 	}
 
@@ -491,6 +491,13 @@ public class TestDungeonGameLogic {
 		Board gameMap = new Board(level2);
 		assertTrue(stringIsSameSize(gameMap.print(entidades, flag), gameMap));
 
+	}
+	
+	@Test
+	public void testCheckSurround() {
+		entidades.removeAllElements();
+		Board gameMap = new Board(errorLoose);
+		
 	}
 
 	boolean stringIsSameSize(String board, Board b) {

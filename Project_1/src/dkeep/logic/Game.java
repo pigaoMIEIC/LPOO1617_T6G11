@@ -117,12 +117,12 @@ public class Game implements java.io.Serializable {
 			finalstatus = win;
 			return true;
 		}
-		if (((Hero) getEntidades().lastElement()).checkSurround('G', getEntidades())) {
+		if (((Hero) getEntidades().lastElement()).checkSurround('G', getEntidades())!='x') {
 			System.out.print("Foi apanhado pelo guarda. :(");
 			finalstatus = DEFEAT;
 			return true;
 		}
-		if (((Hero) getEntidades().lastElement()).checkSurround('O', getEntidades())) {
+		if (((Hero) getEntidades().lastElement()).checkSurround('O', getEntidades())!='x') {
 			System.out.print("Foi apanhado pelo Ogre. :(");
 			finalstatus = DEFEAT;
 			return true;
