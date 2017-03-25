@@ -226,9 +226,19 @@ public class LevelEditor extends JFrame implements WindowInfo{
 		intro.add(btnExit);
 	}
 	
+	public void loadStartButton(){
+		start = new JButton("Start");
+		StartActionListener();
+		start.addActionListener(StartButtonListener);
+		start.setBounds(17, 150, 120, 31);
+		intro.add(start);
+	}
+	
 	public void loadIntro(){
 		loadIntroLabels();
 		loadComboBoxes();
+		loadStartButton();
+		loadNameField();
 		loadExitButton();
 	}
 	
@@ -243,20 +253,11 @@ public class LevelEditor extends JFrame implements WindowInfo{
 				} catch (UnsupportedEncodingException | FileNotFoundException e1) {
 					System.out.println("erro a abrir a file");
 					JOptionPane.showMessageDialog(btnExit.getParent(), "That Level Name is not valid", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
-					return;
-					}
+					return;}
 				start();
 			}};
 	}
-	
-	public void loadStartButton(){
-		start = new JButton("Start");
-		StartActionListener();
-		start.addActionListener(StartButtonListener);
-		start.setBounds(17, 150, 120, 31);
-		intro.add(start);
-	}
-	
+		
 	public void editorPanelMouseMotion(){
 		editorPanelMouseMotion = new MouseMotionAdapter() {
 			@Override

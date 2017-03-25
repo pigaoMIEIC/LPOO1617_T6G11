@@ -111,6 +111,19 @@ public class Ogre extends Entidade {
 		}
 		return false;
 	}
+	
+	private char getInput(){
+		int random, max = 4, min = 1; /// random input
+		random = rand.nextInt(max - min + 1) + min;
+		switch (random) {
+		case 1:return'a';
+		case 2:return's';
+		case 3:return'd';
+		case 4:return'w';
+		}
+		System.out.println("Ogre get input error");
+		return ' ';
+	}
 
 	/**
 	 * Method to move the the Ogre.
@@ -121,102 +134,47 @@ public class Ogre extends Entidade {
 	 *            Board in which the Ogre will move.
 	 */
 	public void move(char direction, Board b) {
-		char input = 'w'; // initializing cause eclipse
-		
-
+		char input = 'w';
 		if (isStunned()) {
 			stunned--;
 			return;
-		} else {
-			while (true) {
-				// input = s.next().charAt(0); //manual input
+		}
 
-				int random, max = 4, min = 1; /// random input
-				random = rand.nextInt(max - min + 1) + min;
-				switch (random) {
-				case 1:
-					input = 'a';
-					break;
-				case 2:
-					input = 's';
-					break;
-				case 3:
-					input = 'd';
-					break;
-				case 4:
-					input = 'w';
-					break;
+		while (true) {
+			input = getInput();
+			switch (input) {
+			case 's':
+				if (moveCondition(x, y + 1, b)) {break;}
+				y++;
+				setCurrent((char) b.refresh(this, input));
+				if (getCurrent() == 'k')
+					setTag('$');
+				return;
+			case 'w':
+				if (moveCondition(x, y - 1, b)) {break;}
+				y--;
+				setCurrent((char) b.refresh(this, input));
 
-				}
-				// input = moves[rand.nextInt(4)];
-				switch (input) {
-				case 's':
-					// if (b.get(x, y + 1) == 'x') {
-					// break;
-					// }
-					// if (b.get(x, y + 1) == 'i') {
-					// break;
-					// }
-					if (moveCondition(x, y + 1, b)) {
-						break;
-					}
-					y++;
-					setCurrent((char) b.refresh(this, input));
-					
-					if (getCurrent() == 'k')
-						setTag('$');
-					return;
-				case 'w':
-					// if (b.get(x, y - 1) == 'x') {
-					// break;
-					// }
-					// if (b.get(x, y - 1) == 'i') {
-					// break;
-					// }
-					if (moveCondition(x, y - 1, b)) {
-						break;
-					}
-					y--;
-					setCurrent((char) b.refresh(this, input));
-					
-					if (getCurrent() == 'k')
-						setTag('$');
-					return;
-				case 'd':
-					// if (b.get(x + 1, y) == 'x') {
-					// break;
-					// }
-					// if (b.get(x + 1, y) == 'i') {
-					// break;
-					// }
-					if (moveCondition(x + 1, y, b)) {
-						break;
-					}
-					x++;
-					setCurrent((char) b.refresh(this, input));
-					
-					if (getCurrent() == 'k')
-						setTag('$');
-					return;
-				case 'a':
-					// if (b.get(x - 1, y) == 'x') {
-					// break;
-					// }
-					// if (b.get(x - 1, y) == 'i') {
-					// break;
-					// }
-					if (moveCondition(x - 1, y, b)) {
-						break;
-					}
-					x--;
-					setCurrent((char) b.refresh(this, input));
-					
-					if (getCurrent() == 'k')
-						setTag('$');
-					return;
-				default:
-					System.out.println("default input");
-				}
+				if (getCurrent() == 'k')
+					setTag('$');
+				return;
+			case 'd':
+				if (moveCondition(x + 1, y, b)) {break;}
+				x++;
+				setCurrent((char) b.refresh(this, input));
+
+				if (getCurrent() == 'k')
+					setTag('$');
+				return;
+			case 'a':
+				if (moveCondition(x - 1, y, b)) {break;}
+				x--;
+				setCurrent((char) b.refresh(this, input));
+				if (getCurrent() == 'k')
+					setTag('$');
+				return;
+			default:
+				System.out.println("default input");
 			}
 		}
 	}

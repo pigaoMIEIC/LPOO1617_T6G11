@@ -15,6 +15,37 @@ public class ComportamentoGuarda implements Serializable{
 	public ComportamentoGuarda(char mov[]) {
 		this.mov = mov;
 	}
+	
+	
+	/**
+	 * Method to invert the input for the guard movement and adjust the current position in the movement array.
+	 * @param input Direction from the movement array.
+	 * @return Inverted input.
+	 */
+	private char invertInput(char input){
+		i--;
+		if (i < 0)
+			i = mov.length - 1;
+		input = mov[i];
+		switch (input) {
+		case 's':return'w';
+		case 'a':return'd';
+		case 'd':return'a';
+		case 'w':return's';
+		}
+		System.out.println("erro em invert input");
+		return ' ';
+	}
+	
+	private boolean moveCondition(int x, int y,char[][] temp){
+		if (temp[y][x] == 'x') {
+			return true;
+		}
+		if (temp[y][x] == 'i') {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Method responsible for moving a Guarda.
@@ -23,75 +54,36 @@ public class ComportamentoGuarda implements Serializable{
 	 * @param b Board in which the to move the Guarda.
 	 */
 	public void move(Guarda guarda, Board b) {
+		int x= guarda.getX(),y=guarda.getY();
 		boolean dir = guarda.getDir();
+		char temp[][] = b.getBoard();
 		char input = mov[i];
-		if (!dir) {
-			i--;
-			if (i < 0)
-				i = mov.length - 1;
-			input = mov[i];
-			switch (input) {
-			case 's':
-				input = 'w';
-				break;
-			case 'a':
-				input = 'd';
-				break;
-			case 'd':
-				input = 'a';
-				break;
-			case 'w':
-				input = 's';
-				break;
-			}
-		} else
-			i++;
-		if (i == mov.length)
-			i = 0;
+		if (!dir) {input = invertInput(input);}
+		else {i++;}
+		if (i == mov.length){i = 0;}
 		switch (input) {
 		case 's':
-			if (b.get(guarda.x, guarda.y + 1) == 'x') {
-				break;
-			}
-			if (b.get(guarda.x, guarda.y + 1) == 'i') {
-				break;
-			}
+			if(moveCondition(x,y+1,temp)){break;}
 			guarda.y++;
 			guarda.setCurrent((char) b.refresh(guarda, input));
 			
 			break;
 		case 'w':
-			if (b.get(guarda.x, guarda.y - 1) == 'x') {
-				break;
-			}
-			if (b.get(guarda.x, guarda.y - 1) == 'i') {
-				break;
-			}
+			if(moveCondition(x,y-1,temp)){break;}
 			guarda.y--;
 			guarda.setCurrent((char) b.refresh(guarda, input));
 			
 			break;
 		case 'd':
-			if (b.get(guarda.x + 1, guarda.y) == 'x') {
-				break;
-			}
-			if (b.get(guarda.x + 1, guarda.y) == 'i') {
-				break;
-			}
+			if(moveCondition(x+1,y,temp)){break;}
 			guarda.x++;
 			guarda.setCurrent((char) b.refresh(guarda, input));
 			
 			break;
 		case 'a':
-			if (b.get(guarda.x - 1, guarda.y) == 'x') {
-				break;
-			}
-			if (b.get(guarda.x - 1, guarda.y) == 'i') {
-				break;
-			}
+			if(moveCondition(x-1,y,temp)){break;}
 			guarda.x--;
 			guarda.setCurrent((char) b.refresh(guarda, input));
-			
 			break;
 		default:
 			System.out.println("default input");
