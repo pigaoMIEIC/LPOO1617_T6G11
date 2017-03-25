@@ -4,4 +4,4 @@
 
 ![Screenshot](Pit_testing.PNG)
 ![Screenshot](junit_testing.PNG)
-
+![Screenshot](coverage_testing.PNG)
