@@ -39,23 +39,13 @@ public class GameInterface extends JPanel {
 	private int xSize;
 	private int ySize;
 
-	public GameInterface(){
+	public GameInterface() {
 		super();
 		this.print = null;
 		try {
-			wall = ImageIO.read(new File("src/resources/wall.jpg"));
-			ogre = ImageIO.read(new File("src/resources/ogre.jpg"));
-			stunnedOgre = ImageIO.read(new File("src/resources/sleepOgre.jpg"));
-			hero = ImageIO.read(new File("src/resources/hero.jpg"));
-			armedHero = ImageIO.read(new File("src/resources/heroArmed.jpg"));
-			keyHero = ImageIO.read(new File("src/resources/heroArmedKey.jpg"));
-			guard = ImageIO.read(new File("src/resources/guard.jpg"));
-			sleepGuard = ImageIO.read(new File("src/resources/sleepguard.jpg"));
-			closedDoor = ImageIO.read(new File("src/resources/door.jpg"));
-			openDoor = ImageIO.read(new File("src/resources/opendoor.jpg"));
-			key = ImageIO.read(new File("src/resources/key.jpg"));
-			attack = ImageIO.read(new File("src/resources/attack.jpg"));
-			floor = ImageIO.read(new File("src/resources/floor.jpg"));
+			loadHeroGuard();
+			loadOgreKey();
+			loadWallFloorDoors();
 			defaulti = ImageIO.read(new File("src/resources/dollar-sign.png"));
 			entry = ImageIO.read(new File("src/resources/entry.jpg"));
 		} catch (IOException e) {
@@ -64,19 +54,38 @@ public class GameInterface extends JPanel {
 		}
 	}
 	
+	public void loadWallFloorDoors()throws IOException{
+		wall = ImageIO.read(new File("src/resources/wall.jpg"));
+		closedDoor = ImageIO.read(new File("src/resources/door.jpg"));
+		openDoor = ImageIO.read(new File("src/resources/opendoor.jpg"));
+		floor = ImageIO.read(new File("src/resources/floor.jpg"));
+	}
+	
+	public void loadHeroGuard() throws IOException{
+		hero = ImageIO.read(new File("src/resources/hero.jpg"));
+		keyHero = ImageIO.read(new File("src/resources/heroArmedKey.jpg"));
+		armedHero = ImageIO.read(new File("src/resources/heroArmed.jpg"));
+		guard = ImageIO.read(new File("src/resources/guard.jpg"));
+		sleepGuard = ImageIO.read(new File("src/resources/sleepguard.jpg"));
+	}
+	
+	public void loadOgreKey() throws IOException {
+		ogre = ImageIO.read(new File("src/resources/ogre.jpg"));
+		stunnedOgre = ImageIO.read(new File("src/resources/sleepOgre.jpg"));
+		attack = ImageIO.read(new File("src/resources/attack.jpg"));
+		key = ImageIO.read(new File("src/resources/key.jpg"));
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		int j=0,x=0;
 		super.paintComponent(g);
 		if(print==null){
-			g.drawImage(entry,0,0,null);
-			return;
+			g.drawImage(entry,0,0,null);return;
 		}
 		for(int i =0;i<print.length();i++){
 			if(print.charAt(i)=='\n'){
-				j++;
-				x=0;
-				continue;
+				j++;x=0;continue;
 			}
 			g.drawImage(getImage(print.charAt(i)),x*xSize,j*ySize,xSize,ySize,null);
 			x++;

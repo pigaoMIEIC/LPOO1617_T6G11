@@ -239,16 +239,14 @@ public class LevelEditor extends JFrame implements WindowInfo{
 					JOptionPane.showMessageDialog(btnExit.getParent(), "That Level Name is already in use.", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				try {
-					out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(SAVE+name.getText()+".txt"), "utf-8"));
+				try {out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(SAVE+name.getText()+".txt"), "utf-8"));
 				} catch (UnsupportedEncodingException | FileNotFoundException e1) {
 					System.out.println("erro a abrir a file");
 					JOptionPane.showMessageDialog(btnExit.getParent(), "That Level Name is not valid", "Invalid Level Name!",JOptionPane.ERROR_MESSAGE);
 					return;
-				}
+					}
 				start();
-			}
-		};
+			}};
 	}
 	
 	public void loadStartButton(){
@@ -308,13 +306,9 @@ public class LevelEditor extends JFrame implements WindowInfo{
 						return;
 					}
 					saveLevel();
-				} catch (IOException e1) {
-					System.out.println("não conseguiu guardar o nivel");
-					e1.printStackTrace();
-				}
+				} catch (IOException e1) {System.out.println("não conseguiu guardar o nivel");e1.printStackTrace();}
 				exit();
-			}
-		};
+			}};
 	}
 	
 	public void loadButtonExitSave(){
@@ -397,9 +391,7 @@ public class LevelEditor extends JFrame implements WindowInfo{
 		try {
 			out.write((String) rows.getSelectedItem());out.write(' ');
 			out.write((String) columns.getSelectedItem());out.newLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {e.printStackTrace();}
 		xSize=500/noColumns;
 		ySize=500/noRows;
 		editorBoard = new char[noRows][noColumns];
