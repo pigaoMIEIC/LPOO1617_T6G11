@@ -181,23 +181,23 @@ public class Board implements Serializable{
 		if (name.equals("level1")) {
 			board[5][0] = 's';
 			board[6][0] = 's';
+			return;
 		}
-		if (name.equals("level2")) {
-			for (int y = 0; y < board.length; y++) {
+		for (int y = 0; y < board.length; y++) {
 				for (int x = 0; x < board[0].length; x++) {
 					if(board[y][x]=='i'){
 						board[y][x]='s';
 					}
 				}
 			}
-		}
-		if(name.equals("testlevel")){
-			board[2][0] = 's';
-			board[3][0] = 's';
-		}
-		if(name.equals("testlevel2")){
-			board[2][0] = 's';
-		}
+//		}
+//		if(name.equals("testlevel")){
+//			board[2][0] = 's';
+//			board[3][0] = 's';
+//		}
+//		if(name.equals("testlevel2")){
+//			board[2][0] = 's';
+//		}
 	}
 
 	/**

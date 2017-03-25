@@ -178,7 +178,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			public void mouseClicked(MouseEvent arg0) {
 				noOgres = Integer.parseInt((String) JOptionPane.showInputDialog(frmDungeonKeepGame,
 						"How many Ogres would you like to face in Level 2", "Number of Ogres",
-						JOptionPane.QUESTION_MESSAGE, null, numbers, null));
+						JOptionPane.QUESTION_MESSAGE, null, OgresOption, null));
 				System.out.println(noOgres);
 			}
 
@@ -298,25 +298,18 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	public void loadLoadSave(){
 		JLabel lblLoadSave = new JLabel("Load Save");
 		lblLoadSave.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				lblLoadSave.setForeground(SystemColor.activeCaption);
 			}
-
-			@Override
 			public void mouseExited(MouseEvent e) {
 				lblLoadSave.setForeground(Color.BLACK);
 			}
-
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				loadState();
 				frmDungeonKeepGame.requestFocusInWindow();
-			}
-		});
+			}});
 		lblLoadSave.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		mnLoadSave.add(lblLoadSave);
-		
+		mnLoadSave.add(lblLoadSave);		
 	}
 	
 	public void loadSaveState(){
@@ -629,11 +622,8 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		gameInterface.updatePrint(null,null);
 		StartGame.setText("Start Game");
 		GameState.setText("");
-		StartGame.setEnabled(true);
-		numberOgres.setEnabled(true);
-		guardType.setEnabled(true);
-		lblEditor.setEnabled(true);
-		lblloadLevel.setEnabled(true);
+		resetRoutine();
+		
 	}
 	
 	public void startGameRoutine(){
@@ -657,5 +647,13 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		numberOgres.setEnabled(false);
 		guardType.setEnabled(false);
 		lblEditor.setEnabled(false);
+	}
+	
+	public void resetRoutine(){
+		StartGame.setEnabled(true);
+		numberOgres.setEnabled(true);
+		guardType.setEnabled(true);
+		lblEditor.setEnabled(true);
+		lblloadLevel.setEnabled(true);
 	}
 }
