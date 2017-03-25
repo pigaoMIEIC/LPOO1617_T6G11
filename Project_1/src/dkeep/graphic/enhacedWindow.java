@@ -93,7 +93,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 
 	// :::::::::::::::::JFRAME OBJECTS::::::::::::::::::::::
 	private JLabel GameState, numberOgres, guardType;
-	private JButton StartGame;
+	private JButton StartGame,btnUp,btnDown,btnLeft,btnRight;
 	private GameInterface gameInterface;
 	private JMenuBar menuBar;
 	private JLabel lblEditor, lblloadLevel;
@@ -353,7 +353,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	}
 	
 	public void loadUpButton(){
-		JButton btnUp = new JButton("Up");
+		btnUp = new JButton("Up");
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				buttonEvent('w');
@@ -365,7 +365,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	}
 	
 	public void loadDownButton(){
-		JButton btnDown = new JButton("Down");
+		btnDown = new JButton("Down");
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonEvent('s');
@@ -377,7 +377,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	}
 	
 	public void loadLeftButton(){
-		JButton btnLeft = new JButton("Left");
+		btnLeft = new JButton("Left");
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonEvent('a');
@@ -389,7 +389,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	}
 	
 	public void loadRightButton(){
-		JButton btnRight = new JButton("Right");
+		btnRight = new JButton("Right");
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonEvent('d');
@@ -581,7 +581,8 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	
 	public void startGameRoutine(){
 		frmDungeonKeepGame.setFocusable(true);
-		reset();				
+		reset();
+		setPlayButtons(true);
 		numberOgres.setEnabled(false);
 		guardType.setEnabled(false);
 		lblEditor.setEnabled(false);
@@ -591,6 +592,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	public void endGameRoutine() {
 		frmDungeonKeepGame.setFocusable(false);
 		StartGame.setEnabled(true);
+		setPlayButtons(false);
 		StartGame.setText("Continue");
 	}
 	
@@ -600,7 +602,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		numberOgres.setEnabled(false);
 		guardType.setEnabled(false);
 		lblEditor.setEnabled(false);
-	}
+	} 
 	
 	public void resetRoutine(){
 		StartGame.setEnabled(true);
@@ -609,4 +611,11 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		lblEditor.setEnabled(true);
 		lblloadLevel.setEnabled(true);
 	}
+	
+	public void setPlayButtons(boolean set){
+		btnUp.setVisible(set);
+		btnDown.setVisible(set);
+		btnLeft.setVisible(set);
+		btnRight.setVisible(set);		
+	};
 }

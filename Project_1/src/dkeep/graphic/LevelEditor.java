@@ -297,7 +297,7 @@ public class LevelEditor extends JFrame implements WindowInfo{
 		editorPanel.setLayout(null);
 	}
 	
-	public void ExitSaveActionListener(){
+	public void exitSaveActionListener(){
 		exitSaveButtonListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Board b = new Board(editorBoard);
@@ -315,6 +315,7 @@ public class LevelEditor extends JFrame implements WindowInfo{
 	
 	public void loadButtonExitSave(){
 		btnExitAndSave = new JButton("Exit and Save");
+		exitSaveActionListener();
 		btnExitAndSave.addActionListener(exitSaveButtonListener);
 		btnExitAndSave.setBounds(30, 584, 212, 43);
 		getContentPane().add(btnExitAndSave);
