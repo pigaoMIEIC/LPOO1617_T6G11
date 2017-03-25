@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**  
 * Entidade.java - A class to store moving parts of the game.
 */ 
-public abstract class Entidade implements Serializable{
+public abstract class Entidade extends CaseFunctions implements Serializable{
 	protected int x,y;
 	private char tag=' ';
 	private char current=' ';

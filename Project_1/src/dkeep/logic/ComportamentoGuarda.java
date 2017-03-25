@@ -4,7 +4,7 @@ import java.io.Serializable;
 /**
  * ComportamentoGuarda.java - Class that is responsible for storing a guard movement routine and moving him.
  */
-public class ComportamentoGuarda implements Serializable{
+public class ComportamentoGuarda extends CaseFunctions implements Serializable {
 	char mov[];
 	int i = 0;
 
@@ -47,25 +47,7 @@ public class ComportamentoGuarda implements Serializable{
 		return false;
 	}
 
-	private void caseStuff(char input,int i[]){
-		switch (input) {
-		case 's':i[1]++;break;
-		case 'w':i[1]--;break;
-		case 'd':i[0]++;break;
-		case 'a':i[0]--;break;
-		default: System.out.println("default input");
-		}
-	}
 	
-	private void caseFunctionEntidade(char input,Entidade g){
-		switch (input) {
-		case 's':g.y++;break;
-		case 'w':g.y--;break;
-		case 'd':g.x++;break;
-		case 'a':g.x--;break;
-		default: System.out.println("default input");
-		}
-	}
 	
 	/**
 	 * Method responsible for moving a Guarda.
@@ -84,7 +66,7 @@ public class ComportamentoGuarda implements Serializable{
 		else {i++;}
 		if (i == mov.length){i = 0;}
 		
-		caseStuff(input,a);
+		caseFunction(input,a);
 
 		if (moveCondition(a[0], a[1], temp)) {return;}
 		caseFunctionEntidade(input, guarda); 

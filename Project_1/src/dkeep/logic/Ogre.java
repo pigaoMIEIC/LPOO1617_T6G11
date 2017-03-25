@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * Ogre.java - A subclass of Entidade representing the ogre character.
  */
-public class Ogre extends Entidade {
+public class Ogre extends Entidade{
 
 	private static Scanner s = new Scanner(System.in);
 	static char moves[] = { 'a', 's', 'd', 'w' };
@@ -134,6 +134,9 @@ public class Ogre extends Entidade {
 	 *            Board in which the Ogre will move.
 	 */
 	public void move(char direction, Board b) {
+		int a[] = new int [2];
+		a[0]= this.getX();
+		a[1]= this.getY();
 		char input = 'w';
 		if (isStunned()) {
 			stunned--;
@@ -142,40 +145,14 @@ public class Ogre extends Entidade {
 
 		while (true) {
 			input = getInput();
-			switch (input) {
-			case 's':
-				if (moveCondition(x, y + 1, b)) {break;}
-				y++;
-				setCurrent((char) b.refresh(this, input));
-				if (getCurrent() == 'k')
-					setTag('$');
-				return;
-			case 'w':
-				if (moveCondition(x, y - 1, b)) {break;}
-				y--;
-				setCurrent((char) b.refresh(this, input));
 
-				if (getCurrent() == 'k')
-					setTag('$');
-				return;
-			case 'd':
-				if (moveCondition(x + 1, y, b)) {break;}
-				x++;
-				setCurrent((char) b.refresh(this, input));
-
-				if (getCurrent() == 'k')
-					setTag('$');
-				return;
-			case 'a':
-				if (moveCondition(x - 1, y, b)) {break;}
-				x--;
-				setCurrent((char) b.refresh(this, input));
-				if (getCurrent() == 'k')
-					setTag('$');
-				return;
-			default:
-				System.out.println("default input");
-			}
+			caseFunction(input, a);
+			if (moveCondition(a[0], a[1], b)) {break;}
+			caseFunctionEntidade(input, this);
+			setCurrent((char) b.refresh(this, input));
+			if (getCurrent() == 'k')
+				setTag('$');
+			return;
 		}
 	}
 
