@@ -97,6 +97,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 	private GameInterface gameInterface;
 	private JMenuBar menuBar;
 	private JLabel lblEditor, lblloadLevel;
+	private JMenu mnLoadSave, mnLevelEditing;
 	// :::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	/**
@@ -128,18 +129,10 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			public void keyPressed(KeyEvent e) {
 				int keyCode = e.getKeyCode();
 				switch (keyCode) {
-				case KeyEvent.VK_UP:
-					buttonEvent('w');
-					break;
-				case KeyEvent.VK_DOWN:
-					buttonEvent('s');
-					break;
-				case KeyEvent.VK_RIGHT:
-					buttonEvent('d');
-					break;
-				case KeyEvent.VK_LEFT:
-					buttonEvent('a');
-					break;
+				case KeyEvent.VK_UP:buttonEvent('w');break;
+				case KeyEvent.VK_DOWN:buttonEvent('s');break;
+				case KeyEvent.VK_RIGHT:buttonEvent('d');break;
+				case KeyEvent.VK_LEFT:buttonEvent('a');break;
 				}
 			}
 		});
@@ -211,10 +204,8 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		menuBar.add(numberOgres);
 	}
 	
-	
-	
 	public void menuLevelEditing(){
-		JMenu mnLevelEditing = new JMenu("Level Editing");
+		mnLevelEditing = new JMenu("Level Editing");
 		mnLevelEditing.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -226,16 +217,20 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 				mnLevelEditing.setForeground(Color.BLACK);
 			}
 		});
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		menuBar.add(horizontalStrut_1);
 		mnLevelEditing.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		menuBar.add(mnLevelEditing);
 		
-		editorLevel(mnLevelEditing);
+		editorLevel();
 
 		lblloadLevel = new JLabel("Load Level");
 		mnLevelEditing.add(lblloadLevel);
+		lblloadLevel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblloadLevel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 	}
 	
-	private void editorLevel(JMenu mnLevelEditing){
+	private void editorLevel(){
 		lblEditor = new JLabel("Editor");
 		mnLevelEditing.add(lblEditor);
 		editorLevelEvents();
@@ -299,39 +294,8 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			}
 		});
 	}
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		if (!directory.exists())
-			directory.mkdir();
-		if (!states.exists())
-			states.mkdir();
-		frmDungeonKeepGame = new JFrame();
-		keyEvents();
-		initializeFrame();
-		// ::::::::::::::::MENU & MENU LABELS::::::::::::::::::::::
-		menuBar = new JMenuBar();
-		menuBar();
-		menuBar.add(guardType);
-		numberOgresLable();
-		
-		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
-		menuBar.add(horizontalStrut_1);
-		
-		menuLevelEditing();
-		
-		loadLevelEvents();
-		lblloadLevel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblloadLevel.setFont(new Font("Tahoma", Font.PLAIN, 24));
-
-		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
-		menuBar.add(horizontalStrut_2);
-
-		JMenu mnLoadSave = new JMenu("Game Saves");
-		mnLoadSave.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		menuBar.add(mnLoadSave);
-
+	
+	public void loadLoadSave(){
 		JLabel lblLoadSave = new JLabel("Load Save");
 		lblLoadSave.addMouseListener(new MouseAdapter() {
 			@Override
@@ -347,11 +311,15 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				loadState();
+				frmDungeonKeepGame.requestFocusInWindow();
 			}
 		});
 		lblLoadSave.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		mnLoadSave.add(lblLoadSave);
-
+		
+	}
+	
+	public void loadSaveState(){
 		JLabel lblSaveState = new JLabel("Save State");
 		lblSaveState.addMouseListener(new MouseAdapter() {
 			@Override
@@ -371,9 +339,17 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		});
 		lblSaveState.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		mnLoadSave.add(lblSaveState);
-		// :::::::::::::::::::::::::::::::::::::::::::::::::
-
-		// ::::::::::::::GAME INTERFACE:::::::::::::::::::::
+	}
+	
+	public void loadStateMenu(){
+		mnLoadSave = new JMenu("Game Saves");
+		mnLoadSave.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		menuBar.add(mnLoadSave);
+		loadLoadSave();
+		loadSaveState();	
+	}
+	
+	public void loadStartGame(){
 		StartGame = new JButton("Start Game");
 		StartGame.setBounds(640, 80, 169, 40);
 		StartGame.addActionListener(new ActionListener() {
@@ -394,18 +370,14 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 							"Invalid number of Ogres!", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-//				frmDungeonKeepGame.setFocusable(true);
-//				reset();				
-//				numberOgres.setEnabled(false);
-//				guardType.setEnabled(false);
-//				lblEditor.setEnabled(false);
-//				frmDungeonKeepGame.requestFocusInWindow();
 				startGameRoutine();
 				loadLvl1();
 			}
 		});
 		frmDungeonKeepGame.getContentPane().add(StartGame);
-
+	}
+	
+	public void loadGameInterface(){
 		GameState = new JLabel("");
 		GameState.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		GameState.setBounds(30, 640, 576, 61);
@@ -416,27 +388,9 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		gameInterface.setBorder(new LineBorder(new Color(0, 0, 0)));
 		gameInterface.setBounds(40, 80, 550, 550);
 		frmDungeonKeepGame.getContentPane().add(gameInterface);
-		// :::::::::::::::::::::::::::::::::::::::::::::::::
-
-		JButton Exit = new JButton("Exit Game");
-		Exit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		Exit.setBounds(640, 643, 169, 48);
-		frmDungeonKeepGame.getContentPane().add(Exit);
-
-		JButton btnLeft = new JButton("Left");
-		btnLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonEvent('a');
-				frmDungeonKeepGame.requestFocusInWindow();
-			}
-		});
-		btnLeft.setBounds(600, 263, 89, 23);
-		frmDungeonKeepGame.getContentPane().add(btnLeft);
-
+	}
+	
+	public void loadUpButton(){
 		JButton btnUp = new JButton("Up");
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -446,17 +400,9 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		});
 		btnUp.setBounds(661, 229, 89, 23);
 		frmDungeonKeepGame.getContentPane().add(btnUp);
-
-		JButton btnRight = new JButton("Right");
-		btnRight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonEvent('d');
-				frmDungeonKeepGame.requestFocusInWindow();
-			}
-		});
-		btnRight.setBounds(735, 263, 89, 23);
-		frmDungeonKeepGame.getContentPane().add(btnRight);
-
+	}
+	
+	public void loadDownButton(){
 		JButton btnDown = new JButton("Down");
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -466,7 +412,74 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		});
 		btnDown.setBounds(661, 297, 89, 23);
 		frmDungeonKeepGame.getContentPane().add(btnDown);
-
+	}
+	
+	public void loadLeftButton(){
+		JButton btnLeft = new JButton("Left");
+		btnLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonEvent('a');
+				frmDungeonKeepGame.requestFocusInWindow();
+			}
+		});
+		btnLeft.setBounds(600, 263, 89, 23);
+		frmDungeonKeepGame.getContentPane().add(btnLeft);
+	}
+	
+	public void loadRightButton(){
+		JButton btnRight = new JButton("Right");
+		btnRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonEvent('d');
+				frmDungeonKeepGame.requestFocusInWindow();
+			}
+		});
+		btnRight.setBounds(735, 263, 89, 23);
+		frmDungeonKeepGame.getContentPane().add(btnRight);
+	}
+	
+	public void loadGameButtons(){
+		loadUpButton();
+		loadDownButton();
+		loadLeftButton();
+		loadRightButton();
+	}
+	
+	public void loadExitButton(){
+		JButton Exit = new JButton("Exit Game");
+		Exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		Exit.setBounds(640, 643, 169, 48);
+		frmDungeonKeepGame.getContentPane().add(Exit);
+	}
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		if (!directory.exists())directory.mkdir();
+		if (!states.exists())states.mkdir();
+		frmDungeonKeepGame = new JFrame();
+		keyEvents();
+		initializeFrame();
+		// ::::::::::::::::MENU & MENU LABELS::::::::::::::::::::::
+		menuBar = new JMenuBar();
+		menuBar();
+		menuBar.add(guardType);
+		numberOgresLable();
+		menuLevelEditing();
+		loadLevelEvents();
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		menuBar.add(horizontalStrut_2);
+		loadStateMenu();
+		// ::::::::::::::GAME INTERFACE:::::::::::::::::::::
+		loadStartGame();
+		loadGameInterface();
+		// :::::::::::::::::::::::::::::::::::::::::::::::::
+		loadExitButton();
+		loadGameButtons();
 	}
 
 	protected void saveState() {
@@ -514,7 +527,6 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		}
 		this.game = new Game(b, entidades);
 		gameInterface.updatePrint(null,game);
-		frmDungeonKeepGame.requestFocusInWindow();
 		gameInterface.repaint();
 	}
 
@@ -550,33 +562,21 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 
 	public void buttonEvent(char input) {
 		String temp;
-		//game.clearAttack();
 		temp = game.Move(input);
-		//game.attack();
 		gameInterface.updatePrint(temp, game);
 		if (game.end()) {
 			int tempStatus = game.getEndStatus();
 			String tempName = game.getBoard().getName();
 			if (tempStatus == 0 && tempName.equals("level1")) {
 				reset();
-				loadLvl2();
-			}
+				loadLvl2();}
 			if (tempStatus == 1) {
 				GameState.setText("Perdeu. :(");
-				frmDungeonKeepGame.setFocusable(false);
-				StartGame.setEnabled(true);
-				StartGame.setText("Continue");
-				// reset();
-				// StartGame.setEnabled(true);
-			}
+				endGameRoutine();}
 			if (tempStatus == 0 && tempName.equals("level2")) {
 				GameState.setText("Parabens Ganhou! :)");
-				frmDungeonKeepGame.setFocusable(false);
-				StartGame.setEnabled(true);
-				StartGame.setText("Continue");
-				// reset();
+				endGameRoutine();}
 			}
-		}
 	}
 
 	public void loadLvl2() {
@@ -593,11 +593,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		}
 		entidades.add(hero);
 		// Game
-		game = new Game(b, entidades);
-		gameInterface.updatePrint(null,game);
-		numberOgres.setEnabled(false);
-		guardType.setEnabled(false);
-		lblEditor.setEnabled(false);
+		gameLoadRoutine();
 	}
 
 	public void loadLvl1() {
@@ -618,12 +614,7 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		entidades.add(guarda);
 		entidades.add(hero);
 		// Game
-		game = new Game(b, entidades);
-		gameInterface.updatePrint(null,game);
-		numberOgres.setEnabled(false);
-		guardType.setEnabled(false);
-		lblEditor.setEnabled(false);
-
+		gameLoadRoutine();
 	}
 
 	public void reset() {
@@ -652,5 +643,19 @@ public class enhacedWindow implements Serializable, WindowInfo, MapsInterface {
 		guardType.setEnabled(false);
 		lblEditor.setEnabled(false);
 		frmDungeonKeepGame.requestFocusInWindow();
+	}
+
+	public void endGameRoutine() {
+		frmDungeonKeepGame.setFocusable(false);
+		StartGame.setEnabled(true);
+		StartGame.setText("Continue");
+	}
+	
+	public void gameLoadRoutine(){
+		game = new Game(b, entidades);
+		gameInterface.updatePrint(null,game);
+		numberOgres.setEnabled(false);
+		guardType.setEnabled(false);
+		lblEditor.setEnabled(false);
 	}
 }
