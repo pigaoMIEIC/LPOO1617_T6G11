@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -41,9 +42,14 @@ public class GameStage extends Stage{
      * The ball actor
      */
     private final BallActor ballActor;
+    boolean joystick = false;
 
     GameStage(Ball game) {
 
+        boolean availableAccelerometers = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+        if(!availableAccelerometers){
+            joystick = true;
+        }
         // Set the viewport
         float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
         setViewport(new FitViewport(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ratio));
@@ -67,7 +73,7 @@ public class GameStage extends Stage{
         alphaAction.setDuration(10);
         ballActor.addAction(alphaAction);
 
-        world = new World(new Vector2(0, -3), true);
+        world = new World(new Vector2(0, 0), true);
         ballBody = ballActor.createBody(world);
         wallActor.createFloor(world);
         wallActor.createLeft(world);
@@ -96,12 +102,18 @@ public class GameStage extends Stage{
 
     }
 
+
     @Override
     public void act(float delta) {
         super.act(delta);
 
         // Step the world
         world.step(delta, 6, 2);
+        float accelX = Gdx.input.getAccelerometerX();
+        float accelY = Gdx.input.getAccelerometerY();
+        float accelZ = Gdx.input.getAccelerometerZ();
+        Vector2 vector = new Vector2(accelY / 100, -accelX / 100);
+        ballBody.applyForceToCenter(vector, true);
 
         // Update the ball actor position
         ballActor.setRotation((float) Math.toDegrees(ballBody.getAngle()));

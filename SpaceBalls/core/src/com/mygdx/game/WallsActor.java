@@ -27,6 +27,8 @@ public class WallsActor extends Actor{
 
     private float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
 
+    private float heigthM = VIEWPORT_WIDTH * ratio+height;
+
     WallsActor(Ball game){
         texture = game.getAssetManager().get("ground.jpg");
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
@@ -69,7 +71,7 @@ public class WallsActor extends Actor{
         fixtureDef.shape = rectangle;
         fixtureDef.density = .5f;      // how heavy is the ground
         fixtureDef.friction =  .5f;    // how slippery is the ground
-        fixtureDef.restitution =  .5f; // how bouncy is the ground
+        fixtureDef.restitution =  1; // how bouncy is the ground
 
         // Attach fixture to body
         body.createFixture(fixtureDef);
@@ -92,7 +94,7 @@ public class WallsActor extends Actor{
 
         // Create rectangular shape
         PolygonShape rectangle = new PolygonShape();
-        rectangle.setAsBox(1, VIEWPORT_WIDTH * ratio+1); // Viewport width and 50cm height
+        rectangle.setAsBox(1, heigthM); // Viewport width and 50cm height
         body.setTransform(-1, 0, 0); // Bottom left corner
 
         // Create ground fixture
@@ -100,7 +102,7 @@ public class WallsActor extends Actor{
         fixtureDef.shape = rectangle;
         fixtureDef.density = .5f;      // how heavy is the ground
         fixtureDef.friction =  .5f;    // how slippery is the ground
-        fixtureDef.restitution =  .5f; // how bouncy is the ground
+        fixtureDef.restitution =  1; // how bouncy is the ground
 
         // Attach fixture to body
         body.createFixture(fixtureDef);
@@ -122,7 +124,7 @@ public class WallsActor extends Actor{
 
         // Create rectangular shape
         PolygonShape rectangle = new PolygonShape();
-        rectangle.setAsBox(1, VIEWPORT_WIDTH * ratio+1); // Viewport width and 50cm height
+        rectangle.setAsBox(1, heigthM); // Viewport width and 50cm height
         body.setTransform(width+1, 0, 0); // Bottom left corner
 
         // Create ground fixture
@@ -130,7 +132,7 @@ public class WallsActor extends Actor{
         fixtureDef.shape = rectangle;
         fixtureDef.density = .5f;      // how heavy is the ground
         fixtureDef.friction =  .5f;    // how slippery is the ground
-        fixtureDef.restitution =  .5f; // how bouncy is the ground
+        fixtureDef.restitution =  1; // how bouncy is the ground
 
         // Attach fixture to body
         body.createFixture(fixtureDef);
@@ -152,14 +154,14 @@ public class WallsActor extends Actor{
 
         PolygonShape rectangle = new PolygonShape();
         rectangle.setAsBox(width, height); // Viewport width and 50cm height
-        body.setTransform(0, VIEWPORT_WIDTH * ratio+height, 0); // Bottom left corner
+        body.setTransform(0, heigthM, 0); // Bottom left corner
 
         // Create ground fixture
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = rectangle;
         fixtureDef.density = .5f;      // how heavy is the ground
         fixtureDef.friction =  .5f;    // how slippery is the ground
-        fixtureDef.restitution =  .5f; // how bouncy is the ground
+        fixtureDef.restitution =  1; // how bouncy is the ground
 
         // Attach fixture to body
         body.createFixture(fixtureDef);

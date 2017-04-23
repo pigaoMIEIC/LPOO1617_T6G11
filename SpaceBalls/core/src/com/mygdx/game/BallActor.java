@@ -93,6 +93,8 @@ public class BallActor extends Actor{
         // Create the ball body definition
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.angularDamping = 0.2f;
+        bodyDef.linearDamping = 0.2f;
 
         // Create the ball body
         float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
@@ -108,7 +110,7 @@ public class BallActor extends Actor{
         fixtureDef.shape = circle;
         fixtureDef.density = .5f;      // how heavy is the ball
         fixtureDef.friction =  .5f;    // how slippery is the ball
-        fixtureDef.restitution =  .5f; // how bouncy is the ball
+        fixtureDef.restitution =  1; // how bouncy is the ball
 
         // Attach fixture to body
         body.createFixture(fixtureDef);
