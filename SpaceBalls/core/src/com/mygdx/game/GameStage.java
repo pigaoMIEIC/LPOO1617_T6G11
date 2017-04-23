@@ -61,6 +61,7 @@ public class GameStage extends Stage{
         wallActor.setPosition(20,60);
         addActor(wallActor);
 
+
         AlphaAction alphaAction = new AlphaAction();
         alphaAction.setAlpha(.5f);
         alphaAction.setDuration(10);
@@ -68,7 +69,11 @@ public class GameStage extends Stage{
 
         world = new World(new Vector2(0, -3), true);
         ballBody = ballActor.createBody(world);
-        wallActor.createBody(world);
+        wallActor.createFloor(world);
+        wallActor.createLeft(world);
+        wallActor.createRight(world);
+        wallActor.createTop(world);
+
 
         // Touch events
         ballActor.addListener(new ClickListener(){
@@ -88,6 +93,7 @@ public class GameStage extends Stage{
                 ballBody.applyForceToCenter(vector, true);
             }
         });
+
     }
 
     @Override

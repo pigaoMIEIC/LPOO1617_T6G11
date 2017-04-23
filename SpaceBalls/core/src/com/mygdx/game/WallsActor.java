@@ -1,4 +1,5 @@
 package com.mygdx.game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,11 +21,11 @@ public class WallsActor extends Actor{
      */
     private final Texture texture;
 
-    float height = 0.5f;
+    private float height = 0.5f;
 
-    float width = VIEWPORT_WIDTH;
+    private float width = VIEWPORT_WIDTH;
 
-
+    private float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
 
     WallsActor(Ball game){
         texture = game.getAssetManager().get("ground.jpg");
@@ -49,7 +50,7 @@ public class WallsActor extends Actor{
      * @param world the world this body belongs to
      * @return the body
      */
-    Body createBody(World world) {
+    Body createFloor(World world) {
         // Create the ball body definition
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -62,6 +63,96 @@ public class WallsActor extends Actor{
         PolygonShape rectangle = new PolygonShape();
         rectangle.setAsBox(width, height); // Viewport width and 50cm height
         body.setTransform(0, -height, 0); // Bottom left corner
+
+        // Create ground fixture
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = rectangle;
+        fixtureDef.density = .5f;      // how heavy is the ground
+        fixtureDef.friction =  .5f;    // how slippery is the ground
+        fixtureDef.restitution =  .5f; // how bouncy is the ground
+
+        // Attach fixture to body
+        body.createFixture(fixtureDef);
+
+        // Dispose of circle shape
+        rectangle.dispose();
+
+        return body;
+    }
+
+
+    Body createLeft(World world) {
+        // Create the ball body definition
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        // Create the ball body
+        Body body = world.createBody(bodyDef);
+
+
+        // Create rectangular shape
+        PolygonShape rectangle = new PolygonShape();
+        rectangle.setAsBox(1, VIEWPORT_WIDTH * ratio+1); // Viewport width and 50cm height
+        body.setTransform(-1, 0, 0); // Bottom left corner
+
+        // Create ground fixture
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = rectangle;
+        fixtureDef.density = .5f;      // how heavy is the ground
+        fixtureDef.friction =  .5f;    // how slippery is the ground
+        fixtureDef.restitution =  .5f; // how bouncy is the ground
+
+        // Attach fixture to body
+        body.createFixture(fixtureDef);
+
+        // Dispose of circle shape
+        rectangle.dispose();
+
+        return body;
+    }
+
+    Body createRight(World world) {
+        // Create the ball body definition
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        // Create the ball body
+        Body body = world.createBody(bodyDef);
+
+
+        // Create rectangular shape
+        PolygonShape rectangle = new PolygonShape();
+        rectangle.setAsBox(1, VIEWPORT_WIDTH * ratio+1); // Viewport width and 50cm height
+        body.setTransform(width+1, 0, 0); // Bottom left corner
+
+        // Create ground fixture
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = rectangle;
+        fixtureDef.density = .5f;      // how heavy is the ground
+        fixtureDef.friction =  .5f;    // how slippery is the ground
+        fixtureDef.restitution =  .5f; // how bouncy is the ground
+
+        // Attach fixture to body
+        body.createFixture(fixtureDef);
+
+        // Dispose of circle shape
+        rectangle.dispose();
+
+        return body;
+    }
+
+    Body createTop(World world) {
+        // Create the ball body definition
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        // Create the ball body
+        Body body = world.createBody(bodyDef);
+
+
+        PolygonShape rectangle = new PolygonShape();
+        rectangle.setAsBox(width, height); // Viewport width and 50cm height
+        body.setTransform(0, VIEWPORT_WIDTH * ratio+height, 0); // Bottom left corner
 
         // Create ground fixture
         FixtureDef fixtureDef = new FixtureDef();
