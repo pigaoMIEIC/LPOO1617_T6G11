@@ -54,8 +54,8 @@ Make sure the game is working as intended.
  
  Decorators: Change player abilities according to power ups picked up.
  
-
- 
+<br><br>
+<br><br>
  
  Tiago Costa Neves 201506203 up201506203@fe.up.pt
  
