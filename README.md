@@ -6,6 +6,18 @@
 ### Activity Diagram
 ![Activity Diagram](Activity_diagram_Space_balls.png)
 
+### GUI Mock-Ups
+##### Main Menu
+![Main Menu](pages/entrymenu.png)
+##### Level Menu
+![Level Menu](pages/levelmenu.png)
+##### Generic game level
+![Generic game level](pages/generic_game_level.png)
+##### SandBox game mode
+![SandBox game mode](pages/sandbox_gamemode.png)
+##### Options Menu
+![Options Menu](pages/optionsmenu.png)
+
 ### Tests
 
 #### TEST 1: (PLAYER BALL)
