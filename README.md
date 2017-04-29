@@ -47,9 +47,13 @@ Make sure the game is working as intended.
  
 ### Design Patterns
  Singleton: Game class;
+ 
  Strategy: Different balls behaviour;
+ 
  State: Change interface state between menus and levels;
+ 
  Decorators: Change player abilities according to power ups picked up.
+ 
 
  
  
