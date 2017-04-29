@@ -51,6 +51,8 @@ Make sure the game is working as intended.
 #### State: Change interface state between menus and levels;
 #### Decorators: Change player abilities according to power ups picked up.
 
+
+
  Tiago Costa Neves 201506203 up201506203@fe.up.pt
  
  Eduardo de Mendonça Rodrigues Salgado Ramos 201505779 up201505779@fe.up.pt
