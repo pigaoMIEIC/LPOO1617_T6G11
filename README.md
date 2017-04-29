@@ -42,7 +42,7 @@ Test if when playing a level the player looses upon hitting a certain wall.
 OBJECTIVE:
 Make sure the game is working as intended.
 
-### TEST 7: (LEVELS-VICTORY)
+#### TEST 7: (LEVELS-VICTORY)
 Test if when the player hits the victory ball the game ends in victory and is marked as complete.
 
  Tiago Costa Neves 201506203 up201506203@fe.up.pt
