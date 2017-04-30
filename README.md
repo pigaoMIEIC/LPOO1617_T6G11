@@ -58,13 +58,13 @@ Make sure the game is working as intended.
  Test if when the player hits the victory ball the game ends in victory and is marked as complete.
  
 ### Design Patterns
- Singleton: Game class;
+ Singleton: SpaceBallGame class;
  
- Strategy: Different balls behaviour;
+ Strategy: Different balls behaviour;Classes: BallBehaviour,Enemy,Player,PowerUp;
  
- State: Change interface state between menus and levels;
+ State: Change interface state between menus and levels;Classes: GameLevel,Menu,Options,Pause,GameStage,;
  
- Decorators: Change player abilities according to power ups picked up.
+ Decorators: Change player abilities according to power ups picked up;Classes: Player,Decorator,Invulnerable,Shield,Heart
 <br><br>
 <br><br>
  Tiago Costa Neves 201506203 up201506203@fe.up.pt
