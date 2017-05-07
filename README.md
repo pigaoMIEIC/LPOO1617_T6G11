@@ -1,22 +1,22 @@
-# LPOO1617_T6G11
+﻿# LPOO1617_T6G11
 
 ### Class Diagram
-![Class Diagram](lpooClassDiagram.png)
+![Class Diagram](readme_resources/lpooClassDiagram.png)
 
 ### Activity Diagram
-![Activity Diagram](Activity_diagram_Space_balls.png)
+![Activity Diagram](readme_resources/Activity_diagram_Space_balls.png)
 
 ### GUI Mock-Ups
 ##### Main Menu
-![Main Menu](pages/entrymenu.png)
+![Main Menu](readme_resources/pages/entrymenu.png)
 ##### Level Menu
-![Level Menu](pages/levelmenu.png)
+![Level Menu](readme_resources/pages/levelmenu.png)
 ##### Generic game level
-![Generic game level](pages/generic_game_level.png)
+![Generic game level](readme_resources/pages/generic_game_level.png)
 ##### SandBox game mode
-![SandBox game mode](pages/sandbox_gamemode.png)
+![SandBox game mode](readme_resources/pages/sandbox_gamemode.png)
 ##### Options Menu
-![Options Menu](pages/optionsmenu.png)
+![Options Menu](readme_resources/pages/optionsmenu.png)
 
 ### Tests
 
