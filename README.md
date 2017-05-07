@@ -1,4 +1,4 @@
-﻿# LPOO1617_T6G11
+# LPOO1617_T6G11
 
 ### Class Diagram
 ![Class Diagram](readme_resources/lpooClassDiagram.png)
