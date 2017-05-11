@@ -44,7 +44,7 @@ public class GameStage extends Stage{
     private final BallActor ballActor;
     boolean joystick = false;
 
-    GameStage(Ball game) {
+    GameStage(SpaceBallsGame game) {
 
         boolean availableAccelerometers = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if(!availableAccelerometers){

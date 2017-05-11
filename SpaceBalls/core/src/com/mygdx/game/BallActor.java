@@ -28,7 +28,7 @@ public class BallActor extends Actor{
      *
      * @param game the game the actor belongs to
      */
-    BallActor(Ball game) {
+    BallActor(SpaceBallsGame game) {
         Texture texture = game.getAssetManager().get("ball.png");
         sprite = new Sprite(texture);
 

@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import static com.mygdx.game.GameStage.PIXEL_TO_METER;
 import static com.mygdx.game.GameStage.VIEWPORT_WIDTH;
 /**
  * Created by Tiago Neves on 21/04/2017.
@@ -29,7 +28,7 @@ public class WallsActor extends Actor{
 
     private float heigthM = VIEWPORT_WIDTH * ratio+height;
 
-    WallsActor(Ball game){
+    WallsActor(SpaceBallsGame game){
         texture = game.getAssetManager().get("ground.jpg");
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
     }
