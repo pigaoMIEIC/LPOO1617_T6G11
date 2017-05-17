@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
  * Created by Tiago Neves on 21/04/2017.
  */
 
-public class GameStage extends Stage{
+public class OptionsStage extends Stage{
     /**
      * Viewport width in meters. Height depends on screen ratio
      */
@@ -46,6 +46,10 @@ public class GameStage extends Stage{
      */
     private final BallActor ballActor;
 
+    private final BallActor limit;
+
+    private final Body limitBody;
+
     private  final OrthographicCamera camera;
 
     private final Box2DDebugRenderer debugRenderer;
@@ -54,7 +58,7 @@ public class GameStage extends Stage{
 
     boolean joystick = false;
 
-    GameStage(SpaceBallsGame game) {
+    OptionsStage(SpaceBallsGame game) {
         float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
         setViewport(new FitViewport(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ratio));
 
@@ -77,11 +81,16 @@ public class GameStage extends Stage{
         // Load the textures
         game.getAssetManager().load("ball.png", Texture.class);
         game.getAssetManager().load("ground.jpg", Texture.class);
+        game.getAssetManager().load("transparent.png", Texture.class);
         game.getAssetManager().finishLoading();
 
         ballActor = new BallActor(game,"ball.png", 0.11f);
         ballActor.setPosition((VIEWPORT_WIDTH) / 2 / PIXEL_TO_METER, (VIEWPORT_WIDTH * ratio) / 2 / PIXEL_TO_METER);
         addActor(ballActor);
+
+        limit = new BallActor(game,"ball.png",0.5f);
+        limit.setPosition((VIEWPORT_WIDTH) / 2 / PIXEL_TO_METER, (VIEWPORT_WIDTH * ratio) / 2 / PIXEL_TO_METER);
+        addActor(limit);
 
         world = new World(new Vector2(0, 0), true);
 
@@ -91,6 +100,8 @@ public class GameStage extends Stage{
         wallActor.createWallsBody(world);
 
 
+
+
         AlphaAction alphaAction = new AlphaAction();
         alphaAction.setAlpha(.5f);
         alphaAction.setDuration(10);
@@ -98,7 +109,8 @@ public class GameStage extends Stage{
 
 
         ballBody = ballActor.createBody(world,true,true,true);
-
+        limitBody = ballActor.createBody(world,true,true,false);
+        limitBody.setTransform(VIEWPORT_WIDTH/2,0,0);
 
         // Touch events
         ballActor.addListener(new ClickListener(){
@@ -119,7 +131,7 @@ public class GameStage extends Stage{
             }
         });
 
-        Gdx.input.setCatchBackKey(true);
+
 
     }
 
@@ -133,14 +145,22 @@ public class GameStage extends Stage{
         float accelX = Gdx.input.getAccelerometerX();
         float accelY = Gdx.input.getAccelerometerY();
         Vector2 vector = new Vector2(accelY / 100, -accelX / 100);
-        ballBody.applyForceToCenter(vector, true);
+        Vector2 vector2 = new Vector2(vector.x*9.8f * 2,vector.y*9.8f * 2);
+        vector2.limit(0.8f);
+        float x = vector2.x +VIEWPORT_WIDTH/2  - 0.11f+ VIEWPORT_WIDTH/4;
+        float y = vector2.y  + VIEWPORT_WIDTH/4.4f;
+
+
+
+        ballBody.setTransform(x,y,0);
 
         // Update the ball actor position
         ballActor.setRotation((float) Math.toDegrees(ballBody.getAngle()));
         ballActor.setPosition(ballBody.getPosition().x / PIXEL_TO_METER, ballBody.getPosition().y / PIXEL_TO_METER);
+        limit.setPosition(limitBody.getPosition().x / PIXEL_TO_METER, limitBody.getPosition().y / PIXEL_TO_METER);
 
         debugCamera = camera.combined.cpy();
         debugCamera.scl(1 / PIXEL_TO_METER);
-        //debugRenderer.render(world, debugCamera);
+        debugRenderer.render(world, debugCamera);
     }
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.sun.org.apache.xpath.internal.operations.String;
 
 import static com.mygdx.game.GameStage.VIEWPORT_WIDTH;
 
@@ -22,14 +23,19 @@ public class BallActor extends Actor{
      * The sprite used to draw the ball.
      */
     private final Sprite sprite;
+    private final float radius;
 
     /**
      * Returns a ball actor.
-     *
      * @param game the game the actor belongs to
+     * @param texName
+     * @param radius
      */
-    BallActor(SpaceBallsGame game) {
-        Texture texture = game.getAssetManager().get("ball.png");
+    BallActor(SpaceBallsGame game, java.lang.String texName, float radius) {
+        this.radius = radius;
+
+        System.out.println(this.radius);
+        Texture texture = game.getAssetManager().get(texName);
         sprite = new Sprite(texture);
 
         // Necessary so that inputs events are registered correctly
@@ -39,6 +45,7 @@ public class BallActor extends Actor{
         // Necessary so that rotations are correctly processed
         setOrigin(getWidth() / 2, getHeight() / 2);
         sprite.setOrigin(getWidth() / 2, getHeight() / 2);
+
     }
 
     /**
@@ -89,13 +96,16 @@ public class BallActor extends Actor{
      * @param world the world this body belongs to
      * @return the body
      */
-    Body createBody(World world) {
+    Body createBody(World world,boolean dynamic,boolean drag,boolean highRebound) {
         // Create the ball body definition
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.angularDamping = 0.2f;
-        bodyDef.linearDamping = 0.2f;
-
+        if(dynamic) {
+            bodyDef.type = BodyDef.BodyType.DynamicBody;
+        }else bodyDef.type = BodyDef.BodyType.StaticBody;
+        if(drag) {
+            bodyDef.angularDamping = 0.2f;
+            bodyDef.linearDamping = 0.2f;
+        }
         // Create the ball body
         float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
         Body body = world.createBody(bodyDef);
@@ -103,14 +113,16 @@ public class BallActor extends Actor{
 
         // Create circle shape
         CircleShape circle = new CircleShape();
-        circle.setRadius(0.11f); // 22cm / 2
+        circle.setRadius(this.radius); // 22cm / 2
 
         // Create ball fixture
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
         fixtureDef.density = .5f;      // how heavy is the ball
-        fixtureDef.friction =  .5f;    // how slippery is the ball
-        fixtureDef.restitution =  1; // how bouncy is the ball
+        fixtureDef.friction =  0;    // how slippery is the ball
+        if(highRebound)
+            fixtureDef.restitution =  1; // how bouncy is the ball
+        else fixtureDef.restitution =  0.9f;
 
         // Attach fixture to body
         body.createFixture(fixtureDef);

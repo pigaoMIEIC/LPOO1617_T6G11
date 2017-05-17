@@ -7,6 +7,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
@@ -15,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class GameScreen extends ScreenAdapter {
     private final Stage gameStage;
 
+    Box2DDebugRenderer debugRenderer;
+    OrthographicCamera debugCam;
     /**
      *
      * @param game the game
@@ -23,7 +27,9 @@ public class GameScreen extends ScreenAdapter {
         this.gameStage = new GameStage(game);
 
         // Sets the stage as its input processor
+
         Gdx.input.setInputProcessor(gameStage);
+
     }
 
     /**
@@ -44,6 +50,10 @@ public class GameScreen extends ScreenAdapter {
 
         // Draws the stage
         gameStage.draw();
+
+
+
+
     }
 
     /**
@@ -56,4 +66,6 @@ public class GameScreen extends ScreenAdapter {
     public void resize(int width, int height) {
         gameStage.getViewport().update(width, height, true);
     }
+
+
 }
