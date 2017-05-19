@@ -36,6 +36,7 @@ public class OptionsScreen extends ScreenAdapter {
     float heigth = Gdx.graphics.getHeight();
 
 
+
     /**
      * @param game the game
      */

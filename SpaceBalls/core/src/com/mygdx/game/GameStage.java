@@ -24,7 +24,7 @@ public class GameStage extends Stage{
     /**
      * Viewport width in meters. Height depends on screen ratio
      */
-    static final int VIEWPORT_WIDTH = 4;
+    public static final int VIEWPORT_WIDTH = 4;
 
     /**
      * A football is 22cm in diameter and the sprite has a width of 200px

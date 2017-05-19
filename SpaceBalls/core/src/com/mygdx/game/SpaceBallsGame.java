@@ -4,11 +4,13 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.view.MenuView;
 
 /**
  * Created by Tiago Neves on 07/04/2017.
@@ -18,17 +20,22 @@ public class SpaceBallsGame extends Game{
     /**
      * Manages the game assets
      */
+
+    private SpriteBatch batch;
     private AssetManager assetManager;
 
     /**
      * Creates a new game and set the current screen
      */
     @Override
-    public void create() {
+    public void create() {batch = new SpriteBatch();
         assetManager = new AssetManager();
 
-        // Sets the game screen
-        setScreen(new MenuScreen(this));
+        startGame();
+    }
+
+    private void startGame() {
+        setScreen(new MenuView(this));
     }
 
     /**
@@ -36,9 +43,12 @@ public class SpaceBallsGame extends Game{
      *
      * @return the asset manager
      */
-    AssetManager getAssetManager() {
+    public AssetManager getAssetManager() {
         return assetManager;
     }
 
+    public SpriteBatch getBatch() {
+        return batch;
+    }
 
 }

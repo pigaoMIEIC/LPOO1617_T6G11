@@ -46,8 +46,6 @@ public class OptionsStage extends Stage{
      */
     private final BallActor ballActor;
 
-    private final BallActor limit;
-
     private final Body limitBody;
 
     private  final OrthographicCamera camera;
@@ -88,9 +86,6 @@ public class OptionsStage extends Stage{
         ballActor.setPosition((VIEWPORT_WIDTH) / 2 / PIXEL_TO_METER, (VIEWPORT_WIDTH * ratio) / 2 / PIXEL_TO_METER);
         addActor(ballActor);
 
-        limit = new BallActor(game,"ball.png",0.5f);
-        limit.setPosition((VIEWPORT_WIDTH) / 2 / PIXEL_TO_METER, (VIEWPORT_WIDTH * ratio) / 2 / PIXEL_TO_METER);
-        addActor(limit);
 
         world = new World(new Vector2(0, 0), true);
 
@@ -110,7 +105,7 @@ public class OptionsStage extends Stage{
 
         ballBody = ballActor.createBody(world,true,true,true);
         limitBody = ballActor.createBody(world,true,true,false);
-        limitBody.setTransform(VIEWPORT_WIDTH/2,0,0);
+
 
         // Touch events
         ballActor.addListener(new ClickListener(){
@@ -157,7 +152,6 @@ public class OptionsStage extends Stage{
         // Update the ball actor position
         ballActor.setRotation((float) Math.toDegrees(ballBody.getAngle()));
         ballActor.setPosition(ballBody.getPosition().x / PIXEL_TO_METER, ballBody.getPosition().y / PIXEL_TO_METER);
-        limit.setPosition(limitBody.getPosition().x / PIXEL_TO_METER, limitBody.getPosition().y / PIXEL_TO_METER);
 
         debugCamera = camera.combined.cpy();
         debugCamera.scl(1 / PIXEL_TO_METER);
