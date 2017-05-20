@@ -20,12 +20,9 @@ public class BallBody extends EntityBody {
         super(world, model);
 
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;
-        int width = 75, height = 75;
 
-        // Left winglet
-        createFixture(body, new float[]{
-                12,28, 15,28, 19,32, 19,42, 13,43
-        }, width, height, density, friction, restitution, SHIP_BODY, (short) (ASTEROID_BODY | SHIP_BODY | BULLET_BODY));
+        //Ball shape
+        createCircle(body, 0.08f, density, friction, restitution, SHIP_BODY, (short) (ASTEROID_BODY | SHIP_BODY | BULLET_BODY));
     }
 }
 

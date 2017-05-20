@@ -1,23 +1,18 @@
 package com.mygdx.game.controller.entities;
 
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.mygdx.game.model.entities.EntityModel;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-
-import static com.mygdx.game.view.MenuView.PIXEL_TO_METER;
+import com.mygdx.game.model.entities.EntityModel;
 
 /**
  * Wrapper class that represents an abstract physical
  * body supported by a Box2D body.
  */
-public abstract class EntityBody {
-    final static short ASTEROID_BODY = 0x0001;
-    final static short SHIP_BODY = 0x0002;
-    final static short BULLET_BODY = 0x0004;
+public abstract class StaticBody {
 
     /**
      * The Box2D body that supports this body.
@@ -30,9 +25,9 @@ public abstract class EntityBody {
      * @param world The world this body lives on.
      * @param model The model representing the body.
      */
-    EntityBody(World world, EntityModel model) {
+    StaticBody(World world, EntityModel model) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(model.getX(), model.getY());
 
         body = world.createBody(bodyDef);
@@ -46,29 +41,68 @@ public abstract class EntityBody {
      * @param friction The friction of the fixture. How slippery it is.
      * @param restitution The restitution of the fixture. How much it bounces.
      * @param radius The radius of the circle fixture.
-     * @param category
-     * @param mask
      */
-    final void createCircle(Body body, float radius, float density, float friction, float restitution, short category, short mask) {
+    final void createWall(Body body, float radius, float density, float friction, float restitution) {
 
         CircleShape circle = new CircleShape();
         circle.setRadius(radius);
+        float k = 2f;
+        float height_1 = 1f;
 
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
+        //Create Shapes
+        EdgeShape leftWallShape = new EdgeShape();
+        leftWallShape.set(0, 0, 0, height_1);
 
-        fixtureDef.density = density;
-        fixtureDef.friction = friction;
-        fixtureDef.restitution = restitution;
-        fixtureDef.filter.categoryBits = category;
-        fixtureDef.filter.maskBits = mask;
+        EdgeShape rightWallShape = new EdgeShape();
+        rightWallShape.set(k, 0,k, height_1);
 
-        body.createFixture(fixtureDef);
+        EdgeShape ceilingShape = new EdgeShape();
+        ceilingShape.set(0, height_1, k, height_1);
 
-        circle.dispose();
+        EdgeShape floorShape = new EdgeShape();
+        floorShape.set(0, 0,k, 0);
+
+        //Create Fixtures
+        FixtureDef leftWall = new FixtureDef();
+        leftWall.shape = leftWallShape;
+        leftWall.density = density;
+        leftWall.friction = friction;
+        leftWall.restitution = restitution;
+
+        FixtureDef rightWall = new FixtureDef();
+        rightWall.shape = rightWallShape;
+        rightWall.density = density;
+        rightWall.friction = friction;
+        rightWall.restitution = restitution;
+
+        FixtureDef ceiling = new FixtureDef();
+        ceiling.shape = ceilingShape;
+        ceiling.density = density;
+        ceiling.friction = friction;
+        ceiling.restitution = restitution;
+
+        FixtureDef floor = new FixtureDef();
+        floor.shape = floorShape;
+        floor.density = density;
+        floor.friction = friction;
+        floor.restitution = restitution;
+
+        //Attach fixtures to body
+        body.createFixture(leftWall);
+        body.createFixture(rightWall);
+        body.createFixture(ceiling);
+        body.createFixture(floor);
+
+        body.setActive(true);
+
+
+
+        //Dispose shape
+        ceilingShape.dispose();
+        leftWallShape.dispose();
+        rightWallShape.dispose();
+        floorShape.dispose();
     }
-
-
 
     /**
      * Wraps the getX method from the Box2D body class.

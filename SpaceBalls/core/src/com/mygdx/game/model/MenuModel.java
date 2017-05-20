@@ -1,12 +1,9 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.controller.entities.BallBody;
 import com.mygdx.game.model.entities.BallModel;
+import com.mygdx.game.model.entities.WallsModel;
 
-import java.awt.Menu;
-import java.util.List;
 
 /**
  * Created by Tiago Neves on 18/05/2017.
@@ -16,9 +13,12 @@ public class MenuModel extends Stage{
     private static MenuModel instance;
 
     private BallModel ballModel;
+    private WallsModel wallsModel;
 
     public MenuModel() {
-        this.ballModel = new BallModel(0.11f,0.11f,0.11f,false,true,true);
+        this.ballModel = new BallModel(0.08f,0.08f,0.08f,false,true,true);
+        this.wallsModel = new WallsModel(0,0);
+
     }
 
     public static MenuModel getInstance() {
@@ -27,8 +27,12 @@ public class MenuModel extends Stage{
         return instance;
     }
 
-    public BallModel getBall() {
+    public BallModel getBallModel() {
         return ballModel;
+    }
+
+    public WallsModel getWallsModel() {
+        return wallsModel;
     }
 
 }

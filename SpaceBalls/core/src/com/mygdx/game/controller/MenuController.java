@@ -1,25 +1,13 @@
 package com.mygdx.game.controller;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.BallActor;
-import com.mygdx.game.SpaceBallsGame;
-import com.mygdx.game.WallsActor;
 import com.mygdx.game.controller.entities.BallBody;
+import com.mygdx.game.controller.entities.WallsBody;
 import com.mygdx.game.model.MenuModel;
-import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EntityModel;
-
-import java.awt.Menu;
-
-import static com.mygdx.game.GameStage.VIEWPORT_WIDTH;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 /**
  * Created by Tiago Neves on 17/05/2017.
@@ -34,6 +22,7 @@ public class MenuController{
     private final World world;
 
     private final BallBody ballBody;
+    private final WallsBody wallsBody;
 
     int randn = 6;//number of random balls in start menu
     BallBody[] rballBodys = new BallBody[randn];
@@ -53,7 +42,8 @@ public class MenuController{
         world = new World(new Vector2(0, 0), false);
 
 
-        ballBody = new BallBody(world,MenuModel.getInstance().getBall());
+        ballBody = new BallBody(world,MenuModel.getInstance().getBallModel());
+        wallsBody = new WallsBody(world,MenuModel.getInstance().getWallsModel());
 
     }
 
@@ -85,6 +75,6 @@ public class MenuController{
 
     public void accelerate() {
         System.out.println("manel");
-        ballBody.applyForceToCenter(20000f,20000f, true);
+        ballBody.applyForceToCenter(0.1f,0.1f, true);
     }
 }

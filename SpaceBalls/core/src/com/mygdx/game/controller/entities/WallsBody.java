@@ -1,12 +1,12 @@
 package com.mygdx.game.controller.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.model.entities.WallsModel;
 
 import static com.mygdx.game.GameStage.VIEWPORT_WIDTH;
 
@@ -14,16 +14,30 @@ import static com.mygdx.game.GameStage.VIEWPORT_WIDTH;
  * Created by Tiago Neves on 17/05/2017.
  */
 
-public class WallBody {
+public class WallsBody extends StaticBody{
+    /**
+     * Constructs a space ship body according to
+     * a space ship model.
+     *
+     * @param world the physical world this space ship belongs to.
+     * @param model the model representing this space ship.
+     */
+    public WallsBody(World world, WallsModel model) {
+        super(world, model);
 
+        float density = 0.5f, friction = 0f, restitution = 1f;
+
+        //Wall shape
+        createWall(body, 0.08f, density, friction, restitution);
+    }
 
     private float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
 
     private float heigthM = VIEWPORT_WIDTH * ratio;
 
-    public WallBody(World world) {
-        createWallsBody(world);
-    }
+//    public WallBody(World world) {
+//        createWallsBody(world);
+//    }
 
     void createWallsBody(World world) {
         //Create wall definition

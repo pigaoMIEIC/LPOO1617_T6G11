@@ -8,15 +8,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
-
-import java.util.List;
 
 /**
  * Created by Tiago Neves on 18/05/2017.
@@ -37,7 +34,12 @@ public class MenuView extends ScreenAdapter {
      * The width of the viewport in meters. The height is
      * automatically calculated using the screen ratio.
      */
-    private static final float VIEWPORT_WIDTH = 4;
+    public static final float VIEWPORT_WIDTH = 4;
+
+    /**
+     * The screen ratio.
+     */
+    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());;
 
     /**
      * The camera used to show the viewport.
@@ -60,29 +62,27 @@ public class MenuView extends ScreenAdapter {
     public MenuView(SpaceBallsGame game) {
         this.game = game;
         loadAssets();
-//        this.game.
 
         camera = createCamera();
-
     }
 
     private void loadAssets() {
-        this.game.getAssetManager().load( "back.png" , Texture.class);
+        //this.game.getAssetManager().load( "back.png" , Texture.class);
         this.game.getAssetManager().load( "ball.png" , Texture.class);
 
-        this.game.getAssetManager().load( "calibrate.png" , Texture.class);
-        this.game.getAssetManager().load( "credits.png" , Texture.class);
-
-        this.game.getAssetManager().load( "enemy.png" , Texture.class);
-
-        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-
-        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
-        this.game.getAssetManager().load( "options.png" , Texture.class);
-        this.game.getAssetManager().load( "play.png" , Texture.class);
-        this.game.getAssetManager().load( "sandbox.png" , Texture.class);
-        this.game.getAssetManager().load( "title.png" , Texture.class);
-        this.game.getAssetManager().load( "transparent.png" , Texture.class);
+//        this.game.getAssetManager().load( "calibrate.png" , Texture.class);
+//        this.game.getAssetManager().load( "credits.png" , Texture.class);
+//
+//        this.game.getAssetManager().load( "enemy.png" , Texture.class);
+//
+//        this.game.getAssetManager().load( "Exit.png" , Texture.class);
+//
+//        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
+//        this.game.getAssetManager().load( "options.png" , Texture.class);
+//        this.game.getAssetManager().load( "play.png" , Texture.class);
+//        this.game.getAssetManager().load( "sandbox.png" , Texture.class);
+//        this.game.getAssetManager().load( "title.png" , Texture.class);
+//        this.game.getAssetManager().load( "transparent.png" , Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }
@@ -111,8 +111,9 @@ public class MenuView extends ScreenAdapter {
         }
 
     }
+
     private void drawEntities() {
-        BallModel ballModel = MenuModel.getInstance().getBall();
+        BallModel ballModel = MenuModel.getInstance().getBallModel();
         EntityView view = ViewFactory.makeView(game, ballModel);
         view.update(ballModel);
         view.draw(game.getBatch());
@@ -125,7 +126,7 @@ public class MenuView extends ScreenAdapter {
     }
 
     private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
+        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
 
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();

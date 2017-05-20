@@ -3,7 +3,6 @@ package com.mygdx.game.view.entities;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.model.entities.EntityModel;
 
@@ -13,7 +12,7 @@ import com.mygdx.game.model.entities.EntityModel;
 
 public abstract class EntityView extends Stage{
 
-    static final float PIXEL_TO_METER = 0.22f / 200;
+    static final float PIXEL_TO_METER = 0.20f / 200;
 
     /**
      * The sprite representing this entity view.

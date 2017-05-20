@@ -2,9 +2,7 @@ package com.mygdx.game.view.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.SpaceBallsGame;
-import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.entities.EntityModel;
 
@@ -20,9 +18,9 @@ public class BallView extends  EntityView{
     @Override
     public Sprite createSprite(SpaceBallsGame game) {
         Texture texture = game.getAssetManager().get("ball.png");
-        float radius = MenuModel.getInstance().getBall().getRadius();
+        float radius = MenuModel.getInstance().getBallModel().getRadius();
 
-        float factor = texture.getWidth()/(radius/PIXEL_TO_METER);
+        float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
         Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
         sprite.setScale(factor);
 

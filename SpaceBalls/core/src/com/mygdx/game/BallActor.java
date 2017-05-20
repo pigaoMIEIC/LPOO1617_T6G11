@@ -10,9 +10,8 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.mygdx.game.view.MenuView;
 
-import static com.mygdx.game.GameStage.VIEWPORT_WIDTH;
 
 /**
  * Created by Tiago Neves on 21/04/2017.
@@ -109,11 +108,11 @@ public class BallActor extends Actor{
         // Create the ball body
         float ratio = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
         Body body = world.createBody(bodyDef);
-        body.setTransform(VIEWPORT_WIDTH / 2, (VIEWPORT_WIDTH * ratio) / 2, 0); // Middle of the viewport, no rotation
+        body.setTransform(MenuView.VIEWPORT_WIDTH / 2, (MenuView.VIEWPORT_WIDTH * ratio) / 2, 0); // Middle of the viewport, no rotation
 
         // Create circle shape
         CircleShape circle = new CircleShape();
-        circle.setRadius(this.radius); // 22cm / 2
+        circle.setRadius(this.radius);
 
         // Create ball fixture
         FixtureDef fixtureDef = new FixtureDef();
