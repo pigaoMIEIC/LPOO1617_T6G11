@@ -9,6 +9,8 @@ import com.mygdx.game.controller.entities.WallsBody;
 import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.entities.EntityModel;
 
+import java.util.Random;
+
 /**
  * Created by Tiago Neves on 17/05/2017.
  */
@@ -20,12 +22,14 @@ public class MenuController{
     private static MenuController instance;
 
     private final World world;
+    private Random forceRand = new Random();
 
-    private final BallBody ballBody;
+//    private final BallBody ballBody;
     private final WallsBody wallsBody;
 
-    int randn = 6;//number of random balls in start menu
-    BallBody[] rballBodys = new BallBody[randn];
+    public final static int RANDNR = 4;//number of random balls in start menu
+
+    BallBody[] rballBodys = new BallBody[RANDNR];
 
 
 
@@ -41,8 +45,11 @@ public class MenuController{
 
         world = new World(new Vector2(0, 0), false);
 
-
-        ballBody = new BallBody(world,MenuModel.getInstance().getBallModel());
+        for(int i=0; i < rballBodys.length;i++){
+            rballBodys[i] = new BallBody(world,MenuModel.getInstance().getBallModel(i));
+            rballBodys[i].applyForceToCenter(2*forceRand.nextFloat()+2,2*forceRand.nextFloat()+2,true);
+        }
+//        ballBody = new BallBody(world,MenuModel.getInstance().getBallModel());
         wallsBody = new WallsBody(world,MenuModel.getInstance().getWallsModel());
 
     }
@@ -74,7 +81,7 @@ public class MenuController{
     }
 
     public void accelerate() {
-        System.out.println("manel");
-        ballBody.applyForceToCenter(0.1f,0.1f, true);
+        //System.out.println("manel");
+        //ballBody.applyForceToCenter(0.1f,0.1f, true);
     }
 }

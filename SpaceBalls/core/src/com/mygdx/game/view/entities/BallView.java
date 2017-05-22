@@ -18,7 +18,7 @@ public class BallView extends  EntityView{
     @Override
     public Sprite createSprite(SpaceBallsGame game) {
         Texture texture = game.getAssetManager().get("ball.png");
-        float radius = MenuModel.getInstance().getBallModel().getRadius();
+        float radius = MenuModel.getInstance().getBallModel(1).getRadius();
 
         float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
         Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());

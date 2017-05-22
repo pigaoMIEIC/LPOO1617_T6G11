@@ -6,14 +6,23 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
+
+import javax.swing.text.View;
 
 /**
  * Created by Tiago Neves on 18/05/2017.
@@ -59,32 +68,111 @@ public class MenuView extends ScreenAdapter {
 
     private final SpaceBallsGame game;
 
+    private final Stage stage;
+
+//    private Vector2[] positions = {
+//            new Vector2(0,0),
+//            new Vector2(VIEWPORT_WIDTH,0),
+//            new Vector2(0,VIEWPORT_WIDTH * RATIO),
+//            new Vector2(VIEWPORT_WIDTH,VIEWPORT_WIDTH * RATIO),
+//            new Vector2(VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2),
+//            new Vector2(VIEWPORT_WIDTH-VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2)
+//    };
+
+    private Button startButton;
+    private Button exitButton;
+    private Button howtoplay;
+    private Button sandbox;
+    private Button credits;
+    private Button title;
+    private Button options;
+
+
     public MenuView(SpaceBallsGame game) {
         this.game = game;
+        this.stage = new Stage();
+        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
+        Gdx.input.setInputProcessor(stage);
         loadAssets();
+
+        createButtons();
 
         camera = createCamera();
     }
 
     private void loadAssets() {
-        //this.game.getAssetManager().load( "back.png" , Texture.class);
+        this.game.getAssetManager().load( "back.png" , Texture.class);
         this.game.getAssetManager().load( "ball.png" , Texture.class);
 
 //        this.game.getAssetManager().load( "calibrate.png" , Texture.class);
-//        this.game.getAssetManager().load( "credits.png" , Texture.class);
-//
+       this.game.getAssetManager().load( "credits.png" , Texture.class);
+
 //        this.game.getAssetManager().load( "enemy.png" , Texture.class);
-//
-//        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-//
-//        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
-//        this.game.getAssetManager().load( "options.png" , Texture.class);
-//        this.game.getAssetManager().load( "play.png" , Texture.class);
-//        this.game.getAssetManager().load( "sandbox.png" , Texture.class);
-//        this.game.getAssetManager().load( "title.png" , Texture.class);
-//        this.game.getAssetManager().load( "transparent.png" , Texture.class);
+
+        this.game.getAssetManager().load( "Exit.png" , Texture.class);
+        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
+        this.game.getAssetManager().load( "options.png" , Texture.class);
+        this.game.getAssetManager().load( "play.png" , Texture.class);
+        this.game.getAssetManager().load( "sandbox.png" , Texture.class);
+        this.game.getAssetManager().load( "title.png" , Texture.class);
+        this.game.getAssetManager().load( "transparent.png" , Texture.class);
 
         this.game.getAssetManager().finishLoading();
+    }
+
+    public void createButtons(){
+        float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
+        float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
+        float buttonYSize =height/10;
+        float spacing = (height - buttonYSize*3)/6;
+
+        System.out.println("tamanho y = "+buttonYSize);
+        System.out.println("largura = "+width);
+        System.out.println("altura = "+height);
+        System.out.println("spacing = "+spacing);
+
+        Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("play.png")));
+        startButton = new Button(buttonDrawable);
+        startButton.setSize(width/5,buttonYSize*2f);
+        startButton.setPosition(width/2 - width/10,height/2+buttonYSize);
+        stage.addActor(startButton);
+
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Exit.png")));
+        exitButton = new Button(buttonDrawable);
+        exitButton.setSize(width/10,buttonYSize);
+        exitButton.setPosition(width/2 - width/20,spacing);
+        stage.addActor(exitButton);
+
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("title.png")));
+        title = new Button(buttonDrawable);
+        title.setSize(width/2,buttonYSize*1.1f);
+        title.setPosition(width/2 - width/4,height - buttonYSize*1.5f);
+        stage.addActor(title);
+
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("howtoplay.png")));
+        howtoplay = new Button(buttonDrawable);
+        howtoplay.setSize(width/3,buttonYSize);
+        howtoplay.setPosition(width/3,spacing*4 - buttonYSize);
+        stage.addActor(howtoplay);
+
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("options.png")));
+        options = new Button(buttonDrawable);
+        options.setSize(width/20,height/10);
+        options.setPosition(width - width/20,height-height/10);
+        stage.addActor(options);
+
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("sandbox.png")));
+        sandbox = new Button(buttonDrawable);
+        sandbox.setSize(width/5,buttonYSize);
+        sandbox.setPosition(width/2 - width/10,spacing*5 - buttonYSize);
+        stage.addActor(sandbox);
+
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("credits.png")));
+        credits = new Button(buttonDrawable);
+        credits.setSize(width/6,buttonYSize);
+        credits.setPosition(width/2 - width/12,spacing*3 - buttonYSize);
+        stage.addActor(credits);
+
     }
 
     @Override
@@ -94,6 +182,7 @@ public class MenuView extends ScreenAdapter {
         MenuController.getInstance().update(delta);
 
         camera.update();
+
         game.getBatch().setProjectionMatrix(camera.combined);
 
         Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
@@ -110,19 +199,31 @@ public class MenuView extends ScreenAdapter {
             debugRenderer.render(MenuController.getInstance().getWorld(), debugCamera);
         }
 
+        stage.act();
+        stage.draw();
+
     }
 
     private void drawEntities() {
-        BallModel ballModel = MenuModel.getInstance().getBallModel();
-        EntityView view = ViewFactory.makeView(game, ballModel);
-        view.update(ballModel);
-        view.draw(game.getBatch());
+        for (int i = 0; i < MenuController.RANDNR; i++) {
+            BallModel ballModel = MenuModel.getInstance().getBallModel(i);
+            EntityView view = ViewFactory.makeView(game, ballModel);
+            view.update(ballModel);
+            view.draw(game.getBatch());
+        }
+
     }
 
     private void handleInputs(float delta) {
-          if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                MenuController.getInstance().accelerate();
-            }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            MenuController.getInstance().accelerate();
+        }
+
+        if (exitButton.isPressed()) {
+            System.out.println("exit");
+            Gdx.app.exit();
+        }
+
     }
 
     private OrthographicCamera createCamera() {
@@ -140,5 +241,8 @@ public class MenuView extends ScreenAdapter {
         return camera;
     }
 
-
+    @Override
+    public void resize(int width, int height) {
+       stage.getViewport().update(width,height,true);
+    }
 }

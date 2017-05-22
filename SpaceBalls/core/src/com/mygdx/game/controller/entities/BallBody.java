@@ -19,7 +19,7 @@ public class BallBody extends EntityBody {
     public BallBody(World world, BallModel model) {
         super(world, model);
 
-        float density = 0.5f, friction = 0.4f, restitution = 0.5f;
+        float density = 0.5f, friction = 0f, restitution = 1f;
 
         //Ball shape
         createCircle(body, 0.08f, density, friction, restitution, SHIP_BODY, (short) (ASTEROID_BODY | SHIP_BODY | BULLET_BODY));
