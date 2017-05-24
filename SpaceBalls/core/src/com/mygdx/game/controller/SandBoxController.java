@@ -1,12 +1,7 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,23 +10,15 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.controller.entities.BallBody;
 import com.mygdx.game.controller.entities.WallsBody;
 import com.mygdx.game.model.SandBoxModel;
 import com.mygdx.game.model.entities.EntityModel;
-import com.mygdx.game.view.SandBoxView;
 
 import java.util.Random;
 import java.util.Vector;
 
-import static com.mygdx.game.view.MenuView.PIXEL_TO_METER;
 import static com.mygdx.game.view.MenuView.RATIO;
 import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
 
@@ -61,7 +48,16 @@ public class SandBoxController {
 
     boolean joystick = true;
 
+    Preferences prefs = Gdx.app.getPreferences("My Preferences");
 
+    float sensitivity = readSensitivityFromPreferences();
+
+
+    private float readSensitivityFromPreferences() {
+        float sensitivity = prefs.getFloat("sensitivity", 0);
+        System.out.println(sensitivity);
+        return sensitivity;
+    }
 
 
     SandBoxController() {
@@ -142,7 +138,8 @@ public class SandBoxController {
 
         float accelX = Gdx.input.getAccelerometerX();
         float accelY = Gdx.input.getAccelerometerY();
-        Vector2 vector = new Vector2(accelY /30, -accelX / 30);
+        Vector2 vector = new Vector2(accelY /sensitivity, -accelX /sensitivity);
+
 
         if(!joystick)
             playerBody.applyForceToCenter(vector.x,vector.y, true);

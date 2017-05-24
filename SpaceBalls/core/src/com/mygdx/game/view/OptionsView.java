@@ -2,6 +2,7 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -87,6 +88,8 @@ public class OptionsView extends ScreenAdapter {
 
     Slider slider;
 
+    Preferences prefs = Gdx.app.getPreferences("My Preferences");
+
 
     public OptionsView(SpaceBallsGame game) {
         this.game = game;
@@ -150,6 +153,7 @@ public class OptionsView extends ScreenAdapter {
         }
 
         OptionsController.getInstance().setSensitivity(slider.getValue());
+        writeSensitivityToPreferences(slider.getValue());
 
 
         stage.act();
@@ -225,4 +229,15 @@ public class OptionsView extends ScreenAdapter {
     public void resize(int width, int height) {
        stage.getViewport().update(width,height,true);
     }
+
+    private void writeSensitivityToPreferences(float sensitivity){
+        System.out.println(sensitivity);
+        prefs.putFloat("sensitivity",sensitivity);
+        float a = prefs.getFloat("sensitivity",123456);
+        System.out.println(a);
+    }
+
+
+
+
 }
