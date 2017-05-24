@@ -1,5 +1,6 @@
 package com.mygdx.game.controller.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.mygdx.game.model.entities.EntityModel;
@@ -26,10 +27,8 @@ public abstract class EntityBody {
 
     /**
      * Constructs a body representing a model in a certain world.
-     *
      * @param world The world this body lives on.
-     * @param model The model representing the body.
-     */
+     * @param model The model representing the body. */
     EntityBody(World world, EntityModel model) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -144,5 +143,21 @@ public abstract class EntityBody {
      */
     public Object getUserData() {
         return body.getUserData();
+    }
+
+    public void setType(BodyDef.BodyType type){
+        this.body.setType(type);
+    }
+
+
+    public void setDrag(float drag){
+        this.body.setLinearDamping(drag);
+    }
+
+    public void limitSpeed(){
+        Vector2 v = this.body.getLinearVelocity();
+        v.limit(3f);
+
+        this.body.setLinearVelocity(v);
     }
 }

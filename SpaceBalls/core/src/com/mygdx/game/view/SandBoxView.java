@@ -3,30 +3,41 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.mygdx.game.MenuScreen;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.MenuController;
+import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.MenuModel;
+import com.mygdx.game.model.SandBoxModel;
 import com.mygdx.game.model.entities.BallModel;
+import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.StaticBallModel;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
 
 /**
- * Created by Tiago Neves on 18/05/2017.
+ * Created by Tiago Neves on 22/05/2017.
  */
 
-public class MenuView extends ScreenAdapter {
+public class SandBoxView extends ScreenAdapter{
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -64,18 +75,9 @@ public class MenuView extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
-    private final SpaceBallsGame game;
+    private static SpaceBallsGame game = null;
 
     private final Stage stage;
-
-//    private Vector2[] positions = {
-//            new Vector2(0,0),
-//            new Vector2(VIEWPORT_WIDTH,0),
-//            new Vector2(0,VIEWPORT_WIDTH * RATIO),
-//            new Vector2(VIEWPORT_WIDTH,VIEWPORT_WIDTH * RATIO),
-//            new Vector2(VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2),
-//            new Vector2(VIEWPORT_WIDTH-VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2)
-//    };
 
     private ImageButton startButton;
     private ImageButton exitButton;
@@ -85,17 +87,81 @@ public class MenuView extends ScreenAdapter {
     private ImageButton title;
     private ImageButton options;
 
+    ProgressBar bar;
 
-    public MenuView(SpaceBallsGame game) {
+    private Skin touchpadSkin;
+
+    private SpriteBatch batch;
+
+    private  Touchpad.TouchpadStyle  touchpadStyle;
+
+    private  Drawable touchBackground,touchKnob;
+
+    private Touchpad touchpad;
+
+
+    public SandBoxView(SpaceBallsGame game) {
         this.game = game;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
         loadAssets();
 
-        createButtons();
+        //createButtons();
 
         camera = createCamera();
+
+        Skin skin = new Skin();
+
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        skin.add("white", new Texture(pixmap));
+        TextureRegionDrawable textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("whiteSquare.png"))));
+        ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.RED), textureBar);
+        barStyle.knobBefore = barStyle.knob;
+        bar = new ProgressBar(0, 5, 1/60f, false, barStyle);
+        bar.setPosition(0, VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER);
+        bar.setSize(VIEWPORT_WIDTH/PIXEL_TO_METER,0.2f);
+        stage.addActor(bar);
+
+        Gdx.input.setCatchBackKey(true);
+
+        createJoystick();
+    }
+
+    private void createJoystick(){
+        batch = new SpriteBatch();
+        //Create camera
+
+        //Create a touchpad skin
+        touchpadSkin = new Skin();
+        //Set background image
+        touchpadSkin.add("touchBackground", new Texture("exterior.png"));
+        //Set knob image
+        touchpadSkin.add("touchKnob", new Texture("inside.png"));
+        //Create TouchPad Style
+        touchpadStyle = new Touchpad.TouchpadStyle();
+        //Create Drawable's from TouchPad skin
+        touchBackground = touchpadSkin.getDrawable("touchBackground");
+        touchKnob = touchpadSkin.getDrawable("touchKnob");
+
+        //Apply the Drawables to the TouchPad Style
+        touchpadStyle.background = touchBackground;
+        touchpadStyle.knob = touchKnob;
+        //Create new TouchPad with the created style
+        touchpad = new Touchpad(10, touchpadStyle);
+        //setBounds(x,y,width,height)
+        touchpad.setBounds(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER, 200, 200);
+        touchpad.setSize(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER);
+
+
+        touchpad.setPosition((VIEWPORT_WIDTH-VIEWPORT_WIDTH/4)/PIXEL_TO_METER,VIEWPORT_WIDTH/8/PIXEL_TO_METER);
+
+        //Create a Stage and add TouchPad
+
+        stage.addActor(touchpad);
+
     }
 
     private void loadAssets() {
@@ -108,73 +174,21 @@ public class MenuView extends ScreenAdapter {
         this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
         this.game.getAssetManager().load( "options.png" , Texture.class);
         this.game.getAssetManager().load( "play.png" , Texture.class);
-        this.game.getAssetManager().load( "Survival.png" , Texture.class);
+        this.game.getAssetManager().load( "sandbox.png" , Texture.class);
         this.game.getAssetManager().load( "title.png" , Texture.class);
         this.game.getAssetManager().load( "transparent.png" , Texture.class);
+        this.game.getAssetManager().load( "exterior.png" , Texture.class);
+        this.game.getAssetManager().load( "inside.png" , Texture.class);
+
 
         this.game.getAssetManager().finishLoading();
     }
 
-    public void createButtons(){
-        float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
-        float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
-        float buttonYSize =height/10;
-        float spacing = (height - buttonYSize*3)/6;
-
-        System.out.println("tamanho y = "+buttonYSize);
-        System.out.println("largura = "+width);
-        System.out.println("altura = "+height);
-        System.out.println("spacing = "+spacing);
-
-        Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("play.png")));
-        startButton = new ImageButton(buttonDrawable);
-        startButton.setSize(width/5,buttonYSize*2f);
-        startButton.setPosition(width/2 - width/10,height/2+buttonYSize);
-        stage.addActor(startButton);
-
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Exit.png")));
-        exitButton = new ImageButton(buttonDrawable);
-        exitButton.setSize(width/10,buttonYSize);
-        exitButton.setPosition(width/2 - width/20,spacing);
-        stage.addActor(exitButton);
-
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("title.png")));
-        title = new ImageButton(buttonDrawable);
-        title.setSize(width/2,buttonYSize*1.1f);
-        title.setPosition(width/2 - width/4,height - buttonYSize*1.5f);
-        stage.addActor(title);
-
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("howtoplay.png")));
-        howtoplay = new ImageButton(buttonDrawable);
-        howtoplay.setSize(width/3,buttonYSize);
-        howtoplay.setPosition(width/3,spacing*4 - buttonYSize);
-        stage.addActor(howtoplay);
-
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("options.png")));
-        options = new ImageButton(buttonDrawable);
-        options.setSize(width/20,height/10);
-        options.setPosition(width - width/20,height-height/10);
-        stage.addActor(options);
-
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Survival.png")));
-        sandbox = new ImageButton(buttonDrawable);
-        sandbox.setSize(width/5,buttonYSize);
-        sandbox.setPosition(width/2 - width/10,spacing*5 - buttonYSize);
-        stage.addActor(sandbox);
-
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("credits.png")));
-        credits = new ImageButton(buttonDrawable);
-        credits.setSize(width/6,buttonYSize);
-        credits.setPosition(width/2 - width/12,spacing*3 - buttonYSize);
-        stage.addActor(credits);
-
-    }
 
     @Override
     public void render(float delta) {
 
-        handleInputs(delta);
-        MenuController.getInstance().update(delta);
+        SandBoxController.getInstance().update(delta);
 
         camera.update();
 
@@ -182,7 +196,8 @@ public class MenuView extends ScreenAdapter {
 
         Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
+        stage.act();
+        stage.draw();
         game.getBatch().begin();
 
         drawEntities();
@@ -191,58 +206,47 @@ public class MenuView extends ScreenAdapter {
         if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
-            debugRenderer.render(MenuController.getInstance().getWorld(), debugCamera);
+            debugRenderer.render(SandBoxController.getInstance().getWorld(), debugCamera);
         }
 
-        stage.act();
-        stage.draw();
+
+
+        if(SandBoxController.getInstance().isColliding()){
+            game.setScreen(new GameOverView(game));
+            SandBoxController.getInstance().setColliding(false);
+            SandBoxController.getInstance().delete();
+        }
+
+        bar.setValue(SandBoxController.getInstance().getSeconds());
+
+        SandBoxController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
+
+        handleInputs(delta);
+
 
     }
 
     private void drawEntities() {
-        for (int i = 0; i < MenuController.RANDNR; i++) {
-            BallModel ballModel = MenuModel.getInstance().getBallModel(i);
+        for (int i = 0; i < SandBoxModel.getInstance().getnBalls(); i++) {
+            EnemyModel ballModel = SandBoxModel.getInstance().getEnemyModel(i);
             EntityView view = ViewFactory.makeView(game, ballModel);
             view.update(ballModel);
             view.draw(game.getBatch());
         }
 
-        for (int i = 0; i < MenuController.SRANDNR; i++) {
-            StaticBallModel ballModel = MenuModel.getInstance().getStaticBallModel(i);
-            EntityView view = ViewFactory.makeView(game, ballModel);
-            view.update(ballModel);
-            view.draw(game.getBatch());
-        }
+        BallModel ballModel = SandBoxModel.getInstance().getPlayerModel();
+        EntityView view = ViewFactory.makeView(game, ballModel);
+        view.update(ballModel);
+        view.draw(game.getBatch());
+
 
     }
 
     private void handleInputs(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            MenuController.getInstance().accelerate();
-        }
-
-        if (exitButton.isPressed()) {
-            System.out.println("exit");
-            Gdx.app.exit();
-        }
-
-        if(sandbox.isPressed()){
-            game.setScreen(new SandBoxView(game));
-        }
-
-        if(startButton.isPressed()){
-            game.setScreen(new LevelsView(game));
-        }
-
-        if(options.isPressed()){
-            System.out.println("manel");
-            game.setScreen(new OptionsView(game));
-        }
-
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            System.out.println("está a ser estupido");
+            SandBoxController.getInstance().delete();
+            game.setScreen(new MenuView(game));
         }
-
     }
 
     private OrthographicCamera createCamera() {
@@ -262,6 +266,12 @@ public class MenuView extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-       stage.getViewport().update(width,height,true);
+        stage.getViewport().update(width,height,true);
     }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+
 }

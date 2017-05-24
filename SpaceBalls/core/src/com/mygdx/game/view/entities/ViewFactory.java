@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.mygdx.game.model.entities.EntityModel.ModelType.BALL;
-import static com.mygdx.game.model.entities.EntityModel.ModelType.OTHERS;
+import static com.mygdx.game.model.entities.EntityModel.ModelType.ENEMY;
+import static com.mygdx.game.model.entities.EntityModel.ModelType.STATIC;
 
 
 /**
@@ -24,8 +25,10 @@ public class ViewFactory {
         if (!cache.containsKey(model.getType())) {
             if (model.getType() == BALL)
                 cache.put(model.getType(), new BallView(game));
-            if (model.getType() == OTHERS)
-                cache.put(model.getType(), new BallView(game));//ainda n há outros... mas um dia pode...
+            if (model.getType() == STATIC)
+                cache.put(model.getType(), new StaticBallView(game));
+            if (model.getType() == ENEMY)
+                cache.put(model.getType(), new EnemyView(game));//ainda n há outros... mas um dia pode...
         }
         return cache.get(model.getType());
     }

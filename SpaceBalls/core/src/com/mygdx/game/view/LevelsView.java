@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -22,11 +23,13 @@ import com.mygdx.game.model.entities.StaticBallModel;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
 
+import java.util.Vector;
+
 /**
- * Created by Tiago Neves on 18/05/2017.
+ * Created by Tiago Neves on 23/05/2017.
  */
 
-public class MenuView extends ScreenAdapter {
+public class LevelsView extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -68,25 +71,14 @@ public class MenuView extends ScreenAdapter {
 
     private final Stage stage;
 
-//    private Vector2[] positions = {
-//            new Vector2(0,0),
-//            new Vector2(VIEWPORT_WIDTH,0),
-//            new Vector2(0,VIEWPORT_WIDTH * RATIO),
-//            new Vector2(VIEWPORT_WIDTH,VIEWPORT_WIDTH * RATIO),
-//            new Vector2(VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2),
-//            new Vector2(VIEWPORT_WIDTH-VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2)
-//    };
+    private Button tmpButton;
 
-    private ImageButton startButton;
-    private ImageButton exitButton;
-    private ImageButton howtoplay;
-    private ImageButton sandbox;
-    private ImageButton credits;
-    private ImageButton title;
-    private ImageButton options;
+    private Vector<Button> levels = new Vector<Button>();
+    private ImageButton returni;
 
 
-    public MenuView(SpaceBallsGame game) {
+
+    public LevelsView(SpaceBallsGame game) {
         this.game = game;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
@@ -96,83 +88,74 @@ public class MenuView extends ScreenAdapter {
         createButtons();
 
         camera = createCamera();
+        Gdx.input.setCatchBackKey(true);
     }
 
     private void loadAssets() {
         this.game.getAssetManager().load( "back.png" , Texture.class);
-        this.game.getAssetManager().load( "ball.png" , Texture.class);
-        this.game.getAssetManager().load( "calibrate.png" , Texture.class);
-        this.game.getAssetManager().load( "credits.png" , Texture.class);
-        this.game.getAssetManager().load( "enemy.png" , Texture.class);
-        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
-        this.game.getAssetManager().load( "options.png" , Texture.class);
-        this.game.getAssetManager().load( "play.png" , Texture.class);
-        this.game.getAssetManager().load( "Survival.png" , Texture.class);
-        this.game.getAssetManager().load( "title.png" , Texture.class);
-        this.game.getAssetManager().load( "transparent.png" , Texture.class);
-
+        this.game.getAssetManager().load("1.png", Texture.class);
+        this.game.getAssetManager().load("2.png", Texture.class);
+        this.game.getAssetManager().load("3.png", Texture.class);
+        this.game.getAssetManager().load("4.png", Texture.class);
+        this.game.getAssetManager().load("5.png", Texture.class);
         this.game.getAssetManager().finishLoading();
     }
 
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
         float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
-        float buttonYSize =height/10;
-        float spacing = (height - buttonYSize*3)/6;
+        float buttonSize =Math.min((height/4)-(height/20),(width-(width/4)-(width/4))/5);
 
-        System.out.println("tamanho y = "+buttonYSize);
+        float horzSpacing = (width-(width/4)-(5*buttonSize))/4f;
+
+        System.out.println("tamanho y = "+buttonSize);
         System.out.println("largura = "+width);
         System.out.println("altura = "+height);
-        System.out.println("spacing = "+spacing);
+        System.out.println("spacing = "+horzSpacing);
 
-        Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("play.png")));
-        startButton = new ImageButton(buttonDrawable);
-        startButton.setSize(width/5,buttonYSize*2f);
-        startButton.setPosition(width/2 - width/10,height/2+buttonYSize);
-        stage.addActor(startButton);
+        Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("1.png")));
+        tmpButton = new ImageButton(buttonDrawable);
+        tmpButton.setSize(buttonSize,buttonSize);
+        tmpButton.setPosition(width/8,(height/2)-(buttonSize/2));
+        levels.addElement(tmpButton);
+        stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Exit.png")));
-        exitButton = new ImageButton(buttonDrawable);
-        exitButton.setSize(width/10,buttonYSize);
-        exitButton.setPosition(width/2 - width/20,spacing);
-        stage.addActor(exitButton);
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("2.png")));
+        tmpButton = new Button(buttonDrawable);
+        tmpButton.setSize(buttonSize,buttonSize);
+        tmpButton.setPosition(width/8+(buttonSize+horzSpacing),(height/2)-(buttonSize/2));
+        levels.addElement(tmpButton);
+        stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("title.png")));
-        title = new ImageButton(buttonDrawable);
-        title.setSize(width/2,buttonYSize*1.1f);
-        title.setPosition(width/2 - width/4,height - buttonYSize*1.5f);
-        stage.addActor(title);
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("3.png")));
+        tmpButton = new Button(buttonDrawable);
+        tmpButton.setSize(buttonSize,buttonSize);
+        tmpButton.setPosition(width/8+(buttonSize+horzSpacing)*2,(height/2)-(buttonSize/2));
+        levels.addElement(tmpButton);
+        stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("howtoplay.png")));
-        howtoplay = new ImageButton(buttonDrawable);
-        howtoplay.setSize(width/3,buttonYSize);
-        howtoplay.setPosition(width/3,spacing*4 - buttonYSize);
-        stage.addActor(howtoplay);
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("4.png")));
+        tmpButton = new Button(buttonDrawable);
+        tmpButton.setSize(buttonSize,buttonSize);
+        tmpButton.setPosition(width/8+(buttonSize+horzSpacing)*3,(height/2)-(buttonSize/2));
+        levels.addElement(tmpButton);
+        stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("options.png")));
-        options = new ImageButton(buttonDrawable);
-        options.setSize(width/20,height/10);
-        options.setPosition(width - width/20,height-height/10);
-        stage.addActor(options);
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("5.png")));
+        tmpButton = new Button(buttonDrawable);
+        tmpButton.setSize(buttonSize,buttonSize);
+        tmpButton.setPosition(width/8+(buttonSize+horzSpacing)*4,(height/2)-(buttonSize/2));
+        levels.addElement(tmpButton);
+        stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Survival.png")));
-        sandbox = new ImageButton(buttonDrawable);
-        sandbox.setSize(width/5,buttonYSize);
-        sandbox.setPosition(width/2 - width/10,spacing*5 - buttonYSize);
-        stage.addActor(sandbox);
+        //(buttonYSize+horzSpacing)
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("credits.png")));
-        credits = new ImageButton(buttonDrawable);
-        credits.setSize(width/6,buttonYSize);
-        credits.setPosition(width/2 - width/12,spacing*3 - buttonYSize);
-        stage.addActor(credits);
 
     }
 
     @Override
     public void render(float delta) {
-
+        stage.setDebugAll(true);
         handleInputs(delta);
         MenuController.getInstance().update(delta);
 
@@ -213,36 +196,13 @@ public class MenuView extends ScreenAdapter {
             view.update(ballModel);
             view.draw(game.getBatch());
         }
-
     }
 
     private void handleInputs(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            MenuController.getInstance().accelerate();
-        }
-
-        if (exitButton.isPressed()) {
-            System.out.println("exit");
-            Gdx.app.exit();
-        }
-
-        if(sandbox.isPressed()){
-            game.setScreen(new SandBoxView(game));
-        }
-
-        if(startButton.isPressed()){
-            game.setScreen(new LevelsView(game));
-        }
-
-        if(options.isPressed()){
-            System.out.println("manel");
-            game.setScreen(new OptionsView(game));
-        }
-
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            System.out.println("está a ser estupido");
+            this.dispose();
+            game.setScreen(new MenuView(game));
         }
-
     }
 
     private OrthographicCamera createCamera() {
@@ -262,6 +222,6 @@ public class MenuView extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-       stage.getViewport().update(width,height,true);
+        stage.getViewport().update(width,height,true);
     }
 }

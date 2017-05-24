@@ -24,6 +24,10 @@ public class SpaceBallsGame extends Game{
     private SpriteBatch batch;
     private AssetManager assetManager;
 
+    private boolean joystick;
+
+
+
     /**
      * Creates a new game and set the current screen
      */
@@ -49,6 +53,15 @@ public class SpaceBallsGame extends Game{
 
     public SpriteBatch getBatch() {
         return batch;
+    }
+
+    public void setJoystick(boolean joystick) {
+        this.joystick = joystick;
+    }
+
+    public boolean hasJoystick() {
+
+        return joystick;
     }
 
 }

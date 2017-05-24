@@ -4,10 +4,10 @@ package com.mygdx.game.model.entities;
  * Created by Tiago Neves on 17/05/2017.
  */
 
-public class BallModel extends EntityModel {
+public class EnemyModel extends EntityModel {
     @Override
     public ModelType getType() {
-        return ModelType.BALL;
+        return ModelType.ENEMY;
     }
 
     private float radius;
@@ -15,9 +15,11 @@ public class BallModel extends EntityModel {
     private boolean drag;
     private boolean highRebound;
 
-    public BallModel(float x, float y, float radius, boolean highRebound) {
+    public EnemyModel(float x, float y, float radius, boolean highRebound) {
         super(x, y);
         this.radius = radius;
+        this.dynamic = dynamic;
+        this.drag = drag;
         this.highRebound = highRebound;
     }
 
