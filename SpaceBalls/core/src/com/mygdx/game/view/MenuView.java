@@ -121,10 +121,10 @@ public class MenuView extends ScreenAdapter {
         float buttonYSize =height/10;
         float spacing = (height - buttonYSize*3)/6;
 
-        System.out.println("tamanho y = "+buttonYSize);
-        System.out.println("largura = "+width);
-        System.out.println("altura = "+height);
-        System.out.println("spacing = "+spacing);
+//        System.out.println("tamanho y = "+buttonYSize);
+//        System.out.println("largura = "+width);
+//        System.out.println("altura = "+height);
+//        System.out.println("spacing = "+spacing);
 
         Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("play.png")));
         startButton = new ImageButton(buttonDrawable);

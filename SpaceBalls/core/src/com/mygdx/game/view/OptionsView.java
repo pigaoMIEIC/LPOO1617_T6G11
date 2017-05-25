@@ -11,9 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -31,6 +33,8 @@ import com.mygdx.game.view.LevelsView;
 import com.mygdx.game.view.SandBoxView;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
+
+import static com.badlogic.gdx.Input.Keys.R;
 
 /**
  * Created by Tiago Neves on 18/05/2017.
@@ -86,6 +90,12 @@ public class OptionsView extends ScreenAdapter {
 
     private Slider.SliderStyle sliderStyle;
 
+    private Drawable buttonDrawable;
+
+    private ImageButton useJoystick;
+    private ImageButton calibrate;
+
+
     Slider slider;
 
     Preferences prefs = Gdx.app.getPreferences("My Preferences");
@@ -110,22 +120,39 @@ public class OptionsView extends ScreenAdapter {
         this.game.getAssetManager().load( "back.png" , Texture.class);
         this.game.getAssetManager().load( "ball.png" , Texture.class);
         this.game.getAssetManager().load( "calibrate.png" , Texture.class);
-        this.game.getAssetManager().load( "credits.png" , Texture.class);
         this.game.getAssetManager().load( "enemy.png" , Texture.class);
-        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
-        this.game.getAssetManager().load( "options.png" , Texture.class);
-        this.game.getAssetManager().load( "play.png" , Texture.class);
-        this.game.getAssetManager().load( "Survival.png" , Texture.class);
-        this.game.getAssetManager().load( "title.png" , Texture.class);
-        this.game.getAssetManager().load( "transparent.png" , Texture.class);
         this.game.getAssetManager().load( "whiteRectangle.png" , Texture.class);
+        this.game.getAssetManager().load("1.png" , Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }
 
     public void createButtons(){
+        float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
+        float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
+        float buttonYSize =height/8;
+        float spacing = (height - buttonYSize*3)/6;
 
+
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("1.png")));
+        useJoystick = new ImageButton(buttonDrawable);
+        useJoystick.setSize(width/5,buttonYSize*0.75f);
+        useJoystick.setPosition(width/5,4*buttonYSize);
+        stage.addActor(useJoystick);
+
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("calibrate.png")));
+        calibrate = new ImageButton(buttonDrawable);
+        calibrate.setSize(width/5,buttonYSize*0.75f);
+        calibrate.setPosition(width/5,4*buttonYSize);
+        stage.addActor(calibrate);
+
+
+//        Skin toggleSkin = new Skin(Gdx.files.internal("SkinMainMenu/glassy-ui.json"));
+//        CheckBox toggleMode = new CheckBox("Use Joystick",toggleSkin);
+//        toggleMode.scaleBy(5);
+//        toggleMode.setSize(width/5,buttonYSize*0.75f);
+//        toggleMode.setPosition(width/5,4*buttonYSize);
+//        stage.addActor(toggleMode);
     }
 
     @Override
@@ -196,8 +223,6 @@ public class OptionsView extends ScreenAdapter {
 
         slider.setSize((VIEWPORT_WIDTH/2)/PIXEL_TO_METER,VIEWPORT_WIDTH/20/PIXEL_TO_METER);
         stage.addActor(slider);
-
-
     }
 
     private void handleInputs(float delta) {
