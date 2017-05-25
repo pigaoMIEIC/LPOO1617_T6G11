@@ -58,7 +58,7 @@ public class OptionsController {
 
         callibrateBody = new BallBody(world, OptionsModel.getInstance().getCallibrateModel());
 
-        wallsBody = new WallsBody(world,SandBoxModel.getInstance().getWallsModel(), 0.5f);
+        wallsBody = new WallsBody(world,OptionsModel.getInstance().getWallsModel(), 0.5f);
 
 
     }
@@ -80,14 +80,6 @@ public class OptionsController {
             accumulator -= 1/60f;
 
         }
-
-
-
-        if(seconds >= 5f){
-            SandBoxModel.getInstance().nextLevel();
-            seconds = 0;
-        }
-
 
 
         float accelX = Gdx.input.getAccelerometerX();
@@ -130,7 +122,7 @@ public class OptionsController {
 
     public void delete(){
         this.instance = null;
-        SandBoxModel.getInstance().delete();
+        OptionsModel.getInstance().delete();
     }
 
     public float getSeconds() {

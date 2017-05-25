@@ -99,6 +99,8 @@ public class SandBoxView extends ScreenAdapter{
 
     private Touchpad touchpad;
 
+    float sensitivity;
+
 
     public SandBoxView(SpaceBallsGame game) {
         this.game = game;
@@ -128,6 +130,8 @@ public class SandBoxView extends ScreenAdapter{
         Gdx.input.setCatchBackKey(true);
 
         createJoystick();
+        sensitivity = game.getPreferences().readSensitivity();
+
     }
 
     private void createJoystick(){
@@ -212,9 +216,10 @@ public class SandBoxView extends ScreenAdapter{
 
 
         if(SandBoxController.getInstance().isColliding()){
-            game.setScreen(new GameOverView(game));
             SandBoxController.getInstance().setColliding(false);
             SandBoxController.getInstance().delete();
+            game.setScreen(new GameOverView(game));
+            return;
         }
 
         bar.setValue(SandBoxController.getInstance().getSeconds());

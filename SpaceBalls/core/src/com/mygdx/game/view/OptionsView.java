@@ -95,6 +95,8 @@ public class OptionsView extends ScreenAdapter {
     private ImageButton useJoystick;
     private ImageButton calibrate;
 
+    private float sensitivity;
+
 
     Slider slider;
 
@@ -114,6 +116,11 @@ public class OptionsView extends ScreenAdapter {
         camera = createCamera();
 
         Gdx.input.setCatchBackKey(true);
+
+        sensitivity = game.getPreferences().readSensitivity();
+        if(sensitivity == 0){
+            sensitivity = slider.getValue();
+        }else slider.setValue(sensitivity);
     }
 
     private void loadAssets() {
@@ -180,7 +187,9 @@ public class OptionsView extends ScreenAdapter {
         }
 
         OptionsController.getInstance().setSensitivity(slider.getValue());
-        writeSensitivityToPreferences(slider.getValue());
+        System.out.println(slider.getValue());
+        game.getPreferences().writeSensitivity(slider.getValue());
+        System.out.println(game.getPreferences().readSensitivity());
 
 
         stage.act();
@@ -189,7 +198,7 @@ public class OptionsView extends ScreenAdapter {
     }
 
     private void drawEntities() {
-        EnemyModel callibrateModel= OptionsModel.getInstance().getCallibrateModel();
+        BallModel callibrateModel= OptionsModel.getInstance().getCallibrateModel();
         EntityView view1 = ViewFactory.makeView(game, callibrateModel);
         view1.update(callibrateModel);
         view1.draw(game.getBatch());
@@ -229,6 +238,7 @@ public class OptionsView extends ScreenAdapter {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            OptionsController.getInstance().delete();
             game.setScreen(new MenuView(game));
         }
 

@@ -1,9 +1,7 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.entities.BallModel;
-import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.WallsModel;
 
 import java.util.Random;
@@ -19,7 +17,7 @@ import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
 public class OptionsModel extends Stage{
     private static OptionsModel instance;
 
-    private EnemyModel callibrateModel;
+    private BallModel callibrateModel;
 
     private BallModel playerModel;
 
@@ -30,7 +28,7 @@ public class OptionsModel extends Stage{
 
 
     public OptionsModel() {
-        this.callibrateModel = new EnemyModel(3f, 2f, 0.08f,false);
+        this.callibrateModel = new BallModel(3f, 2f, 0.08f,false);
 
         this.playerModel = new BallModel(2f, 2f, 0.08f,false);
 
@@ -44,7 +42,7 @@ public class OptionsModel extends Stage{
     }
 
 
-    public EnemyModel getCallibrateModel() {
+    public BallModel getCallibrateModel() {
         return callibrateModel;
     }
 

@@ -17,6 +17,13 @@ import com.mygdx.game.view.MenuView;
  */
 
 public class SpaceBallsGame extends Game{
+
+    private final Preferences preferences;
+
+    public SpaceBallsGame(Preferences preferences) {
+        this.preferences = preferences;
+    }
+
     /**
      * Manages the game assets
      */
@@ -62,6 +69,10 @@ public class SpaceBallsGame extends Game{
     public boolean hasJoystick() {
 
         return joystick;
+    }
+
+    public Preferences getPreferences() {
+        return preferences;
     }
 
 }

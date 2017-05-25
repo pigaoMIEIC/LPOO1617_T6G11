@@ -7,6 +7,6 @@ import javax.naming.Context;
  */
 
 public interface Preferences {
-    float readSensistivity();
+    float readSensitivity();
     void writeSensitivity(float sensitivity);
 }

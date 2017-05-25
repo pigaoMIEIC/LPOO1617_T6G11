@@ -50,30 +50,26 @@ public class SandBoxController {
 
     Preferences prefs = Gdx.app.getPreferences("My Preferences");
 
-    float sensitivity = readSensitivityFromPreferences();
+    float sensitivity = 60;
 
-
-    private float readSensitivityFromPreferences() {
-        float sensitivity = prefs.getFloat("sensitivity", 0);
-        System.out.println(sensitivity);
-        return sensitivity;
-    }
 
 
     SandBoxController() {
+            rballBodys.removeAllElements();
 
             world = new World(new Vector2(0, 0), false);
 
             playerBody = new BallBody(world,SandBoxModel.getInstance().getPlayerModel());
-            playerBody.setDrag(0.2f);
+            playerBody.setDrag(0.5f);
             userData = playerBody.getUserData();
 
-            for(int i=0; i < SandBoxModel.getInstance().getnBalls();i++){
-                rballBodys.addElement(new BallBody(world, SandBoxModel.getInstance().getEnemyModel(i)));
-                rballBodys.elementAt(i).setType(BodyDef.BodyType.DynamicBody);
-                playerBody.setDrag(0.6f);
-                System.out.print(rballBodys.elementAt(i).getUserData());
-            }
+
+            rballBodys.addElement(new BallBody(world, SandBoxModel.getInstance().getEnemyModel(0)));
+            rballBodys.elementAt(0).setType(BodyDef.BodyType.DynamicBody);
+
+
+            System.out.println("manel");
+
 
 
             wallsBody = new WallsBody(world,SandBoxModel.getInstance().getWallsModel(), 0.5f);
@@ -112,8 +108,10 @@ public class SandBoxController {
 }
 
     public static SandBoxController getInstance() {
-        if (instance == null)
+        if (instance == null){
+            System.out.println("new controler");
             instance = new SandBoxController();
+        }
         return instance;
     }
 
@@ -156,6 +154,8 @@ public class SandBoxController {
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
+
+        System.out.println("quantos bodies estão no world: " + bodies.size);
 
         for (Body body : bodies) {
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
@@ -213,6 +213,9 @@ public class SandBoxController {
         return seconds;
     }
 
+    public void setSensitivity(float sensitivity) {
+        this.sensitivity = sensitivity;
+    }
 }
 
 

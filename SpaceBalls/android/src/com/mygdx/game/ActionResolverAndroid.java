@@ -21,7 +21,7 @@ public class ActionResolverAndroid implements Preferences {
     }
 
     @Override
-    public float readSensistivity() {
+    public float readSensitivity() {
         SharedPreferences sp = context.getSharedPreferences(myPref,Context.MODE_PRIVATE);
         float sensitivity = sp.getFloat("sensitivity",0);
         return sensitivity;

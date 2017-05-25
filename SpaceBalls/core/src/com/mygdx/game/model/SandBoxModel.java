@@ -35,9 +35,10 @@ public class SandBoxModel extends Stage{
 
 
     public SandBoxModel() {
-        for(int i = 0; i < nBalls;i++) {
-            this.ballModels.addElement(new EnemyModel(0.08f, 0.08f, 0.08f,true));
-        }
+        nBalls = 1;
+        this.ballModels.removeAllElements();
+        this.ballModels.addElement(new EnemyModel(0.08f, 0.08f, 0.08f,true));
+
 
         this.playerModel = new BallModel(2f, 2f, 0.08f,false);
 

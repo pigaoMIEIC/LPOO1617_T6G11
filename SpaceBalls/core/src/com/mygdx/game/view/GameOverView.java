@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.MenuController;
+import com.mygdx.game.controller.OptionsController;
 import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.StaticBallModel;
@@ -157,6 +158,7 @@ public class GameOverView extends ScreenAdapter {
         }
 
         if(returni.isPressed()){
+            OptionsController.getInstance().delete();
             game.setScreen(new MenuView(game));
         }
     }
