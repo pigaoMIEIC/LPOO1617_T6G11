@@ -48,8 +48,6 @@ public class SandBoxController {
 
     boolean joystick = true;
 
-    Preferences prefs = Gdx.app.getPreferences("My Preferences");
-
     float sensitivity = 60;
 
 
@@ -67,11 +65,6 @@ public class SandBoxController {
             rballBodys.addElement(new BallBody(world, SandBoxModel.getInstance().getEnemyModel(0)));
             rballBodys.elementAt(0).setType(BodyDef.BodyType.DynamicBody);
 
-
-            System.out.println("manel");
-
-
-
             wallsBody = new WallsBody(world,SandBoxModel.getInstance().getWallsModel(), 0.5f);
 
             world.setContactListener(new ContactListener() {
@@ -81,7 +74,6 @@ public class SandBoxController {
                     for (int i = 0; i < SandBoxModel.getInstance().getnBalls(); i++) {
                         if(contact.getFixtureA().getBody().getUserData() == userData && contact.getFixtureB().getBody().getUserData() != userData){
                             Colliding = true;
-                            System.out.println("Contact detected");
                         }
                     }
 
@@ -109,7 +101,6 @@ public class SandBoxController {
 
     public static SandBoxController getInstance() {
         if (instance == null){
-            System.out.println("new controler");
             instance = new SandBoxController();
         }
         return instance;
@@ -155,8 +146,6 @@ public class SandBoxController {
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
-        System.out.println("quantos bodies estão no world: " + bodies.size);
-
         for (Body body : bodies) {
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
         }
@@ -172,7 +161,8 @@ public class SandBoxController {
      * @param y
      */
     public void accelerate(float x,float y){
-        playerBody.applyForceToCenter(x,y, true);
+        System.out.println(sensitivity);
+        playerBody.applyForceToCenter(sensitivity*x,sensitivity*y, true);
     }
 
 

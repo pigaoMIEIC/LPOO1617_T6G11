@@ -36,6 +36,9 @@ public class MenuController{
 
     BallBody[] staticBodys = new BallBody[SRANDNR];
 
+    float offsetY = 0;
+    float offsetX = 0;
+
 
     //    Vector2[] positions = {
 //            new Vector2(0,0),
@@ -60,7 +63,7 @@ public class MenuController{
             staticBodys[i] = new BallBody(world,MenuModel.getInstance().getStaticBallModel(i));
             staticBodys[i].setType(BodyDef.BodyType.StaticBody);
         }
-//        ballBody = new BallBody(world,MenuModel.getInstance().getBallModel());
+
         wallsBody = new WallsBody(world,MenuModel.getInstance().getWallsModel(), 1f);
 
     }
@@ -81,7 +84,7 @@ public class MenuController{
 
         float accelX = Gdx.input.getAccelerometerX();
         float accelY = Gdx.input.getAccelerometerY();
-        Vector2 vector = new Vector2(accelY /50, -accelX / 50);
+        Vector2 vector = new Vector2(accelY /50 - offsetY, -accelX / 50 + offsetX);
 
         for(int i=0; i < rballBodys.length;i++){
             rballBodys[i].applyForceToCenter(vector.x,vector.y, true);
@@ -103,5 +106,13 @@ public class MenuController{
     public void accelerate() {
         //System.out.println("manel");
         //ballBody.applyForceToCenter(0.1f,0.1f, true);
+    }
+
+    public void setOffsetY(float offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    public void setOffsetX(float offsetX) {
+        this.offsetX = offsetX;
     }
 }

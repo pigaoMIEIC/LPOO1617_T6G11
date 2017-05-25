@@ -4,37 +4,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.SpaceBallsGame;
-import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.controller.OptionsController;
-import com.mygdx.game.controller.SandBoxController;
-import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.OptionsModel;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
-import com.mygdx.game.model.entities.StaticBallModel;
-import com.mygdx.game.view.LevelsView;
-import com.mygdx.game.view.SandBoxView;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
-
-import static com.badlogic.gdx.Input.Keys.R;
 
 /**
  * Created by Tiago Neves on 18/05/2017.
@@ -92,15 +86,26 @@ public class OptionsView extends ScreenAdapter {
 
     private Drawable buttonDrawable;
 
-    private ImageButton useJoystick;
-    private ImageButton calibrate;
+    private ImageButton joystick;
+
+    private Button calibrate;
+
+    private ImageButton on;
+
+    private ImageButton off;
 
     private float sensitivity;
+
+    CheckBox checkBox;
 
 
     Slider slider;
 
-    Preferences prefs = Gdx.app.getPreferences("My Preferences");
+    float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
+    float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
+
+    float offsetY = 0;
+    float offsetX = 0;
 
 
     public OptionsView(SpaceBallsGame game) {
@@ -112,6 +117,7 @@ public class OptionsView extends ScreenAdapter {
 
         createButtons();
         createSlider();
+        createCheckBox();
 
         camera = createCamera();
 
@@ -123,6 +129,17 @@ public class OptionsView extends ScreenAdapter {
         }else slider.setValue(sensitivity);
     }
 
+    private void createCheckBox() {
+        Drawable offDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("off.png")));
+        Drawable onDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("on.png")));
+
+
+        CheckBox.CheckBoxStyle s = new CheckBox.CheckBoxStyle(offDrawable,onDrawable,new BitmapFont(), Color.CLEAR);
+        checkBox = new CheckBox("JoyStick",s);
+        checkBox.setPosition(width/6,3*height/8);
+        stage.addActor(checkBox);
+    }
+
     private void loadAssets() {
         this.game.getAssetManager().load( "back.png" , Texture.class);
         this.game.getAssetManager().load( "ball.png" , Texture.class);
@@ -130,36 +147,33 @@ public class OptionsView extends ScreenAdapter {
         this.game.getAssetManager().load( "enemy.png" , Texture.class);
         this.game.getAssetManager().load( "whiteRectangle.png" , Texture.class);
         this.game.getAssetManager().load("1.png" , Texture.class);
+        this.game.getAssetManager().load("joystick.png" , Texture.class);
+        this.game.getAssetManager().load("on.png" , Texture.class);
+        this.game.getAssetManager().load("off.png" , Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }
 
     public void createButtons(){
-        float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
-        float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
         float buttonYSize =height/8;
         float spacing = (height - buttonYSize*3)/6;
 
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("1.png")));
-        useJoystick = new ImageButton(buttonDrawable);
-        useJoystick.setSize(width/5,buttonYSize*0.75f);
-        useJoystick.setPosition(width/5,4*buttonYSize);
-        stage.addActor(useJoystick);
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("joystick.png")));
+        joystick = new ImageButton(buttonDrawable);
+        joystick.setSize(width/4,buttonYSize*1.7f);
+        joystick.setPosition(width/7,6*buttonYSize);
+        stage.addActor(joystick);
 
+        float radius = OptionsModel.getInstance().getCallibrateModel().getRadius();
         buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("calibrate.png")));
-        calibrate = new ImageButton(buttonDrawable);
-        calibrate.setSize(width/5,buttonYSize*0.75f);
-        calibrate.setPosition(width/5,4*buttonYSize);
+        calibrate = new Button(buttonDrawable);
+        calibrate.setSize(width/3,width/3);
+        float x = (5*width)/6 - width/6 - radius/PIXEL_TO_METER;
+        float y =  width/3-width/6 + radius/PIXEL_TO_METER;
+        calibrate.setPosition(x,y);
         stage.addActor(calibrate);
 
-
-//        Skin toggleSkin = new Skin(Gdx.files.internal("SkinMainMenu/glassy-ui.json"));
-//        CheckBox toggleMode = new CheckBox("Use Joystick",toggleSkin);
-//        toggleMode.scaleBy(5);
-//        toggleMode.setSize(width/5,buttonYSize*0.75f);
-//        toggleMode.setPosition(width/5,4*buttonYSize);
-//        stage.addActor(toggleMode);
     }
 
     @Override
@@ -187,9 +201,8 @@ public class OptionsView extends ScreenAdapter {
         }
 
         OptionsController.getInstance().setSensitivity(slider.getValue());
-        System.out.println(slider.getValue());
         game.getPreferences().writeSensitivity(slider.getValue());
-        System.out.println(game.getPreferences().readSensitivity());
+
 
 
         stage.act();
@@ -198,7 +211,7 @@ public class OptionsView extends ScreenAdapter {
     }
 
     private void drawEntities() {
-        BallModel callibrateModel= OptionsModel.getInstance().getCallibrateModel();
+        EnemyModel callibrateModel= OptionsModel.getInstance().getCallibrateModel();
         EntityView view1 = ViewFactory.makeView(game, callibrateModel);
         view1.update(callibrateModel);
         view1.draw(game.getBatch());
@@ -227,7 +240,7 @@ public class OptionsView extends ScreenAdapter {
         sliderStyle.background = touchBackground;
         sliderStyle.knob = touchKnob;
 
-        slider = new Slider(10,60,1,false,sliderStyle);
+        slider = new Slider(1,7,1/100f,false,sliderStyle);
         slider.setPosition((VIEWPORT_WIDTH/10)/PIXEL_TO_METER,VIEWPORT_WIDTH/8/PIXEL_TO_METER);
 
         slider.setSize((VIEWPORT_WIDTH/2)/PIXEL_TO_METER,VIEWPORT_WIDTH/20/PIXEL_TO_METER);
@@ -240,6 +253,15 @@ public class OptionsView extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
             OptionsController.getInstance().delete();
             game.setScreen(new MenuView(game));
+        }
+
+        if(calibrate.isPressed()){
+            this.offsetX = OptionsController.getInstance().getReadingX();
+            this.offsetY = OptionsController.getInstance().getReadingY();
+            game.getPreferences().writeOffsetX(this.offsetX);
+            game.getPreferences().writeOffsetY(this.offsetY);
+            OptionsController.getInstance().setOffsetX(this.offsetX);
+            OptionsController.getInstance().setOffsetY(this.offsetY);
         }
 
     }
@@ -263,13 +285,6 @@ public class OptionsView extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
        stage.getViewport().update(width,height,true);
-    }
-
-    private void writeSensitivityToPreferences(float sensitivity){
-        System.out.println(sensitivity);
-        prefs.putFloat("sensitivity",sensitivity);
-        float a = prefs.getFloat("sensitivity",123456);
-        System.out.println(a);
     }
 
 

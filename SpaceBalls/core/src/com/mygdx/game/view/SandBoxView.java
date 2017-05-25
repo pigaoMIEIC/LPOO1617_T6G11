@@ -131,6 +131,7 @@ public class SandBoxView extends ScreenAdapter{
 
         createJoystick();
         sensitivity = game.getPreferences().readSensitivity();
+        SandBoxController.getInstance().setSensitivity(sensitivity);
 
     }
 

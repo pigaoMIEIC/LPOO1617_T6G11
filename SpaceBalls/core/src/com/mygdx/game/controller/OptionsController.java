@@ -18,6 +18,7 @@ import com.mygdx.game.model.OptionsModel;
 import com.mygdx.game.model.SandBoxModel;
 import com.mygdx.game.model.entities.EntityModel;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
@@ -42,16 +43,35 @@ public class OptionsController {
 
     private BallBody callibrateBody;
 
-    BallBody playerBody;
+    private BallBody playerBody;
 
-    float sensitivity = 1/50f;
+    private float sensitivity = 1/50f;
+
+    private float calRadius;
+
+    private final int smoothnessLevel = 6;
+
+    //data of accelerometer in x
+    private ArrayList<Float> X_values = new ArrayList<Float>(smoothnessLevel);
+    //data of accelerometer in y
+    private ArrayList<Float> Y_values = new ArrayList<Float>(smoothnessLevel);
 
 
+    //readings
+    private Float readingY = new Float(0);
+    private Float readingX = new Float(0);
+    private Float offsetY = 0f;
+    private Float offsetX = 0f;
 
 
     OptionsController() {
 
         world = new World(new Vector2(0, 0), false);
+
+        for(int i = 0; i < smoothnessLevel; i++){
+            X_values.add(0f);
+            Y_values.add(0f);
+        }
 
         playerBody = new BallBody(world, OptionsModel.getInstance().getPlayerModel());
         playerBody.setDrag(0.2f);
@@ -59,6 +79,8 @@ public class OptionsController {
         callibrateBody = new BallBody(world, OptionsModel.getInstance().getCallibrateModel());
 
         wallsBody = new WallsBody(world,OptionsModel.getInstance().getWallsModel(), 0.5f);
+
+        calRadius=OptionsModel.getInstance().getCallibrateModel().getRadius();
 
 
     }
@@ -84,10 +106,20 @@ public class OptionsController {
 
         float accelX = Gdx.input.getAccelerometerX();
         float accelY = Gdx.input.getAccelerometerY();
-        Vector2 vector = new Vector2(accelY /sensitivity, -accelX /sensitivity);
+
+        X_values.remove(0);
+        X_values.add(accelX*delta);
+        Y_values.remove(0);
+        Y_values.add(accelY*delta);
+
+        readingX = sensitivity*average(X_values);
+        readingY = sensitivity*average(Y_values);
+
+        Vector2 vector = new Vector2(readingY - offsetY, -readingX + offsetX);
+        vector.limit(VIEWPORT_WIDTH/6 - calRadius);
 
 
-        callibrateBody.setTransform(vector.x, vector.y,0);
+        callibrateBody.setTransform(vector.x+VIEWPORT_WIDTH-VIEWPORT_WIDTH/6-calRadius, vector.y+VIEWPORT_WIDTH/3+calRadius,0);
 
         playerBody.applyForceToCenter(vector.x,vector.y,true);
 
@@ -133,4 +165,29 @@ public class OptionsController {
         this.sensitivity = sensitivity;
     }
 
+    public float average(ArrayList<Float> arr){
+        Float sum = new Float(0);
+        for(Float f : arr)
+            sum += f;
+        return sum/arr.size();
+    }
+
+
+    public float getReadingY() {
+        return readingY.floatValue();
+    }
+
+
+    public float getReadingX() {
+        return readingX.floatValue();
+    }
+
+
+    public void setOffsetY(Float readingY) {
+        this.offsetY = readingY;
+    }
+
+    public void setOffsetX(Float readingX) {
+        this.offsetX = readingX;
+    }
 }

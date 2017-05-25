@@ -108,11 +108,6 @@ public class LevelsView extends ScreenAdapter {
 
         float horzSpacing = (width-(width/4)-(5*buttonSize))/4f;
 
-        System.out.println("tamanho y = "+buttonSize);
-        System.out.println("largura = "+width);
-        System.out.println("altura = "+height);
-        System.out.println("spacing = "+horzSpacing);
-
         Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("1.png")));
         tmpButton = new ImageButton(buttonDrawable);
         tmpButton.setSize(buttonSize,buttonSize);

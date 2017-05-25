@@ -9,4 +9,8 @@ import javax.naming.Context;
 public interface Preferences {
     float readSensitivity();
     void writeSensitivity(float sensitivity);
+    float readOffsetX();
+    void writeOffsetX(float offset);
+    float readOffsetY();
+    void writeOffsetY(float offset);
 }

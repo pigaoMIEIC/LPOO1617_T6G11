@@ -96,6 +96,9 @@ public class MenuView extends ScreenAdapter {
         createButtons();
 
         camera = createCamera();
+
+        MenuController.getInstance().setOffsetX(game.getPreferences().readOffsetX());
+        MenuController.getInstance().setOffsetY(game.getPreferences().readOffsetY());
     }
 
     private void loadAssets() {
@@ -120,11 +123,6 @@ public class MenuView extends ScreenAdapter {
         float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
         float buttonYSize =height/10;
         float spacing = (height - buttonYSize*3)/6;
-
-//        System.out.println("tamanho y = "+buttonYSize);
-//        System.out.println("largura = "+width);
-//        System.out.println("altura = "+height);
-//        System.out.println("spacing = "+spacing);
 
         Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("play.png")));
         startButton = new ImageButton(buttonDrawable);
@@ -222,7 +220,6 @@ public class MenuView extends ScreenAdapter {
         }
 
         if (exitButton.isPressed()) {
-            System.out.println("exit");
             Gdx.app.exit();
         }
 
@@ -235,12 +232,10 @@ public class MenuView extends ScreenAdapter {
         }
 
         if(options.isPressed()){
-            System.out.println("manel");
             game.setScreen(new OptionsView(game));
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            System.out.println("está a ser estupido");
         }
 
     }

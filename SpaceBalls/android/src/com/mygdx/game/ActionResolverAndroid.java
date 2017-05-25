@@ -34,4 +34,32 @@ public class ActionResolverAndroid implements Preferences {
         editor.putFloat("sensitivity", sensitivity);
         editor.commit();
     }
+
+    @Override
+    public float readOffsetX() {
+        SharedPreferences sp = context.getSharedPreferences(myPref,Context.MODE_PRIVATE);
+        float offset = sp.getFloat("offsetX",0);
+        return offset;
+    }
+
+    @Override
+    public void writeOffsetX(float offset) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(myPref, Context.MODE_PRIVATE).edit();
+        editor.putFloat("offsetX", offset);
+        editor.commit();
+    }
+
+    @Override
+    public float readOffsetY() {
+        SharedPreferences sp = context.getSharedPreferences(myPref,Context.MODE_PRIVATE);
+        float offset = sp.getFloat("offsetY",0);
+        return offset;
+    }
+
+    @Override
+    public void writeOffsetY(float offset) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(myPref, Context.MODE_PRIVATE).edit();
+        editor.putFloat("offsetY", offset);
+        editor.commit();
+    }
 }

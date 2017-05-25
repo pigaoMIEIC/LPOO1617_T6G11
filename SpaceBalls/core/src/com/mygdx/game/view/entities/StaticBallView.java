@@ -21,7 +21,6 @@ public class StaticBallView extends  EntityView{
     public Sprite createSprite(SpaceBallsGame game) {
         Texture texture = game.getAssetManager().get("enemy.png");
         float radius = MenuModel.getInstance().getStaticBallModel(1).getRadius();
-        System.out.println(radius);
 
         float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
         Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
