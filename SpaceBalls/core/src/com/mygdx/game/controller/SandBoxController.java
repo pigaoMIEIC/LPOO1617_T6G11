@@ -50,6 +50,9 @@ public class SandBoxController {
 
     float sensitivity = 60;
 
+    float offsetX;
+    float offsetY;
+
 
 
     SandBoxController() {
@@ -127,13 +130,11 @@ public class SandBoxController {
 
         float accelX = Gdx.input.getAccelerometerX();
         float accelY = Gdx.input.getAccelerometerY();
-        Vector2 vector = new Vector2(accelY /sensitivity, -accelX /sensitivity);
 
+        Vector2 vector = new Vector2((accelY *sensitivity)/35 - offsetY, (-accelX *sensitivity)/35 + offsetX);
 
         if(!joystick)
             playerBody.applyForceToCenter(vector.x,vector.y, true);
-
-
 
         for(int i=0; i < rballBodys.size();i++){
             Vector2 follow = new Vector2((playerBody.getX()-rballBodys.elementAt(i).getX())/50,(playerBody.getY()-rballBodys.elementAt(i).getY())/50);
@@ -161,7 +162,6 @@ public class SandBoxController {
      * @param y
      */
     public void accelerate(float x,float y){
-        System.out.println(sensitivity);
         playerBody.applyForceToCenter(sensitivity*x,sensitivity*y, true);
     }
 
@@ -205,6 +205,18 @@ public class SandBoxController {
 
     public void setSensitivity(float sensitivity) {
         this.sensitivity = sensitivity;
+    }
+
+    public void setJoystick(boolean joystick) {
+        this.joystick = joystick;
+    }
+
+    public void setOffsetX(float offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public void setOffsetY(float offsetY) {
+        this.offsetY = offsetY;
     }
 }
 

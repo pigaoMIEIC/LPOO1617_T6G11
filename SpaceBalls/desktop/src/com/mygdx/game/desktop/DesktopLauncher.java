@@ -7,6 +7,6 @@ import com.mygdx.game.SpaceBallsGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new SpaceBallsGame(), config);
+		new LwjglApplication(new SpaceBallsGame(new ActionResolverDesktop()), config);
 	}
 }

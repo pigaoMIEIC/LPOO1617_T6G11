@@ -13,4 +13,6 @@ public interface Preferences {
     void writeOffsetX(float offset);
     float readOffsetY();
     void writeOffsetY(float offset);
+    boolean readJoystick();
+    void writeJoystick(boolean joystick);
 }

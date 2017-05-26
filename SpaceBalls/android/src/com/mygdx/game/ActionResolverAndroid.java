@@ -62,4 +62,18 @@ public class ActionResolverAndroid implements Preferences {
         editor.putFloat("offsetY", offset);
         editor.commit();
     }
+
+    @Override
+    public boolean readJoystick() {
+        SharedPreferences sp = context.getSharedPreferences(myPref,Context.MODE_PRIVATE);
+        boolean joystick = sp.getBoolean("joystick",false);
+        return joystick;
+    }
+
+    @Override
+    public void writeJoystick(boolean joystick) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(myPref, Context.MODE_PRIVATE).edit();
+        editor.putBoolean("joystick", joystick);
+        editor.commit();
+    }
 }

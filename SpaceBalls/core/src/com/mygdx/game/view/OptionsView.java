@@ -127,6 +127,14 @@ public class OptionsView extends ScreenAdapter {
         if(sensitivity == 0){
             sensitivity = slider.getValue();
         }else slider.setValue(sensitivity);
+
+
+        this.offsetX =game.getPreferences().readOffsetX();
+        this.offsetY =game.getPreferences().readOffsetY();
+        OptionsController.getInstance().setOffsetX(this.offsetX);
+        OptionsController.getInstance().setOffsetY(this.offsetY);
+
+        checkBox.setChecked(game.getPreferences().readJoystick());
     }
 
     private void createCheckBox() {
@@ -263,6 +271,13 @@ public class OptionsView extends ScreenAdapter {
             OptionsController.getInstance().setOffsetX(this.offsetX);
             OptionsController.getInstance().setOffsetY(this.offsetY);
         }
+
+        if(checkBox.isChecked()){
+          game.getPreferences().writeJoystick(true);
+        }else {
+            game.getPreferences().writeJoystick(false);
+        }
+
 
     }
 

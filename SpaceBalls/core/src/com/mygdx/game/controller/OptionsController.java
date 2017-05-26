@@ -136,15 +136,6 @@ public class OptionsController {
 
     }
 
-    /**
-     * Applies force to the player sandbox ball
-     * @param x
-     * @param y
-     */
-    public void accelerate(float x,float y){
-        playerBody.applyForceToCenter(x,y, true);
-    }
-
 
 
     public World getWorld() {

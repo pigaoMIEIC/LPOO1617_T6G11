@@ -99,6 +99,8 @@ public class MenuView extends ScreenAdapter {
 
         MenuController.getInstance().setOffsetX(game.getPreferences().readOffsetX());
         MenuController.getInstance().setOffsetY(game.getPreferences().readOffsetY());
+
+        MenuController.getInstance().setSensitivity(game.getPreferences().readSensitivity());
     }
 
     private void loadAssets() {
@@ -194,6 +196,8 @@ public class MenuView extends ScreenAdapter {
 
         stage.act();
         stage.draw();
+
+
 
     }
 

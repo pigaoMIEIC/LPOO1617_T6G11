@@ -101,6 +101,8 @@ public class SandBoxView extends ScreenAdapter{
 
     float sensitivity;
 
+    boolean joystick;
+
 
     public SandBoxView(SpaceBallsGame game) {
         this.game = game;
@@ -129,9 +131,16 @@ public class SandBoxView extends ScreenAdapter{
 
         Gdx.input.setCatchBackKey(true);
 
-        createJoystick();
+
         sensitivity = game.getPreferences().readSensitivity();
         SandBoxController.getInstance().setSensitivity(sensitivity);
+        joystick = game.getPreferences().readJoystick();
+        if(joystick)
+         createJoystick();
+
+        SandBoxController.getInstance().setJoystick(game.getPreferences().readJoystick());
+        SandBoxController.getInstance().setOffsetX(game.getPreferences().readOffsetX());
+        SandBoxController.getInstance().setOffsetY(game.getPreferences().readOffsetY());
 
     }
 
@@ -225,7 +234,8 @@ public class SandBoxView extends ScreenAdapter{
 
         bar.setValue(SandBoxController.getInstance().getSeconds());
 
-        SandBoxController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
+        if(joystick)
+            SandBoxController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
 
         handleInputs(delta);
 

@@ -39,6 +39,8 @@ public class MenuController{
     float offsetY = 0;
     float offsetX = 0;
 
+    float sensitivity = 0;
+
 
     //    Vector2[] positions = {
 //            new Vector2(0,0),
@@ -84,7 +86,7 @@ public class MenuController{
 
         float accelX = Gdx.input.getAccelerometerX();
         float accelY = Gdx.input.getAccelerometerY();
-        Vector2 vector = new Vector2(accelY /50 - offsetY, -accelX / 50 + offsetX);
+        Vector2 vector = new Vector2(accelY * sensitivity * 0.01f - offsetY*0.01f, -accelX * sensitivity * 0.01f + offsetX*0.01f);
 
         for(int i=0; i < rballBodys.length;i++){
             rballBodys[i].applyForceToCenter(vector.x,vector.y, true);
@@ -114,5 +116,9 @@ public class MenuController{
 
     public void setOffsetX(float offsetX) {
         this.offsetX = offsetX;
+    }
+
+    public void setSensitivity(float sensitivity) {
+        this.sensitivity = sensitivity;
     }
 }
