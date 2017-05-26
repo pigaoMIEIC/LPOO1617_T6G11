@@ -29,7 +29,7 @@ import java.util.Vector;
  * Created by Tiago Neves on 23/05/2017.
  */
 
-public class LevelsView extends ScreenAdapter {
+public class LevelChoiceView extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -78,7 +78,7 @@ public class LevelsView extends ScreenAdapter {
 
 
 
-    public LevelsView(SpaceBallsGame game) {
+    public LevelChoiceView(SpaceBallsGame game) {
         this.game = game;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
@@ -197,6 +197,10 @@ public class LevelsView extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
             this.dispose();
             game.setScreen(new MenuView(game));
+        }
+
+        if(levels.elementAt(0).isPressed()){
+            game.setScreen(new LevelView(game));
         }
     }
 

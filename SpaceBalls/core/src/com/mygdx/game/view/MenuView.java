@@ -232,7 +232,7 @@ public class MenuView extends ScreenAdapter {
         }
 
         if(startButton.isPressed()){
-            game.setScreen(new LevelsView(game));
+            game.setScreen(new LevelChoiceView(game));
         }
 
         if(options.isPressed()){

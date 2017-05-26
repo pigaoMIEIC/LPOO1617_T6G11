@@ -47,7 +47,7 @@ public class LevelsBodies {
 
 
     public Vector<StaticBody> getStaticBodies(LevelType.levelType level, World world){
-        Vector<StaticBody> temp = new Vector<>();
+        Vector<StaticBody> temp = new Vector<StaticBody>();
         switch(level){
             case ONE:
                 System.out.println("this is staticBodies one");

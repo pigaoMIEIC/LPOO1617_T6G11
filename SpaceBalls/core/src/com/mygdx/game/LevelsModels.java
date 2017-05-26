@@ -21,12 +21,12 @@ public class LevelsModels {
     private LevelsModels() {}
 
     public final Vector<EntityModel> getEntitiesModels(LevelType.levelType level){
-        Vector<EntityModel> temp = new Vector<>();
+        Vector<EntityModel> temp = new Vector<EntityModel>();
         switch(level){
             case ONE:
                 System.out.println("this is Model one");
                 temp.add(new WallsModel(0,0));
-                temp.add(new EnemyModel(0.08f, 0.08f, 0.08f,true));
+                temp.add(new EnemyModel(0.5f, 0.5f, 0.08f,true));
                 temp.add(new BallModel(0.08f, 0.08f, 0.08f,true));
                 return temp;
             case TWO:
