@@ -5,6 +5,7 @@ import com.mygdx.game.LevelsModels;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.EntityModel;
+import com.mygdx.game.model.entities.StaticBallModel;
 import com.mygdx.game.model.entities.WallsModel;
 
 import java.util.Vector;
@@ -26,6 +27,8 @@ public class LevelModel {
 
     private WallsModel wallsModel;
 
+    private BallModel endModel;
+
 
     public static LevelModel getInstance(LevelType.levelType newLevel) {
         if (instance == null)
@@ -44,13 +47,11 @@ public class LevelModel {
         this.playerModel = (BallModel)temp.elementAt(2);
 
         this.wallsModel = (WallsModel)temp.elementAt(0);
+
+        this.endModel = (BallModel)temp.elementAt(3);
     }
 
 
-    /**
-     * @param i index in the vector of balls
-     * @return
-     */
     public EnemyModel getEnemyModel() {
         return ballModels;
     }
@@ -62,6 +63,10 @@ public class LevelModel {
 
     public WallsModel getWallsModel() {
         return wallsModel;
+    }
+
+    public BallModel getEndModel(){
+        return this.endModel;
     }
 
 

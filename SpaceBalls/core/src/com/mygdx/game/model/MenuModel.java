@@ -37,7 +37,7 @@ public class MenuModel extends Stage{
         }
 
         for(int i = 0; i < staticBallModel.length;i++) {
-            this.staticBallModel[i] = new StaticBallModel(positions[i].x, positions[i].y, 0.1f, false, true, true);
+            this.staticBallModel[i] = new StaticBallModel(positions[i].x, positions[i].y, 0.1f,false);
         }
 
         this.wallsModel = new WallsModel(0,0);

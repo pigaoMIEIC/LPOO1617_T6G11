@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.EntityModel;
+import com.mygdx.game.model.entities.StaticBallModel;
 import com.mygdx.game.model.entities.WallsModel;
 
 import java.util.Vector;
@@ -28,6 +29,7 @@ public class LevelsModels {
                 temp.add(new WallsModel(0,0));
                 temp.add(new EnemyModel(0.5f, 0.5f, 0.08f,true));
                 temp.add(new BallModel(0.08f, 0.08f, 0.08f,true));
+                temp.add(new StaticBallModel(2f,2f,0.04f,true));
                 return temp;
             case TWO:
                 return temp;

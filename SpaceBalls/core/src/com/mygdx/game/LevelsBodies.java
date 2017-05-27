@@ -35,7 +35,7 @@ public class LevelsBodies {
                 System.out.println("this is entityBodies one");
                 temp.add(new BallBody(world, LevelModel.getInstance(ONE).getPlayerModel()));
                 temp.add(new BallBody(world, LevelModel.getInstance(ONE).getEnemyModel()));
-                //temp.add(new endBallBody)
+                temp.add(new BallBody(world,LevelModel.getInstance(ONE).getEndModel()));
                 return temp;
             case TWO:
                 return temp;

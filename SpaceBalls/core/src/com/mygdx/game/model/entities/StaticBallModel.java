@@ -15,24 +15,14 @@ public class StaticBallModel extends EntityModel{
     private boolean drag;
     private boolean highRebound;
 
-    public StaticBallModel(float x, float y, float radius, boolean dynamic, boolean drag, boolean highRebound) {
+    public StaticBallModel(float x, float y, float radius, boolean highRebound) {
         super(x, y);
         this.radius = radius;
-        this.dynamic = dynamic;
-        this.drag = drag;
         this.highRebound = highRebound;
     }
 
     public float getRadius() {
         return radius;
-    }
-
-    public boolean isDynamic() {
-        return dynamic;
-    }
-
-    public boolean hasDrag() {
-        return drag;
     }
 
     public boolean hasHighRebound() {

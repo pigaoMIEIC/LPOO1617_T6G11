@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.WallsModel;
 import com.mygdx.game.view.MenuView;
 
-import static com.mygdx.game.GameStage.VIEWPORT_WIDTH;
 
 /**
  * Created by Tiago Neves on 17/05/2017.

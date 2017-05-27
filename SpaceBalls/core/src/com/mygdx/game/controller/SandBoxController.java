@@ -55,51 +55,53 @@ public class SandBoxController {
 
 
     SandBoxController() {
-            rballBodys.removeAllElements();
-
-            world = new World(new Vector2(0, 0), false);
-
-            playerBody = new BallBody(world,SandBoxModel.getInstance().getPlayerModel());
-            playerBody.setDrag(0.5f);
-            userData = playerBody.getUserData();
 
 
-            rballBodys.addElement(new BallBody(world, SandBoxModel.getInstance().getEnemyModel(0)));
-            rballBodys.elementAt(0).setType(BodyDef.BodyType.DynamicBody);
+        rballBodys.removeAllElements();
 
-            wallsBody = new WallsBody(world,SandBoxModel.getInstance().getWallsModel(), 0.5f);
+        world = new World(new Vector2(0, 0), false);
 
-            world.setContactListener(new ContactListener() {
+        playerBody = new BallBody(world,SandBoxModel.getInstance().getPlayerModel());
+        playerBody.setDrag(0.5f);
+        userData = playerBody.getUserData();
 
-                @Override
-                public void beginContact(Contact contact) {
-                    for (int i = 0; i < SandBoxModel.getInstance().getnBalls(); i++) {
-                        if(contact.getFixtureA().getBody().getUserData() == userData && contact.getFixtureB().getBody().getUserData() != userData){
-                            Colliding = true;
-                        }
+
+        rballBodys.addElement(new BallBody(world, SandBoxModel.getInstance().getEnemyModel(0)));
+        rballBodys.elementAt(0).setType(BodyDef.BodyType.DynamicBody);
+
+        wallsBody = new WallsBody(world,SandBoxModel.getInstance().getWallsModel(), 0.5f);
+
+        world.setContactListener(new ContactListener() {
+
+            @Override
+            public void beginContact(Contact contact) {
+                for (int i = 0; i < SandBoxModel.getInstance().getnBalls(); i++) {
+                    if(contact.getFixtureA().getBody().getUserData() == userData && contact.getFixtureB().getBody().getUserData() != userData){
+                        Colliding = true;
                     }
-
-
                 }
 
-                @Override
-                public void endContact(Contact contact) {
 
-                }
+            }
 
-                @Override
-                public void preSolve(Contact contact, Manifold oldManifold) {
+            @Override
+            public void endContact(Contact contact) {
 
-                }
+            }
 
-                @Override
-                public void postSolve(Contact contact, ContactImpulse impulse) {
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
 
-                }
+            }
 
-            });
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
 
-}
+            }
+
+        });
+
+    }
 
     public static SandBoxController getInstance() {
         if (instance == null){

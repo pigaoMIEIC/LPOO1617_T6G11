@@ -43,18 +43,20 @@ public class LevelController {
 
     private BallBody rballBodys;
 
+    private BallBody endBall;
+
     BallBody playerBody;
 
     private boolean Colliding;
 
     private Object userData;
 
-    boolean joystick = true;
+    boolean joystick = false;
 
     float sensitivity = 60;
 
-    float offsetX;
-    float offsetY;
+    float offsetX = 0;
+    float offsetY = 0;
 
     static LevelType.levelType currLevel = LevelType.levelType.ONE;
 
@@ -78,6 +80,8 @@ public class LevelController {
 
         rballBodys = (BallBody)enityTemp.elementAt(1);
         rballBodys.setType(BodyDef.BodyType.DynamicBody);
+
+        endBall = (BallBody)enityTemp.elementAt(2) ;
 
         wallsBody = (WallsBody)staticTemp.elementAt(0);
 
@@ -137,8 +141,6 @@ public class LevelController {
             follow.limit(0.01f);
             rballBodys.applyForceToCenter(follow.x,follow.y,true);
         //}
-
-
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
