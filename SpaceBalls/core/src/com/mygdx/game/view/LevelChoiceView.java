@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.mygdx.game.LevelType;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.model.MenuModel;
@@ -200,7 +201,7 @@ public class LevelChoiceView extends ScreenAdapter {
         }
 
         if(levels.elementAt(0).isPressed()){
-            game.setScreen(new LevelView(game));
+            game.setScreen(new LevelView(game, LevelType.levelType.ONE));
         }
     }
 

@@ -7,10 +7,10 @@ import com.mygdx.game.view.MenuView;
  * Created by Tiago Neves on 17/05/2017.
  */
 
-public class WallsModel extends EntityModel {
+public class StaticModel extends EntityModel {
     @Override
     public ModelType getType() {
-        return ModelType.BALL;
+        return ModelType.STATIC;
     }
 
     float length;
@@ -18,10 +18,10 @@ public class WallsModel extends EntityModel {
     boolean drag;
     boolean highRebound;
 
-    public WallsModel(float x,float y) {
+    public StaticModel(float x, float y) {
         super(x, y);
 
-        this.length = length;
+
         this.dynamic = false;
         this.drag = true;
         this.highRebound = true;

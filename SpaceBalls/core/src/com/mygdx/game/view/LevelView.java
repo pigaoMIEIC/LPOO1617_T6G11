@@ -21,6 +21,7 @@ import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.LevelModel;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
+import com.mygdx.game.model.entities.StaticModel;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
 
@@ -85,14 +86,17 @@ public class LevelView extends ScreenAdapter {
 
     boolean joystick;
 
+    private LevelType.levelType currLevel;
 
-    public LevelView(SpaceBallsGame game) {
+
+    public LevelView(SpaceBallsGame game,LevelType.levelType newLevel) {
         this.game = game;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
         loadAssets();
 
+        currLevel = newLevel;
 
         sensitivity = game.getPreferences().readSensitivity();
         LevelController.getInstance().setSensitivity(sensitivity);
@@ -187,16 +191,25 @@ public class LevelView extends ScreenAdapter {
 
     private void drawEntities() {
 
-        BallModel ballModel = LevelModel.getInstance(LevelType.levelType.ONE).getPlayerModel();
+        BallModel ballModel = LevelModel.getInstance(currLevel).getPlayerModel();
         EntityView view = ViewFactory.makeView(game, ballModel);
         view.update(ballModel);
         view.draw(game.getBatch());
 
 
-        EnemyModel enemyModel = LevelModel.getInstance(LevelType.levelType.ONE).getEnemyModel();
-        view = ViewFactory.makeView(game, enemyModel);
-        view.update(enemyModel);
-        view.draw(game.getBatch());
+        for (int i = 0; i < LevelModel.getInstance(currLevel).getEnemySize(); i++) {
+            EnemyModel enemyModel = LevelModel.getInstance(currLevel).getEnemyModel(i);
+            view = ViewFactory.makeView(game, enemyModel);
+            view.update(enemyModel);
+            view.draw(game.getBatch());
+        }
+
+        for (int i = 1; i < LevelModel.getInstance(currLevel).getObstaclesSize(); i++) {
+            StaticModel obstacleModel = LevelModel.getInstance(currLevel).getStaticModel(i);
+            view = ViewFactory.makeView(game, obstacleModel);
+            view.update(obstacleModel);
+            view.draw(game.getBatch());
+        }
 
     }
 

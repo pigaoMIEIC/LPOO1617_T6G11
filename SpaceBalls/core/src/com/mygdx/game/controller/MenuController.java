@@ -66,7 +66,7 @@ public class MenuController{
             staticBodys[i].setType(BodyDef.BodyType.StaticBody);
         }
 
-        wallsBody = new WallsBody(world,MenuModel.getInstance().getWallsModel(), 1f);
+        wallsBody = new WallsBody(world,MenuModel.getInstance().getStaticModel(), 1f);
 
     }
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
-import com.mygdx.game.model.entities.WallsModel;
+import com.mygdx.game.model.entities.StaticModel;
 
 import java.util.Random;
 import java.util.Vector;
@@ -23,7 +23,7 @@ public class SandBoxModel extends Stage{
 
     private BallModel playerModel;
 
-    private WallsModel wallsModel;
+    private StaticModel staticModel;
 
 
     private int nBalls = 1;
@@ -39,7 +39,7 @@ public class SandBoxModel extends Stage{
 
         this.playerModel = new BallModel(2f, 2f, 0.08f,false);
 
-        this.wallsModel = new WallsModel(0,0);
+        this.staticModel = new StaticModel(0,0);
     }
 
     public static SandBoxModel getInstance() {
@@ -66,8 +66,8 @@ public class SandBoxModel extends Stage{
     }
 
 
-    public WallsModel getWallsModel() {
-        return wallsModel;
+    public StaticModel getStaticModel() {
+        return staticModel;
     }
 
     public void nextLevel(){

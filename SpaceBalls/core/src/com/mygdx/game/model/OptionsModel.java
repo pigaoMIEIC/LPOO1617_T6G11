@@ -3,13 +3,7 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
-import com.mygdx.game.model.entities.WallsModel;
-
-import java.util.Random;
-import java.util.Vector;
-
-import static com.mygdx.game.view.MenuView.RATIO;
-import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
+import com.mygdx.game.model.entities.StaticModel;
 
 /**
  * Created by Tiago Neves on 22/05/2017.
@@ -22,7 +16,7 @@ public class OptionsModel extends Stage{
 
     private BallModel playerModel;
 
-    private WallsModel wallsModel;
+    private StaticModel staticModel;
 
 
     private int nBalls = 1;
@@ -33,7 +27,7 @@ public class OptionsModel extends Stage{
 
         this.playerModel = new BallModel(2f, 2f, 0.08f,false);
 
-        this.wallsModel = new WallsModel(0,0);
+        this.staticModel = new StaticModel(0,0);
     }
 
     public static OptionsModel getInstance() {
@@ -57,8 +51,8 @@ public class OptionsModel extends Stage{
     }
 
 
-    public WallsModel getWallsModel() {
-        return wallsModel;
+    public StaticModel getStaticModel() {
+        return staticModel;
     }
 
 

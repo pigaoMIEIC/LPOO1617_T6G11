@@ -5,8 +5,7 @@ import com.mygdx.game.LevelsModels;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.EntityModel;
-import com.mygdx.game.model.entities.StaticBallModel;
-import com.mygdx.game.model.entities.WallsModel;
+import com.mygdx.game.model.entities.StaticModel;
 
 import java.util.Vector;
 
@@ -21,13 +20,11 @@ public class LevelModel {
 
     private static LevelModel instance = new LevelModel();
 
-    private EnemyModel ballModels;
-
     private BallModel playerModel;
 
-    private WallsModel wallsModel;
+    private Vector<EnemyModel> enemyModels = new Vector<EnemyModel>();
 
-    private BallModel endModel;
+    private Vector<StaticModel> obstaclesModels =  new Vector<StaticModel>();
 
 
     public static LevelModel getInstance(LevelType.levelType newLevel) {
@@ -41,34 +38,44 @@ public class LevelModel {
     }
 
     private LevelModel() {
-        Vector<EntityModel> temp = LevelsModels.getInstance().getEntitiesModels(currLevel);
-        this.ballModels= (EnemyModel)temp.elementAt(1);
+        Vector<EntityModel> tempEntities = LevelsModels.getInstance().getEntitiesModels(currLevel);
+        Vector<StaticModel> tempStatics = LevelsModels.getInstance().getStaticModels(currLevel);
 
-        this.playerModel = (BallModel)temp.elementAt(2);
+        this.playerModel = (BallModel)tempEntities.elementAt(0);
 
-        this.wallsModel = (WallsModel)temp.elementAt(0);
+        for (int i = 1; i < tempEntities.size(); i++) {
+            this.enemyModels.addElement((EnemyModel)tempEntities.elementAt(i));
+        }
 
-        this.endModel = (BallModel)temp.elementAt(3);
+        for (int i = 0; i < tempStatics.size(); i++) {
+            this.obstaclesModels.addElement(tempStatics.elementAt(i));
+        }
     }
 
 
-    public EnemyModel getEnemyModel() {
-        return ballModels;
+    /**
+     * @param i index in the vector of enemies
+     * @return
+     */
+    public EnemyModel getEnemyModel(int i) {
+        return enemyModels.elementAt(i);
     }
-
 
     public BallModel getPlayerModel() {
         return playerModel;
     }
 
-    public WallsModel getWallsModel() {
-        return wallsModel;
+    public StaticModel getStaticModel(int i) {
+        return obstaclesModels.elementAt(i);
     }
 
-    public BallModel getEndModel(){
-        return this.endModel;
+    public int getEnemySize() {
+        return enemyModels.size();
     }
 
+    public int getObstaclesSize() {
+        return obstaclesModels.size();
+    }
 
     public void delete(){
         instance=null;
