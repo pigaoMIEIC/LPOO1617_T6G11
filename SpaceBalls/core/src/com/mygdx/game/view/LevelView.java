@@ -187,6 +187,16 @@ public class LevelView extends ScreenAdapter {
         if(joystick)
            LevelController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
 
+        //checks if the player Won
+        if(LevelController.getInstance().getWin()){
+            backToMenu();
+        }
+
+        //checks if the player lost
+        if(LevelController.getInstance().isColliding()){
+           backToMenu();
+        }
+
     }
 
     private void drawEntities() {
@@ -220,8 +230,7 @@ public class LevelView extends ScreenAdapter {
 
     private void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)||Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            LevelController.getInstance().delete();
-            game.setScreen(new MenuView(game));
+            backToMenu();
         }
     }
 
@@ -244,5 +253,10 @@ public class LevelView extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width,height,true);
+    }
+
+    private void backToMenu(){
+        LevelController.getInstance().delete();
+        game.setScreen(new MenuView(game));
     }
 }

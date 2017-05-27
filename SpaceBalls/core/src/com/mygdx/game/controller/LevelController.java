@@ -53,6 +53,8 @@ public class LevelController {
 
     private Object userData;
 
+    private Object userData2;
+
     boolean joystick = false;
 
     float sensitivity = 60;
@@ -61,6 +63,8 @@ public class LevelController {
     float offsetY = 0;
 
     static LevelType.levelType currLevel = LevelType.levelType.ONE;
+
+    private boolean win;
 
     public static LevelController getInstance() {
         if (instance == null){
@@ -80,7 +84,7 @@ public class LevelController {
         userData = playerBody.getUserData();
 
         endBall = (BallBody)entityTemp.elementAt(1);
-
+        userData2 = endBall.getUserData();
         for (int i = 2; i < entityTemp.size(); i++) {
             enemyBodies.addElement((BallBody)entityTemp.elementAt(i));
         }
@@ -98,11 +102,12 @@ public class LevelController {
 
             @Override
             public void beginContact(Contact contact) {
-                //for (int i = 0; i < LevelModel.getInstance(currLevel).getnBalls(); i++) {
-                    if(contact.getFixtureA().getBody().getUserData() == userData && contact.getFixtureB().getBody().getUserData() != userData){
-                        Colliding = true;
-                    }
-                //}
+           
+                if(contact.getFixtureA().getBody().getUserData() == userData && contact.getFixtureB().getBody().getUserData() != userData && contact.getFixtureB().getBody().getUserData() != userData2){
+                    Colliding = true;
+                }
+                if(contact.getFixtureA().getBody().getUserData() == userData && contact.getFixtureB().getBody().getUserData() == userData2)
+                    win = true;
 
 
             }
@@ -193,6 +198,10 @@ public class LevelController {
 
     public float getSeconds() {
         return seconds;
+    }
+
+    public boolean getWin() {
+        return win;
     }
 
     public void setSensitivity(float sensitivity) {
