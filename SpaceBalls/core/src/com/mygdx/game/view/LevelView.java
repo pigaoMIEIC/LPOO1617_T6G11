@@ -196,6 +196,10 @@ public class LevelView extends ScreenAdapter {
         view.update(ballModel);
         view.draw(game.getBatch());
 
+        BallModel endBall = LevelModel.getInstance(currLevel).getEndBall();
+        view.update(endBall);
+        view.draw(game.getBatch());
+
 
         for (int i = 0; i < LevelModel.getInstance(currLevel).getEnemySize(); i++) {
             EnemyModel enemyModel = LevelModel.getInstance(currLevel).getEnemyModel(i);

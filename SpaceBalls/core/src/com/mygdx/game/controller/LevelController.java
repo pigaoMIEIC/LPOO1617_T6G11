@@ -79,12 +79,13 @@ public class LevelController {
         playerBody.setDrag(0.5f);
         userData = playerBody.getUserData();
 
+        endBall = (BallBody)entityTemp.elementAt(1);
 
-        for (int i = 1; i < entityTemp.size(); i++) {
+        for (int i = 2; i < entityTemp.size(); i++) {
             enemyBodies.addElement((BallBody)entityTemp.elementAt(i));
         }
 
-        endBall = (BallBody)enityTemp.elementAt(2) ;
+        endBall = (BallBody)entityTemp.elementAt(2) ;
 
         wallsBody = (WallsBody)staticTemp.elementAt(0);
 

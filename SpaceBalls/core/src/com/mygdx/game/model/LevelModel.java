@@ -22,6 +22,8 @@ public class LevelModel {
 
     private BallModel playerModel;
 
+    private BallModel endBall;
+
     private Vector<EnemyModel> enemyModels = new Vector<EnemyModel>();
 
     private Vector<StaticModel> obstaclesModels =  new Vector<StaticModel>();
@@ -43,7 +45,9 @@ public class LevelModel {
 
         this.playerModel = (BallModel)tempEntities.elementAt(0);
 
-        for (int i = 1; i < tempEntities.size(); i++) {
+        this.endBall = (BallModel)tempEntities.elementAt(1);
+
+        for (int i = 2; i < tempEntities.size(); i++) {
             this.enemyModels.addElement((EnemyModel)tempEntities.elementAt(i));
         }
 
@@ -63,6 +67,10 @@ public class LevelModel {
 
     public BallModel getPlayerModel() {
         return playerModel;
+    }
+
+    public BallModel getEndBall() {
+        return endBall;
     }
 
     public StaticModel getStaticModel(int i) {

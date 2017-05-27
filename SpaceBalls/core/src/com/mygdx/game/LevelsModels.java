@@ -26,6 +26,7 @@ public class LevelsModels {
             case ONE:
                 System.out.println("this is Model one");
                 tempEntity.add(new BallModel(0.08f, 0.08f, 0.08f,true));
+                tempEntity.add(new BallModel(2,2,0.08f,true));
                 tempEntity.add(new EnemyModel(0.5f, 0.5f, 0.08f,true));
                 tempEntity.add(new EnemyModel(1f, 1f, 0.08f,true));
                 return tempEntity;
