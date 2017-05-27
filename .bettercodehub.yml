@@ -1,5 +1,9 @@
 exclude:
 - /Project_1/.*
+- /SpaceBalls/android/.*
+- /SpaceBalls/html/.*
+- /SpaceBalls/ios/.*
+- /SpaceBalls/desktop/.*
 component_depth: 7
 languages:
 - java
