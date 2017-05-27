@@ -1,16 +1,11 @@
 package com.mygdx.game.controller.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.model.entities.WallsModel;
+import com.mygdx.game.model.entities.StaticModel;
 import com.mygdx.game.view.MenuView;
-
-import static com.mygdx.game.GameStage.VIEWPORT_WIDTH;
 
 /**
  * Created by Tiago Neves on 17/05/2017.
@@ -24,13 +19,13 @@ public class WallsBody extends StaticBody{
      * @param model the model representing this space ship.
      * @param restitution
      */
-    public WallsBody(World world, WallsModel model, float restitution) {
+    public WallsBody(World world, StaticModel model, float restitution) {
         super(world, model);
 
         float density = 1f, friction = 0f;
 
         //Wall shape
-        createWall(body, 0.08f, density, friction, restitution);
+        createWall(body, density, friction, restitution);
     }
 
     /**
@@ -39,9 +34,8 @@ public class WallsBody extends StaticBody{
      * @param density The density of the fixture. How heavy it is in relation to its area.
      * @param friction The friction of the fixture. How slippery it is.
      * @param restitution The restitution of the fixture. How much it bounces.
-     * @param radius The radius of the circle fixture.
      */
-    public final void createWall(Body body, float radius, float density, float friction, float restitution) {
+    public final void createWall(Body body, float density, float friction, float restitution) {
 
         float width = MenuView.VIEWPORT_WIDTH;
         float height = MenuView.VIEWPORT_WIDTH*MenuView.RATIO;

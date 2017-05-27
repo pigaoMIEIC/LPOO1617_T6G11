@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.EntityModel;
-import com.mygdx.game.model.entities.WallsModel;
+import com.mygdx.game.model.entities.StaticModel;
 
 import java.util.Vector;
 
@@ -21,19 +21,38 @@ public class LevelsModels {
     private LevelsModels() {}
 
     public final Vector<EntityModel> getEntitiesModels(LevelType.levelType level){
-        Vector<EntityModel> temp = new Vector<EntityModel>();
+        Vector<EntityModel> tempEntity = new Vector<EntityModel>();
         switch(level){
             case ONE:
                 System.out.println("this is Model one");
-                temp.add(new WallsModel(0,0));
-                temp.add(new EnemyModel(0.5f, 0.5f, 0.08f,true));
-                temp.add(new BallModel(0.08f, 0.08f, 0.08f,true));
-                return temp;
+                tempEntity.add(new BallModel(0.08f, 0.08f, 0.08f,true));
+                tempEntity.add(new EnemyModel(0.5f, 0.5f, 0.08f,true));
+                tempEntity.add(new EnemyModel(1f, 1f, 0.08f,true));
+                return tempEntity;
             case TWO:
-                return temp;
+                return tempEntity;
             default:
-                System.out.println("default level... ups!!");
-                return temp;
+                System.out.println("default levelModel.java... ups!!");
+                return tempEntity;
+        }
+    }
+
+
+
+    public final Vector<StaticModel> getStaticModels(LevelType.levelType level){
+        Vector<StaticModel> tempStatic = new Vector<StaticModel>();
+        switch(level){
+            case ONE:
+                System.out.println("this is StaticModel one");
+                tempStatic.add(new StaticModel(0,0));
+                tempStatic.add(new StaticModel(1.5f,1.5f));
+                tempStatic.add(new StaticModel(3f,2f));
+                return tempStatic;
+            case TWO:
+                return tempStatic;
+            default:
+                System.out.println("default levelModel.java... ups!!");
+                return tempStatic;
         }
     }
 

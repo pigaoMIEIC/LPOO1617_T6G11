@@ -67,7 +67,7 @@ public class SandBoxController {
             rballBodys.addElement(new BallBody(world, SandBoxModel.getInstance().getEnemyModel(0)));
             rballBodys.elementAt(0).setType(BodyDef.BodyType.DynamicBody);
 
-            wallsBody = new WallsBody(world,SandBoxModel.getInstance().getWallsModel(), 0.5f);
+            wallsBody = new WallsBody(world,SandBoxModel.getInstance().getStaticModel(), 0.5f);
 
             world.setContactListener(new ContactListener() {
 

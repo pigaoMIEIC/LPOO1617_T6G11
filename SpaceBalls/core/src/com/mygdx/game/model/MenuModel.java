@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.StaticBallModel;
-import com.mygdx.game.model.entities.WallsModel;
+import com.mygdx.game.model.entities.StaticModel;
 
 import static com.mygdx.game.view.MenuView.RATIO;
 import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
@@ -20,7 +20,7 @@ public class MenuModel extends Stage{
 
     private BallModel[] ballModels = new BallModel[MenuController.RANDNR];
     private StaticBallModel[] staticBallModel = new StaticBallModel[MenuController.SRANDNR];
-    private WallsModel wallsModel;
+    private StaticModel staticModel;
 
     Vector2[] positions = {
             new Vector2(0,0),
@@ -40,7 +40,7 @@ public class MenuModel extends Stage{
             this.staticBallModel[i] = new StaticBallModel(positions[i].x, positions[i].y, 0.1f, false, true, true);
         }
 
-        this.wallsModel = new WallsModel(0,0);
+        this.staticModel = new StaticModel(0,0);
     }
 
     public static MenuModel getInstance() {
@@ -61,8 +61,8 @@ public class MenuModel extends Stage{
         return staticBallModel[i];
     }
 
-    public WallsModel getWallsModel() {
-        return wallsModel;
+    public StaticModel getStaticModel() {
+        return staticModel;
     }
 
 }

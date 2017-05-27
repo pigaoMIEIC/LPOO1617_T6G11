@@ -41,7 +41,9 @@ public class LevelController {
 
     private final WallsBody wallsBody;
 
-    private BallBody rballBodys;
+    private final Vector<StaticBody> obstaclesBodies = new Vector<StaticBody>();
+
+    private Vector<BallBody> enemyBodies = new Vector<BallBody>();
 
     BallBody playerBody;
 
@@ -68,18 +70,24 @@ public class LevelController {
     LevelController() {
         world = new World(new Vector2(0, 0), false);
 
-        Vector<EntityBody> enityTemp = LevelsBodies.getInstance().getEntitiesBodies(currLevel,world);
+        Vector<EntityBody> entityTemp = LevelsBodies.getInstance().getEntitiesBodies(currLevel,world);
         Vector<StaticBody> staticTemp = LevelsBodies.getInstance().getStaticBodies(currLevel,world);
 
-        playerBody = (BallBody)enityTemp.elementAt(0);
+        playerBody = (BallBody)entityTemp.elementAt(0);
         playerBody.setDrag(0.5f);
         userData = playerBody.getUserData();
 
 
-        rballBodys = (BallBody)enityTemp.elementAt(1);
-        rballBodys.setType(BodyDef.BodyType.DynamicBody);
+        for (int i = 1; i < entityTemp.size(); i++) {
+            enemyBodies.addElement((BallBody)entityTemp.elementAt(i));
+        }
 
         wallsBody = (WallsBody)staticTemp.elementAt(0);
+
+        for (int i = 1; i < staticTemp.size(); i++) {
+            obstaclesBodies.addElement(staticTemp.elementAt(i));
+        }
+
 
         world.setContactListener(new ContactListener() {
 
@@ -132,11 +140,11 @@ public class LevelController {
         if(!joystick)
             playerBody.applyForceToCenter(vector.x,vector.y, true);
 
-        //for(int i=0; i < rballBodys.size();i++){
-            Vector2 follow = new Vector2((playerBody.getX()-rballBodys.getX())/50,(playerBody.getY()-rballBodys.getY())/50);
+        for(int i=0; i < enemyBodies.size();i++){
+            Vector2 follow = new Vector2((playerBody.getX()-enemyBodies.elementAt(i).getX())/50,(playerBody.getY()-enemyBodies.elementAt(i).getY())/50);
             follow.limit(0.01f);
-            rballBodys.applyForceToCenter(follow.x,follow.y,true);
-        //}
+            enemyBodies.elementAt(i).applyForceToCenter(follow.x,follow.y,true);
+        }
 
 
 

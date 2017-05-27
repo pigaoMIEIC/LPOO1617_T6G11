@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.view.MenuView;
@@ -34,6 +35,30 @@ public abstract class StaticBody {
         body = world.createBody(bodyDef);
         body.setUserData(model);
     }
+
+    final void createFixture(Body body, float[] vertexes, int width, int height, float restitution) {
+        // Transform pixels into meters, center and invert the y-coordinate
+        for (int i = 0; i < vertexes.length; i++) {
+            if (i % 2 == 0) vertexes[i] -= width / 2;   // center the vertex x-coordinate
+            if (i % 2 != 0) vertexes[i] -= height / 2;  // center the vertex y-coordinate
+
+            if (i % 2 != 0) vertexes[i] *= -1;          // invert the y-coordinate
+
+            vertexes[i] *= MenuView.PIXEL_TO_METER;              // scale from pixel to meter
+        }
+
+        PolygonShape polygon = new PolygonShape();
+        polygon.set(vertexes);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = polygon;
+        fixtureDef.restitution = restitution;
+
+        body.createFixture(fixtureDef);
+
+        polygon.dispose();
+    }
+
 
 
 

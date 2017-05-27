@@ -3,26 +3,16 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.OptionsStage;
 import com.mygdx.game.controller.entities.BallBody;
 import com.mygdx.game.controller.entities.WallsBody;
-import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.OptionsModel;
-import com.mygdx.game.model.SandBoxModel;
 import com.mygdx.game.model.entities.EntityModel;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Vector;
 
-import static com.mygdx.game.view.MenuView.RATIO;
 import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
 
 /**
@@ -78,7 +68,7 @@ public class OptionsController {
 
         callibrateBody = new BallBody(world, OptionsModel.getInstance().getCallibrateModel());
 
-        wallsBody = new WallsBody(world,OptionsModel.getInstance().getWallsModel(), 0.5f);
+        wallsBody = new WallsBody(world,OptionsModel.getInstance().getStaticModel(), 0.5f);
 
         calRadius=OptionsModel.getInstance().getCallibrateModel().getRadius();
 
