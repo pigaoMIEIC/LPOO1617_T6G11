@@ -1,3 +1,5 @@
-component_depth: 4
+exclude:
+- /Project_1/.*
+component_depth: 7
 languages:
 - java
