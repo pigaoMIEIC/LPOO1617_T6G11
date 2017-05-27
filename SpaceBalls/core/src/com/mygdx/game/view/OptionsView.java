@@ -258,10 +258,11 @@ public class OptionsView extends ScreenAdapter {
     private void handleInputs(float delta) {
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)||Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             OptionsController.getInstance().delete();
             game.setScreen(new MenuView(game));
         }
+
 
         if(calibrate.isPressed()){
             this.offsetX = OptionsController.getInstance().getReadingX();

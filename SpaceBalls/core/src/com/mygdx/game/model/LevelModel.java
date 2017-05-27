@@ -2,17 +2,12 @@ package com.mygdx.game.model;
 
 import com.mygdx.game.LevelType;
 import com.mygdx.game.LevelsModels;
-import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.model.entities.WallsModel;
 
-import java.util.Random;
 import java.util.Vector;
-
-import static com.mygdx.game.view.MenuView.RATIO;
-import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
 
 /**
  * Created by Tiago Neves on 26/05/2017.

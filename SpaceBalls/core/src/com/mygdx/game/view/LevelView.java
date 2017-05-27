@@ -6,13 +6,18 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LevelType;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
+import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.LevelModel;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
@@ -66,6 +71,21 @@ public class LevelView extends ScreenAdapter {
 
     private final Stage stage;
 
+    private Skin touchpadSkin;
+
+    private SpriteBatch batch;
+
+    private  Touchpad.TouchpadStyle  touchpadStyle;
+
+    private Drawable touchBackground,touchKnob;
+
+    private Touchpad touchpad;
+
+    float sensitivity;
+
+    boolean joystick;
+
+
     public LevelView(SpaceBallsGame game) {
         this.game = game;
         this.stage = new Stage();
@@ -73,18 +93,64 @@ public class LevelView extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
         loadAssets();
 
+
+        sensitivity = game.getPreferences().readSensitivity();
+        LevelController.getInstance().setSensitivity(sensitivity);
+        joystick = game.getPreferences().readJoystick();
+        if(joystick)
+            createJoystick();
+
+        LevelController.getInstance().setJoystick(game.getPreferences().readJoystick());
+        LevelController.getInstance().setOffsetX(game.getPreferences().readOffsetX());
+        LevelController.getInstance().setOffsetY(game.getPreferences().readOffsetY());
+
         camera = createCamera();
         Gdx.input.setCatchBackKey(true);
     }
 
+    private void createJoystick(){
+        batch = new SpriteBatch();
+        //Create camera
+
+        //Create a touchpad skin
+        touchpadSkin = new Skin();
+        //Set background image
+        touchpadSkin.add("touchBackground", new Texture("exterior.png"));
+        //Set knob image
+        touchpadSkin.add("touchKnob", new Texture("inside.png"));
+        //Create TouchPad Style
+        touchpadStyle = new Touchpad.TouchpadStyle();
+        //Create Drawable's from TouchPad skin
+        touchBackground = touchpadSkin.getDrawable("touchBackground");
+        touchKnob = touchpadSkin.getDrawable("touchKnob");
+
+        //Apply the Drawables to the TouchPad Style
+        touchpadStyle.background = touchBackground;
+        touchpadStyle.knob = touchKnob;
+        //Create new TouchPad with the created style
+        touchpad = new Touchpad(10, touchpadStyle);
+        //setBounds(x,y,width,height)
+        touchpad.setBounds(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER, 200, 200);
+        touchpad.setSize(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER);
+
+
+        touchpad.setPosition((VIEWPORT_WIDTH-VIEWPORT_WIDTH/4)/PIXEL_TO_METER,VIEWPORT_WIDTH/8/PIXEL_TO_METER);
+
+        //Create a Stage and add TouchPad
+
+        stage.addActor(touchpad);
+
+    }
 
     private void loadAssets() {
-        this.game.getAssetManager().load( "back.png" , Texture.class);
+        this.game.getAssetManager().load("back.png" , Texture.class);
         this.game.getAssetManager().load("1.png", Texture.class);
         this.game.getAssetManager().load("2.png", Texture.class);
         this.game.getAssetManager().load("3.png", Texture.class);
         this.game.getAssetManager().load("4.png", Texture.class);
         this.game.getAssetManager().load("5.png", Texture.class);
+        this.game.getAssetManager().load("exterior.png", Texture.class);
+        this.game.getAssetManager().load("inside.png", Texture.class);
         this.game.getAssetManager().finishLoading();
     }
 
@@ -114,6 +180,9 @@ public class LevelView extends ScreenAdapter {
         stage.act();
         stage.draw();
 
+        if(joystick)
+           LevelController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
+
     }
 
     private void drawEntities() {
@@ -134,7 +203,7 @@ public class LevelView extends ScreenAdapter {
 
     private void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)||Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            this.dispose();
+            LevelController.getInstance().delete();
             game.setScreen(new MenuView(game));
         }
     }

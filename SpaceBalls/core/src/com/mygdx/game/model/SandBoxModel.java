@@ -1,12 +1,9 @@
 package com.mygdx.game.model;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EnemyModel;
-import com.mygdx.game.model.entities.StaticBallModel;
 import com.mygdx.game.model.entities.WallsModel;
 
 import java.util.Random;

@@ -46,7 +46,7 @@ public class MenuView extends ScreenAdapter {
     /**
      * The screen ratio.
      */
-    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());;
+    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
 
     /**
      * The camera used to show the viewport.
