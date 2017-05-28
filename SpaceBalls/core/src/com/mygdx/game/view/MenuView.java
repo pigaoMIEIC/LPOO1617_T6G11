@@ -28,40 +28,12 @@ import com.mygdx.game.view.entities.ViewFactory;
 
 public class MenuView extends GameView {
     /**
-     * Used to debug the position of the physics fixtures
-     */
-    private static final boolean DEBUG_PHYSICS = true;
-
-    /**
-     * How much meters does a pixel represent.
-     */
-    public static final float PIXEL_TO_METER = 0.20f / 200;
-
-    /**
-     * The width of the viewport in meters. The height is
-     * automatically calculated using the screen ratio.
-     */
-    public static final float VIEWPORT_WIDTH = 4;
-
-    /**
-     * The screen ratio.
-     */
-    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
-
-    /**
      * The camera used to show the viewport.
      */
     private final OrthographicCamera camera;
 
     private final SpaceBallsGame game;
-//    private Vector2[] positions = {
-//            new Vector2(0,0),
-//            new Vector2(VIEWPORT_WIDTH,0),
-//            new Vector2(0,VIEWPORT_WIDTH * RATIO),
-//            new Vector2(VIEWPORT_WIDTH,VIEWPORT_WIDTH * RATIO),
-//            new Vector2(VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2),
-//            new Vector2(VIEWPORT_WIDTH-VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2)
-//    };
+
 
     private ImageButton startButton;
     private ImageButton exitButton;
@@ -90,19 +62,15 @@ public class MenuView extends GameView {
     }
 
     private void loadAssets() {
-        this.game.getAssetManager().load( "back.png" , Texture.class);
-        this.game.getAssetManager().load( "ball.png" , Texture.class);
-        this.game.getAssetManager().load( "calibrate.png" , Texture.class);
-        this.game.getAssetManager().load( "credits.png" , Texture.class);
-        this.game.getAssetManager().load( "enemy.png" , Texture.class);
-        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
-        this.game.getAssetManager().load( "options.png" , Texture.class);
         this.game.getAssetManager().load( "play.png" , Texture.class);
-        this.game.getAssetManager().load( "Survival.png" , Texture.class);
+        this.game.getAssetManager().load( "Exit.png" , Texture.class);
         this.game.getAssetManager().load( "title.png" , Texture.class);
-        this.game.getAssetManager().load( "transparent.png" , Texture.class);
-        this.game.getAssetManager().load( "end.png" , Texture.class);
+        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
+        this.game.getAssetManager().load( "credits.png" , Texture.class);
+        this.game.getAssetManager().load( "options.png" , Texture.class);
+        this.game.getAssetManager().load( "Survival.png" , Texture.class);
+        this.game.getAssetManager().load( "ball.png" , Texture.class);
+        this.game.getAssetManager().load( "enemy.png" , Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }

@@ -41,8 +41,6 @@ public class LevelView extends GameView {
 
     private Skin touchpadSkin;
 
-    private SpriteBatch batch;
-
     private  Touchpad.TouchpadStyle  touchpadStyle;
 
     private Drawable touchBackground,touchKnob;
@@ -80,9 +78,6 @@ public class LevelView extends GameView {
     }
 
     private void createJoystick(){
-        batch = new SpriteBatch();
-        //Create camera
-
         //Create a touchpad skin
         touchpadSkin = new Skin();
         //Set background image
@@ -115,12 +110,8 @@ public class LevelView extends GameView {
 
     private void loadAssets() {
         this.game.getAssetManager().load("back.png" , Texture.class);
-        this.game.getAssetManager().load("1.png", Texture.class);
-        this.game.getAssetManager().load("2.png", Texture.class);
-        this.game.getAssetManager().load("3.png", Texture.class);
-        this.game.getAssetManager().load("4.png", Texture.class);
-        this.game.getAssetManager().load("5.png", Texture.class);
         this.game.getAssetManager().load("exterior.png", Texture.class);
+        this.game.getAssetManager().load("end.png",Texture.class);
         this.game.getAssetManager().load("inside.png", Texture.class);
         this.game.getAssetManager().finishLoading();
     }

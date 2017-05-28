@@ -32,21 +32,6 @@ import java.util.Vector;
 
 public class LevelChoiceView extends GameView {
 
-    /**
-     * How much meters does a pixel represent.
-     */
-    public static final float PIXEL_TO_METER = 0.20f / 200;
-
-    /**
-     * The width of the viewport in meters. The height is
-     * automatically calculated using the screen ratio.
-     */
-    public static final float VIEWPORT_WIDTH = 4;
-
-    /**
-     * The screen ratio.
-     */
-    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());;
 
     /**
      * The camera used to show the viewport.
