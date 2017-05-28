@@ -37,8 +37,6 @@ public class LevelView extends GameView {
      */
     private final OrthographicCamera camera;
 
-    private final SpaceBallsGame game;
-
     float sensitivity;
 
     boolean joystick;
@@ -47,10 +45,13 @@ public class LevelView extends GameView {
 
 
     public LevelView(SpaceBallsGame game,LevelType.levelType newLevel) {
+
         super(game);
-        this.game = game;
+
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
+
         Gdx.input.setInputProcessor(stage);
+
         loadAssets();
 
         currLevel = newLevel;
@@ -79,25 +80,27 @@ public class LevelView extends GameView {
     }
 
     public void render(float delta) {
+        LevelController lvlContrl = LevelController.getInstance();
+
         stage.setDebugAll(true);
 
-        LevelController.getInstance().update(delta);
+       lvlContrl.update(delta);
 
         super.render(delta);
 
         debugPhysics(LevelController.getInstance().getWorld());
 
         if(joystick)
-           LevelController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
+          lvlContrl.accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
 
         //checks if the player Won
-        if(LevelController.getInstance().getWin()){
+        if(lvlContrl.getWin()){
             backToMenu();
         }
 
         //checks if the player lost
-        if(LevelController.getInstance().isColliding()){
-            LevelController.getInstance().delete();
+        if(lvlContrl.isColliding()){
+            lvlContrl.delete();
             game.setScreen(new GameOverView(game,this));
         }
 
@@ -108,28 +111,20 @@ public class LevelView extends GameView {
     void drawEntities() {
 
         BallModel ballModel = LevelModel.getInstance(currLevel).getPlayerModel();
-        EntityView view = ViewFactory.makeView(game, ballModel);
-        view.update(ballModel);
-        view.draw(game.getBatch());
+        drawView(ballModel);
 
         EndBallModel endBall = LevelModel.getInstance(currLevel).getEndBall();
-        view = ViewFactory.makeView(game, endBall);
-        view.update(endBall);
-        view.draw(game.getBatch());
+        drawView(endBall);
 
 
         for (int i = 0; i < LevelModel.getInstance(currLevel).getEnemySize(); i++) {
             EnemyModel enemyModel = LevelModel.getInstance(currLevel).getEnemyModel(i);
-            view = ViewFactory.makeView(game, enemyModel);
-            view.update(enemyModel);
-            view.draw(game.getBatch());
+           drawView(enemyModel);
         }
 
         for (int i = 1; i < LevelModel.getInstance(currLevel).getObstaclesSize(); i++) {
             StaticModel obstacleModel = LevelModel.getInstance(currLevel).getStaticModel(i);
-            view = ViewFactory.makeView(game, obstacleModel);
-            view.update(obstacleModel);
-            view.draw(game.getBatch());
+            drawView(obstacleModel);
         }
 
     }

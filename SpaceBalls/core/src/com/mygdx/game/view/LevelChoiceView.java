@@ -148,18 +148,14 @@ public class LevelChoiceView extends GameView {
 
     @Override
     void drawEntities() {
-        for (int i = 0; i < MenuController.RANDNR; i++) {
+        for (int i = 0; i < RANDNR; i++) {
             BallModel ballModel = MenuModel.getInstance().getBallModel(i);
-            EntityView view = ViewFactory.makeView(game, ballModel);
-            view.update(ballModel);
-            view.draw(game.getBatch());
+            drawView(ballModel);
         }
 
-        for (int i = 0; i < MenuController.SRANDNR; i++) {
-            StaticBallModel ballModel = MenuModel.getInstance().getStaticBallModel(i);
-            EntityView view = ViewFactory.makeView(game, ballModel);
-            view.update(ballModel);
-            view.draw(game.getBatch());
+        for (int i = 0; i < SRANDNR; i++) {
+            StaticBallModel staticBallModel = MenuModel.getInstance().getStaticBallModel(i);
+            drawView(staticBallModel);
         }
     }
 

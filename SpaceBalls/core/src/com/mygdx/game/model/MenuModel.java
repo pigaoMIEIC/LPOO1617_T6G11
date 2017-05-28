@@ -6,6 +6,7 @@ import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.StaticBallModel;
 import com.mygdx.game.model.entities.StaticModel;
+import com.mygdx.game.view.GameView;
 
 import static com.mygdx.game.view.MenuView.RATIO;
 import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
@@ -18,8 +19,8 @@ import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
 public class MenuModel extends Stage{
     private static MenuModel instance;
 
-    private BallModel[] ballModels = new BallModel[MenuController.RANDNR];
-    private StaticBallModel[] staticBallModel = new StaticBallModel[MenuController.SRANDNR];
+    private BallModel[] ballModels = new BallModel[GameView.RANDNR];
+    private StaticBallModel[] staticBallModel = new StaticBallModel[GameView.SRANDNR];
     private StaticModel staticModel;
 
     Vector2[] positions = {

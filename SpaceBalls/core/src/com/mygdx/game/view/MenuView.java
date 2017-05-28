@@ -131,29 +131,19 @@ public class MenuView extends GameView {
 
         super.render(delta);
 
-//        if (DEBUG_PHYSICS) {
-//            debugCamera = camera.combined.cpy();
-//            debugCamera.scl(1 / PIXEL_TO_METER);
-//            debugRenderer.render(MenuController.getInstance().getWorld(), debugCamera);
-//        }
-
         debugPhysics(MenuController.getInstance().getWorld());
     }
 
     @Override
     void drawEntities() {
-        for (int i = 0; i < MenuController.RANDNR; i++) {
+        for (int i = 0; i < RANDNR; i++) {
             BallModel ballModel = MenuModel.getInstance().getBallModel(i);
-            EntityView view = ViewFactory.makeView(game, ballModel);
-            view.update(ballModel);
-            view.draw(game.getBatch());
+            drawView(ballModel);
         }
 
-        for (int i = 0; i < MenuController.SRANDNR; i++) {
+        for (int i = 0; i < SRANDNR; i++) {
             StaticBallModel ballModel = MenuModel.getInstance().getStaticBallModel(i);
-            EntityView view = ViewFactory.makeView(game, ballModel);
-            view.update(ballModel);
-            view.draw(game.getBatch());
+            drawView(ballModel);
         }
 
     }

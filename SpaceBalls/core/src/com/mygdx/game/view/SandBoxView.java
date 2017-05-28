@@ -44,9 +44,9 @@ public class SandBoxView extends GameView{
     private ImageButton title;
     private ImageButton options;
 
-    ProgressBar bar;
+    private ProgressBar bar;
 
-    boolean joystick;
+    private boolean joystick;
 
 
     public SandBoxView(SpaceBallsGame game) {
@@ -155,7 +155,7 @@ public class SandBoxView extends GameView{
             SandBoxController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
 
 
-        if(Gdx.input.justTouched()){
+        if(Gdx.input.justTouched() && joystick){
             float conversionX = VIEWPORT_WIDTH/PIXEL_TO_METER/Gdx.graphics.getWidth();
             float conversionY = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER/Gdx.graphics.getHeight();
             float radius = VIEWPORT_WIDTH/12/PIXEL_TO_METER;

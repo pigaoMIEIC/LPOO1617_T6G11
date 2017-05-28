@@ -47,6 +47,9 @@ public abstract class GameView extends ScreenAdapter{
      */
     public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
 
+    public final static int RANDNR = 4;//number of random balls in start menu
+    public final static int SRANDNR = 6;//number of random balls in start menu
+
     /**
      * A renderer used to debug the physical fixtures.
      */

@@ -10,6 +10,7 @@ import com.mygdx.game.controller.entities.BallBody;
 import com.mygdx.game.controller.entities.WallsBody;
 import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.entities.EntityModel;
+import com.mygdx.game.view.GameView;
 
 import java.util.Random;
 
@@ -29,12 +30,9 @@ public class MenuController{
 //    private final BallBody ballBody;
     private final WallsBody wallsBody;
 
-    public final static int RANDNR = 4;//number of random balls in start menu
-    public final static int SRANDNR = 6;//number of random balls in start menu
+    BallBody[] rballBodys = new BallBody[GameView.RANDNR];
 
-    BallBody[] rballBodys = new BallBody[RANDNR];
-
-    BallBody[] staticBodys = new BallBody[SRANDNR];
+    BallBody[] staticBodys = new BallBody[GameView.SRANDNR];
 
     float offsetY = 0;
     float offsetX = 0;
