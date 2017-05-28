@@ -4,10 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
 import com.mygdx.game.controller.OptionsController;
@@ -62,12 +66,10 @@ public abstract class GameView extends ScreenAdapter{
     protected final Stage stage;
 
     SpaceBallsGame game;
-    float offsetY;
-    float offsetX;
+
+    Touchpad touchpad;
 
     float sensitivity;
-
-    boolean joystick;
 
     public GameView(SpaceBallsGame game) {
         super();
@@ -116,6 +118,41 @@ public abstract class GameView extends ScreenAdapter{
             debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(world, debugCamera);
         }
+    }
+
+    protected void createJoystick(){
+        Touchpad.TouchpadStyle  touchpadStyle;
+        Drawable touchBackground,touchKnob;
+        Skin touchpadSkin;
+
+        //Create a touchpad skin
+        touchpadSkin = new Skin();
+        //Set background image
+        touchpadSkin.add("touchBackground", new Texture("exterior.png"));
+        //Set knob image
+        touchpadSkin.add("touchKnob", new Texture("inside.png"));
+        //Create TouchPad Style
+        touchpadStyle = new Touchpad.TouchpadStyle();
+        //Create Drawable's from TouchPad skin
+        touchBackground = touchpadSkin.getDrawable("touchBackground");
+        touchKnob = touchpadSkin.getDrawable("touchKnob");
+
+        //Apply the Drawables to the TouchPad Style
+        touchpadStyle.background = touchBackground;
+        touchpadStyle.knob = touchKnob;
+        //Create new TouchPad with the created style
+        touchpad = new Touchpad(10, touchpadStyle);
+        //setBounds(x,y,width,height)
+        touchpad.setBounds(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER, 200, 200);
+        touchpad.setSize(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER);
+
+
+        touchpad.setPosition((VIEWPORT_WIDTH-VIEWPORT_WIDTH/4)/PIXEL_TO_METER,VIEWPORT_WIDTH/8/PIXEL_TO_METER);
+
+        //Create a Stage and add TouchPad
+
+        stage.addActor(touchpad);
+
     }
 
     protected OrthographicCamera createCamera() {

@@ -39,14 +39,6 @@ public class LevelView extends GameView {
 
     private final SpaceBallsGame game;
 
-    private Skin touchpadSkin;
-
-    private  Touchpad.TouchpadStyle  touchpadStyle;
-
-    private Drawable touchBackground,touchKnob;
-
-    private Touchpad touchpad;
-
     float sensitivity;
 
     boolean joystick;
@@ -77,36 +69,6 @@ public class LevelView extends GameView {
         Gdx.input.setCatchBackKey(true);
     }
 
-    private void createJoystick(){
-        //Create a touchpad skin
-        touchpadSkin = new Skin();
-        //Set background image
-        touchpadSkin.add("touchBackground", new Texture("exterior.png"));
-        //Set knob image
-        touchpadSkin.add("touchKnob", new Texture("inside.png"));
-        //Create TouchPad Style
-        touchpadStyle = new Touchpad.TouchpadStyle();
-        //Create Drawable's from TouchPad skin
-        touchBackground = touchpadSkin.getDrawable("touchBackground");
-        touchKnob = touchpadSkin.getDrawable("touchKnob");
-
-        //Apply the Drawables to the TouchPad Style
-        touchpadStyle.background = touchBackground;
-        touchpadStyle.knob = touchKnob;
-        //Create new TouchPad with the created style
-        touchpad = new Touchpad(10, touchpadStyle);
-        //setBounds(x,y,width,height)
-        touchpad.setBounds(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER, 200, 200);
-        touchpad.setSize(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER);
-
-
-        touchpad.setPosition((VIEWPORT_WIDTH-VIEWPORT_WIDTH/4)/PIXEL_TO_METER,VIEWPORT_WIDTH/8/PIXEL_TO_METER);
-
-        //Create a Stage and add TouchPad
-
-        stage.addActor(touchpad);
-
-    }
 
     private void loadAssets() {
         this.game.getAssetManager().load("back.png" , Texture.class);
@@ -116,32 +78,14 @@ public class LevelView extends GameView {
         this.game.getAssetManager().finishLoading();
     }
 
-    @Override
     public void render(float delta) {
         stage.setDebugAll(true);
-        handleInputs(delta);
+
         LevelController.getInstance().update(delta);
 
-        camera.update();
+        super.render(delta);
 
-        game.getBatch().setProjectionMatrix(camera.combined);
-
-        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
-        game.getBatch().begin();
-
-        drawEntities();
-        game.getBatch().end();
-
-        if (DEBUG_PHYSICS) {
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-            debugRenderer.render(LevelController.getInstance().getWorld(), debugCamera);
-        }
-
-        stage.act();
-        stage.draw();
+        debugPhysics(LevelController.getInstance().getWorld());
 
         if(joystick)
            LevelController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);

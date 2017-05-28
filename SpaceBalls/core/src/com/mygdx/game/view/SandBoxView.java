@@ -35,7 +35,6 @@ import com.mygdx.game.view.entities.ViewFactory;
  */
 
 public class SandBoxView extends GameView{
-    private static SpaceBallsGame game = null;
 
     private ImageButton startButton;
     private ImageButton exitButton;
@@ -47,26 +46,17 @@ public class SandBoxView extends GameView{
 
     ProgressBar bar;
 
-    private Skin touchpadSkin;
-
-    private SpriteBatch batch;
-
-    private  Touchpad.TouchpadStyle  touchpadStyle;
-
-    private  Drawable touchBackground,touchKnob;
-
-    private Touchpad touchpad;
-
     boolean joystick;
 
 
     public SandBoxView(SpaceBallsGame game) {
         super(game);
-        this.game = game;
-        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
-        Gdx.input.setInputProcessor(stage);
-        loadAssets();
 
+        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
+
+        Gdx.input.setInputProcessor(stage);
+
+        loadAssets();
 
         Skin skin = new Skin();
 
@@ -79,7 +69,7 @@ public class SandBoxView extends GameView{
         barStyle.knobBefore = barStyle.knob;
         bar = new ProgressBar(0, 5, 1/60f, false, barStyle);
         bar.setPosition(0, VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER);
-        bar.setSize(VIEWPORT_WIDTH/PIXEL_TO_METER,0.2f);
+        bar.setSize(VIEWPORT_WIDTH/PIXEL_TO_METER,0.8f);
         stage.addActor(bar);
 
         Gdx.input.setCatchBackKey(true);
@@ -97,58 +87,23 @@ public class SandBoxView extends GameView{
 
     }
 
-    private void createJoystick(){
-        batch = new SpriteBatch();
-        //Create camera
-
-        //Create a touchpad skin
-        touchpadSkin = new Skin();
-        //Set background image
-        touchpadSkin.add("touchBackground", new Texture("exterior.png"));
-        //Set knob image
-        touchpadSkin.add("touchKnob", new Texture("inside.png"));
-        //Create TouchPad Style
-        touchpadStyle = new Touchpad.TouchpadStyle();
-        //Create Drawable's from TouchPad skin
-        touchBackground = touchpadSkin.getDrawable("touchBackground");
-        touchKnob = touchpadSkin.getDrawable("touchKnob");
-
-        //Apply the Drawables to the TouchPad Style
-        touchpadStyle.background = touchBackground;
-        touchpadStyle.knob = touchKnob;
-        //Create new TouchPad with the created style
-        touchpad = new Touchpad(10, touchpadStyle);
-        //setBounds(x,y,width,height)
-        touchpad.setBounds(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER, 200, 200);
-        touchpad.setSize(VIEWPORT_WIDTH/6/PIXEL_TO_METER,VIEWPORT_WIDTH/6/PIXEL_TO_METER);
-
-
-        touchpad.setPosition((VIEWPORT_WIDTH-VIEWPORT_WIDTH/4)/PIXEL_TO_METER,VIEWPORT_WIDTH/8/PIXEL_TO_METER);
-
-        //Create a Stage and add TouchPad
-
-        stage.addActor(touchpad);
-
-    }
 
     private void loadAssets() {
-        this.game.getAssetManager().load( "back.png" , Texture.class);
-        this.game.getAssetManager().load( "ball.png" , Texture.class);
-        this.game.getAssetManager().load( "calibrate.png" , Texture.class);
-        this.game.getAssetManager().load( "credits.png" , Texture.class);
-        this.game.getAssetManager().load( "enemy.png" , Texture.class);
-        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
-        this.game.getAssetManager().load( "options.png" , Texture.class);
-        this.game.getAssetManager().load( "play.png" , Texture.class);
-        this.game.getAssetManager().load( "sandbox.png" , Texture.class);
-        this.game.getAssetManager().load( "title.png" , Texture.class);
-        this.game.getAssetManager().load( "transparent.png" , Texture.class);
-        this.game.getAssetManager().load( "exterior.png" , Texture.class);
-        this.game.getAssetManager().load( "inside.png" , Texture.class);
-
-
-        this.game.getAssetManager().finishLoading();
+        game.getAssetManager().load( "back.png" , Texture.class);
+        game.getAssetManager().load( "ball.png" , Texture.class);
+        game.getAssetManager().load( "calibrate.png" , Texture.class);
+        game.getAssetManager().load( "credits.png" , Texture.class);
+        game.getAssetManager().load( "enemy.png" , Texture.class);
+        game.getAssetManager().load( "Exit.png" , Texture.class);
+        game.getAssetManager().load( "howtoplay.png" , Texture.class);
+        game.getAssetManager().load( "options.png" , Texture.class);
+        game.getAssetManager().load( "play.png" , Texture.class);
+        game.getAssetManager().load( "sandbox.png" , Texture.class);
+        game.getAssetManager().load( "title.png" , Texture.class);
+        game.getAssetManager().load( "transparent.png" , Texture.class);
+        game.getAssetManager().load( "exterior.png" , Texture.class);
+        game.getAssetManager().load( "inside.png" , Texture.class);
+        game.getAssetManager().finishLoading();
     }
 
 
