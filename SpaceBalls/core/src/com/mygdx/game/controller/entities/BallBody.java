@@ -3,6 +3,7 @@ package com.mygdx.game.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.entities.BallModel;
+import com.mygdx.game.model.entities.EndBallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.StaticBallModel;
 
@@ -55,6 +56,16 @@ public class BallBody extends EntityBody {
         }else restitution = 0f;
         //Ball shape
         createCircle(body, enemyModel.getRadius(), density, friction, restitution, SHIP_BODY, (short) (ASTEROID_BODY | SHIP_BODY | BULLET_BODY));
+    }
+
+
+    public BallBody(World world, EndBallModel model) {
+        super(world, model);
+
+        float density = 999f, friction = 999f, restitution=1f;
+
+
+        createCircle(body,model.getRadius(), density, friction, restitution, SHIP_BODY, (short) (ASTEROID_BODY | SHIP_BODY | BULLET_BODY));
     }
 }
 

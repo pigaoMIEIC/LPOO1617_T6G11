@@ -95,8 +95,6 @@ public class SandBoxView extends GameView{
 
     private Touchpad touchpad;
 
-    float sensitivity;
-
     boolean joystick;
 
 
@@ -225,7 +223,7 @@ public class SandBoxView extends GameView{
         if(SandBoxController.getInstance().isColliding()){
             SandBoxController.getInstance().setColliding(false);
             SandBoxController.getInstance().delete();
-            game.setScreen(new GameOverView(game));
+            game.setScreen(new GameOverView(game,this));
             return;
         }
 
@@ -235,23 +233,14 @@ public class SandBoxView extends GameView{
             SandBoxController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
 
         handleInputs(delta);
-        System.out.println(touchpad.getX());
-
-        //dá mais ou menos... era para poderes mover o joystick onde quisesses... mas n dá mt bem pk não consegues mexer logo o joystick
-        //quando clicas no ecrã... tens de voltar a clicar no joystick para dar para controlar a bola...
-
-
-
 
         if(Gdx.input.justTouched()){
-            System.out.println(Gdx.graphics.getWidth());
-            System.out.println(Gdx.input.getX());
-            System.out.println();
+
             float conversaoX = VIEWPORT_WIDTH/PIXEL_TO_METER/Gdx.graphics.getWidth();
             float conversaoY = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER/Gdx.graphics.getHeight();
             float radius = VIEWPORT_WIDTH/12/PIXEL_TO_METER;
             touchpad.setPosition(Gdx.input.getX()*conversaoX - radius,(Gdx.graphics.getHeight() - Gdx.input.getY())*conversaoY - radius);
-            //touchpad.setPosition(a.x,a.y);
+            touchpad.toFront();
             System.out.println(touchpad.getX());
         }
     }
@@ -277,26 +266,6 @@ public class SandBoxView extends GameView{
             SandBoxController.getInstance().delete();
             game.setScreen(new MenuView(game));
         }
-    }
-
-    private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
-
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
-
-        if (DEBUG_PHYSICS) {
-            debugRenderer = new Box2DDebugRenderer();
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-        }
-
-        return camera;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width,height,true);
     }
 
     public Stage getStage() {

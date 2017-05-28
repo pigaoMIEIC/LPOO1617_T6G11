@@ -30,7 +30,7 @@ import java.util.Vector;
  * Created by Tiago Neves on 23/05/2017.
  */
 
-public class LevelChoiceView extends ScreenAdapter {
+public class LevelChoiceView extends GameView {
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -80,6 +80,7 @@ public class LevelChoiceView extends ScreenAdapter {
 
 
     public LevelChoiceView(SpaceBallsGame game) {
+        super(game);
         this.game = game;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
@@ -205,23 +206,4 @@ public class LevelChoiceView extends ScreenAdapter {
         }
     }
 
-    private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
-
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
-
-        if (DEBUG_PHYSICS) {
-            debugRenderer = new Box2DDebugRenderer();
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-        }
-
-        return camera;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width,height,true);
-    }
 }

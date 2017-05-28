@@ -26,7 +26,7 @@ import com.mygdx.game.view.entities.ViewFactory;
  * Created by Tiago Neves on 18/05/2017.
  */
 
-public class MenuView extends ScreenAdapter {
+public class MenuView extends GameView {
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -53,17 +53,6 @@ public class MenuView extends ScreenAdapter {
      */
     private final OrthographicCamera camera;
 
-    /**
-     * A renderer used to debug the physical fixtures.
-     */
-    private Box2DDebugRenderer debugRenderer;
-
-    /**
-     * The transformation matrix used to transform meters into
-     * pixels in order to show fixtures in their correct places.
-     */
-    private Matrix4 debugCamera;
-
     private final SpaceBallsGame game;
 
     private final Stage stage;
@@ -87,6 +76,7 @@ public class MenuView extends ScreenAdapter {
 
 
     public MenuView(SpaceBallsGame game) {
+        super(game);
         this.game = game;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
@@ -116,6 +106,7 @@ public class MenuView extends ScreenAdapter {
         this.game.getAssetManager().load( "Survival.png" , Texture.class);
         this.game.getAssetManager().load( "title.png" , Texture.class);
         this.game.getAssetManager().load( "transparent.png" , Texture.class);
+        this.game.getAssetManager().load( "end.png" , Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }
@@ -152,8 +143,8 @@ public class MenuView extends ScreenAdapter {
 
         buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("options.png")));
         options = new ImageButton(buttonDrawable);
-        options.setSize(width/20,height/10);
-        options.setPosition(width - width/20,height-height/10);
+        options.setSize(width/10,height/10);
+        options.setPosition(width - width/10,height-height/9);
         stage.addActor(options);
 
         buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Survival.png")));
@@ -244,23 +235,4 @@ public class MenuView extends ScreenAdapter {
 
     }
 
-    private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
-
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
-
-        if (DEBUG_PHYSICS) {
-            debugRenderer = new Box2DDebugRenderer();
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-        }
-
-        return camera;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-       stage.getViewport().update(width,height,true);
-    }
 }

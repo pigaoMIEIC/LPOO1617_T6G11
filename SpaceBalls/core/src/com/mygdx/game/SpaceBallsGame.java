@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.view.MenuView;
 
+
 /**
  * Created by Tiago Neves on 07/04/2017.
  */
@@ -46,6 +47,7 @@ public class SpaceBallsGame extends Game{
     }
 
     private void startGame() {
+        MyFonts.getInstance();
         setScreen(new MenuView(this));
     }
 

@@ -20,6 +20,7 @@ import com.mygdx.game.controller.LevelController;
 import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.LevelModel;
 import com.mygdx.game.model.entities.BallModel;
+import com.mygdx.game.model.entities.EndBallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.StaticModel;
 import com.mygdx.game.view.entities.EntityView;
@@ -195,7 +196,8 @@ public class LevelView extends GameView {
 
         //checks if the player lost
         if(LevelController.getInstance().isColliding()){
-           backToMenu();
+            LevelController.getInstance().delete();
+            game.setScreen(new GameOverView(game,this));
         }
 
     }
@@ -207,7 +209,8 @@ public class LevelView extends GameView {
         view.update(ballModel);
         view.draw(game.getBatch());
 
-        BallModel endBall = LevelModel.getInstance(currLevel).getEndBall();
+        EndBallModel endBall = LevelModel.getInstance(currLevel).getEndBall();
+        view = ViewFactory.makeView(game, endBall);
         view.update(endBall);
         view.draw(game.getBatch());
 
@@ -236,24 +239,9 @@ public class LevelView extends GameView {
     }
 
 
-    private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
-
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
-
-        if (DEBUG_PHYSICS) {
-            debugRenderer = new Box2DDebugRenderer();
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-        }
-
-        return camera;
+    public LevelType.levelType getCurrLevel() {
+        return currLevel;
     }
 
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width,height,true);
-    }
 
 }

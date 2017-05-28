@@ -8,7 +8,7 @@ public abstract class EntityModel {
 
     public abstract ModelType getType();
 
-    public enum ModelType {BALL,ENEMY, STATIC};
+    public enum ModelType {BALL,ENEMY, STATIC, END};
     /**
      * The x-coordinate of this model in meters.
      */

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.mygdx.game.model.entities.EntityModel.ModelType.BALL;
+import static com.mygdx.game.model.entities.EntityModel.ModelType.END;
 import static com.mygdx.game.model.entities.EntityModel.ModelType.ENEMY;
 import static com.mygdx.game.model.entities.EntityModel.ModelType.STATIC;
 
@@ -28,7 +29,9 @@ public class ViewFactory {
             if (model.getType() == STATIC)
                 cache.put(model.getType(), new StaticBallView(game));
             if (model.getType() == ENEMY)
-                cache.put(model.getType(), new EnemyView(game));//ainda n há outros... mas um dia pode...
+                cache.put(model.getType(), new EnemyView(game));
+            if(model.getType() == END)
+                cache.put(model.getType(), new EndView(game));
         }
         return cache.get(model.getType());
     }

@@ -1,11 +1,15 @@
 package com.mygdx.game;
 
 import com.mygdx.game.model.entities.BallModel;
+import com.mygdx.game.model.entities.EndBallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.model.entities.StaticModel;
 
 import java.util.Vector;
+
+import static com.mygdx.game.view.LevelView.RATIO;
+import static com.mygdx.game.view.LevelView.VIEWPORT_WIDTH;
 
 /**
  * Created by User on 26-05-2017.
@@ -26,9 +30,9 @@ public class LevelsModels {
             case ONE:
                 System.out.println("this is Model one");
                 tempEntity.add(new BallModel(0.08f, 0.08f, 0.08f,true));
-                tempEntity.add(new BallModel(2,2,0.08f,true));
-                tempEntity.add(new EnemyModel(0.5f, 0.5f, 0.08f,true));
-                tempEntity.add(new EnemyModel(1f, 1f, 0.08f,true));
+                tempEntity.add(new EndBallModel(2,2,0.08f));
+                tempEntity.add(new EnemyModel(2.1f,2.1f, 0.08f,true));
+                tempEntity.add(new EnemyModel(0.8f, VIEWPORT_WIDTH*RATIO-0.08f, 0.08f,true));
                 return tempEntity;
             case TWO:
                 return tempEntity;

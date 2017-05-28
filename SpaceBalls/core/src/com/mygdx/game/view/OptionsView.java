@@ -10,18 +10,25 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.mygdx.game.MyFonts;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.OptionsController;
 import com.mygdx.game.model.OptionsModel;
@@ -34,27 +41,8 @@ import com.mygdx.game.view.entities.ViewFactory;
  * Created by Tiago Neves on 18/05/2017.
  */
 
-public class OptionsView extends ScreenAdapter {
-    /**
-     * Used to debug the position of the physics fixtures
-     */
-    private static final boolean DEBUG_PHYSICS = false;
+public class OptionsView extends GameView{
 
-    /**
-     * How much meters does a pixel represent.
-     */
-    public static final float PIXEL_TO_METER = 0.20f / 200;
-
-    /**
-     * The width of the viewport in meters. The height is
-     * automatically calculated using the screen ratio.
-     */
-    public static final float VIEWPORT_WIDTH = 4;
-
-    /**
-     * The screen ratio.
-     */
-    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());;
 
     /**
      * The camera used to show the viewport.
@@ -72,10 +60,6 @@ public class OptionsView extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
-    private final SpaceBallsGame game;
-
-    private final Stage stage;
-
     private Skin sliderSkin;
 
     private Drawable touchBackground;
@@ -86,13 +70,7 @@ public class OptionsView extends ScreenAdapter {
 
     private Drawable buttonDrawable;
 
-    private ImageButton joystick;
-
     private Button calibrate;
-
-    private ImageButton on;
-
-    private ImageButton off;
 
     private float sensitivity;
 
@@ -107,10 +85,11 @@ public class OptionsView extends ScreenAdapter {
     float offsetY = 0;
     float offsetX = 0;
 
+    Label lblsensitivity;
+
 
     public OptionsView(SpaceBallsGame game) {
-        this.game = game;
-        this.stage = new Stage();
+        super(game);
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
         loadAssets();
@@ -135,18 +114,26 @@ public class OptionsView extends ScreenAdapter {
         OptionsController.getInstance().setOffsetY(this.offsetY);
 
         checkBox.setChecked(game.getPreferences().readJoystick());
+
     }
 
     private void createCheckBox() {
-        Drawable offDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("off.png")));
-        Drawable onDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("on.png")));
+        BitmapFont font = MyFonts.getInstance().getFont();
+        Sprite off = new Sprite((Texture)game.getAssetManager().get("off.png"));
+        off.setSize(width/6,width/12);
+        Sprite on = new Sprite((Texture)game.getAssetManager().get("on.png"));
+        on.setSize(width/6,width/12);
+        SpriteDrawable offDrawable = new SpriteDrawable(off);
+        SpriteDrawable onDrawable = new SpriteDrawable(on);
+        CheckBox.CheckBoxStyle s = new CheckBox.CheckBoxStyle(offDrawable,onDrawable,font, Color.RED);
 
+        checkBox = new CheckBox(" JoyStick",s);
 
-        CheckBox.CheckBoxStyle s = new CheckBox.CheckBoxStyle(offDrawable,onDrawable,new BitmapFont(), Color.CLEAR);
-        checkBox = new CheckBox("JoyStick",s);
-        checkBox.setPosition(width/6,3*height/8);
+        checkBox.setPosition(width/10,5*height/8);
         stage.addActor(checkBox);
     }
+
+
 
     private void loadAssets() {
         this.game.getAssetManager().load( "back.png" , Texture.class);
@@ -163,16 +150,6 @@ public class OptionsView extends ScreenAdapter {
     }
 
     public void createButtons(){
-        float buttonYSize =height/8;
-        float spacing = (height - buttonYSize*3)/6;
-
-
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("joystick.png")));
-        joystick = new ImageButton(buttonDrawable);
-        joystick.setSize(width/4,buttonYSize*1.7f);
-        joystick.setPosition(width/7,6*buttonYSize);
-        stage.addActor(joystick);
-
         float radius = OptionsModel.getInstance().getCallibrateModel().getRadius();
         buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("calibrate.png")));
         calibrate = new Button(buttonDrawable);
@@ -182,10 +159,14 @@ public class OptionsView extends ScreenAdapter {
         calibrate.setPosition(x,y);
         stage.addActor(calibrate);
 
+        lblsensitivity = new Label(String.format("%s: ", "Sensitivity"), new Label.LabelStyle(MyFonts.getInstance().getFont(), Color.RED));
+        lblsensitivity.setPosition((VIEWPORT_WIDTH/10)/PIXEL_TO_METER,VIEWPORT_WIDTH/5/PIXEL_TO_METER);
+        stage.addActor(lblsensitivity);
     }
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         stage.setDebugAll(true);
         handleInputs(delta);
         OptionsController.getInstance().update(delta);
@@ -280,27 +261,6 @@ public class OptionsView extends ScreenAdapter {
         }
 
 
-    }
-
-    private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
-
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
-
-        if (DEBUG_PHYSICS) {
-            debugRenderer = new Box2DDebugRenderer();
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-        }
-        return camera;
-    }
-
-
-
-    @Override
-    public void resize(int width, int height) {
-       stage.getViewport().update(width,height,true);
     }
 
 

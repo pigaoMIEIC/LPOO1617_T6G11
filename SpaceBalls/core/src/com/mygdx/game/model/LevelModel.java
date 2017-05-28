@@ -3,6 +3,7 @@ package com.mygdx.game.model;
 import com.mygdx.game.LevelType;
 import com.mygdx.game.LevelsModels;
 import com.mygdx.game.model.entities.BallModel;
+import com.mygdx.game.model.entities.EndBallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.model.entities.StaticModel;
@@ -22,7 +23,7 @@ public class LevelModel {
 
     private BallModel playerModel;
 
-    private BallModel endBall;
+    private EndBallModel endBall;
 
     private Vector<EnemyModel> enemyModels = new Vector<EnemyModel>();
 
@@ -45,7 +46,7 @@ public class LevelModel {
 
         this.playerModel = (BallModel)tempEntities.elementAt(0);
 
-        this.endBall = (BallModel)tempEntities.elementAt(1);
+        this.endBall = (EndBallModel)tempEntities.elementAt(1);
 
         for (int i = 2; i < tempEntities.size(); i++) {
             this.enemyModels.addElement((EnemyModel)tempEntities.elementAt(i));
@@ -69,7 +70,7 @@ public class LevelModel {
         return playerModel;
     }
 
-    public BallModel getEndBall() {
+    public EndBallModel getEndBall() {
         return endBall;
     }
 

@@ -57,10 +57,10 @@ public class LevelsBodies {
             case ONE:
                 System.out.println("this is staticBodies one");
                 //outer limits wall
-                temp.add(new WallsBody(world, LevelModel.getInstance(ONE).getStaticModel(0), 0.5f));
+                temp.add(new WallsBody(world, LevelModel.getInstance(ONE).getStaticModel(0), 0f));
                 //inner obstacles
                 for (int i = 1; i < LevelModel.getInstance(ONE).getObstaclesSize(); i++) {
-                    temp.add(new SquareBody(world,LevelModel.getInstance(ONE).getStaticModel(i), 0.2f));
+                    temp.add(new SquareBody(world,LevelModel.getInstance(ONE).getStaticModel(i), 0f));
                 }
                 return temp;
             case TWO:

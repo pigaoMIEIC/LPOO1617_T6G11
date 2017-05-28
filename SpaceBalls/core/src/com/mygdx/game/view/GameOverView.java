@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.SpaceBallsGame;
+import com.mygdx.game.controller.LevelController;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.controller.OptionsController;
 import com.mygdx.game.model.MenuModel;
@@ -27,7 +28,7 @@ import com.mygdx.game.view.entities.ViewFactory;
  * Created by Tiago Neves on 23/05/2017.
  */
 
-public class GameOverView extends ScreenAdapter {
+public class GameOverView extends GameView {
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -67,6 +68,7 @@ public class GameOverView extends ScreenAdapter {
 
     private final SpaceBallsGame game;
 
+
     private final Stage stage;
 
 //    private Vector2[] positions = {
@@ -81,11 +83,15 @@ public class GameOverView extends ScreenAdapter {
     private ImageButton gameOver;
     private ImageButton returni;
     private ImageButton restart;
+    private Object clas;
 
 
 
-    public GameOverView(SpaceBallsGame game) {
+
+    public GameOverView(SpaceBallsGame game,Object clas) {
+        super(game);
         this.game = game;
+        this.clas = clas;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
@@ -154,32 +160,24 @@ public class GameOverView extends ScreenAdapter {
 
     private void handleInputs(float delta) {
         if(restart.isPressed()){
-            game.setScreen(new SandBoxView(game));
+            if(clas instanceof SandBoxView) {
+                game.setScreen(new SandBoxView(game));
+            }
+            if(clas instanceof LevelView){
+                game.setScreen(new LevelView(game,(((LevelView) clas).getCurrLevel())));
+            }
+
         }
 
         if(returni.isPressed()){
-            OptionsController.getInstance().delete();
+            if(clas instanceof SandBoxView) {
+                OptionsController.getInstance().delete();
+            }
+            if(clas instanceof LevelView){
+                LevelController.getInstance().delete();
+            }
             game.setScreen(new MenuView(game));
         }
     }
 
-    private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
-
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
-
-        if (DEBUG_PHYSICS) {
-            debugRenderer = new Box2DDebugRenderer();
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-        }
-
-        return camera;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width,height,true);
-    }
 }
