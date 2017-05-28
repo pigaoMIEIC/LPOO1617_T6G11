@@ -30,27 +30,6 @@ import com.mygdx.game.view.entities.ViewFactory;
 
 public class GameOverView extends GameView {
 
-    /**
-     * The screen ratio.
-     */
-    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());;
-
-    /**
-     * The camera used to show the viewport.
-     */
-    private final OrthographicCamera camera;
-
-    private final SpaceBallsGame game;
-
-
-//    private Vector2[] positions = {
-//            new Vector2(0,0),
-//            new Vector2(VIEWPORT_WIDTH,0),
-//            new Vector2(0,VIEWPORT_WIDTH * RATIO),
-//            new Vector2(VIEWPORT_WIDTH,VIEWPORT_WIDTH * RATIO),
-//            new Vector2(VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2),
-//            new Vector2(VIEWPORT_WIDTH-VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * RATIO)/2)
-//    };
 
     private ImageButton gameOver;
     private ImageButton returni;
@@ -108,28 +87,27 @@ public class GameOverView extends GameView {
 
     }
 
+//    public void render(float delta) {
+//        handleInputs(delta);
+//
+//        camera.update();
+//
+//        game.getBatch().setProjectionMatrix(camera.combined);
+//
+//        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
+//        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+//
+//        stage.act();
+//        stage.draw();
+//
+//    }
+
+
     @Override
-    public void render(float delta) {
-        handleInputs(delta);
+    void drawEntities() {}
 
-        camera.update();
-
-        game.getBatch().setProjectionMatrix(camera.combined);
-
-        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
-        game.getBatch().begin();
-
-        game.getBatch().end();
-
-        stage.act();
-        stage.draw();
-
-    }
-
-
-    private void handleInputs(float delta) {
+    @Override
+    void handleInputs(float delta) {
         if(restart.isPressed()){
             if(clas instanceof SandBoxView) {
                 game.setScreen(new SandBoxView(game));

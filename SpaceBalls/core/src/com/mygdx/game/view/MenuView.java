@@ -127,36 +127,21 @@ public class MenuView extends GameView {
 
     @Override
     public void render(float delta) {
-
-        handleInputs(delta);
         MenuController.getInstance().update(delta);
 
-        camera.update();
+        super.render(delta);
 
-        game.getBatch().setProjectionMatrix(camera.combined);
+//        if (DEBUG_PHYSICS) {
+//            debugCamera = camera.combined.cpy();
+//            debugCamera.scl(1 / PIXEL_TO_METER);
+//            debugRenderer.render(MenuController.getInstance().getWorld(), debugCamera);
+//        }
 
-        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
-        game.getBatch().begin();
-
-        drawEntities();
-        game.getBatch().end();
-
-        if (DEBUG_PHYSICS) {
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-            debugRenderer.render(MenuController.getInstance().getWorld(), debugCamera);
-        }
-
-        stage.act();
-        stage.draw();
-
-
-
+        debugPhysics(MenuController.getInstance().getWorld());
     }
 
-    private void drawEntities() {
+    @Override
+    void drawEntities() {
         for (int i = 0; i < MenuController.RANDNR; i++) {
             BallModel ballModel = MenuModel.getInstance().getBallModel(i);
             EntityView view = ViewFactory.makeView(game, ballModel);
@@ -173,7 +158,8 @@ public class MenuView extends GameView {
 
     }
 
-    private void handleInputs(float delta) {
+    @Override
+    void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             MenuController.getInstance().accelerate();
         }

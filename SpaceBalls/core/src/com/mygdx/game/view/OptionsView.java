@@ -42,13 +42,6 @@ import com.mygdx.game.view.entities.ViewFactory;
  */
 
 public class OptionsView extends GameView{
-
-
-    /**
-     * The camera used to show the viewport.
-     */
-    private final OrthographicCamera camera;
-
     private Skin sliderSkin;
 
     private Drawable touchBackground;
@@ -68,13 +61,13 @@ public class OptionsView extends GameView{
 
     Slider slider;
 
-    float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
-    float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
+    private final float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
+    private final float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
 
-    float offsetY = 0;
-    float offsetX = 0;
+    private float offsetY = 0;
+    private float offsetX = 0;
 
-    Label lblsensitivity;
+    private Label lblsensitivity;
 
 
     public OptionsView(SpaceBallsGame game) {
@@ -122,8 +115,6 @@ public class OptionsView extends GameView{
         stage.addActor(checkBox);
     }
 
-
-
     private void loadAssets() {
         this.game.getAssetManager().load( "back.png" , Texture.class);
         this.game.getAssetManager().load( "ball.png" , Texture.class);
@@ -153,30 +144,21 @@ public class OptionsView extends GameView{
         stage.addActor(lblsensitivity);
     }
 
-    @Override
     public void render(float delta) {
-        super.render(delta);
+
         stage.setDebugAll(true);
-        handleInputs(delta);
+
         OptionsController.getInstance().update(delta);
 
-        camera.update();
+        super.render(delta);
 
-        game.getBatch().setProjectionMatrix(camera.combined);
+//        if (DEBUG_PHYSICS) {
+//            debugCamera = camera.combined.cpy();
+//            debugCamera.scl(1 / PIXEL_TO_METER);
+//            debugRenderer.render(OptionsController.getInstance().getWorld(), debugCamera);
+//        }
 
-        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
-        game.getBatch().begin();
-
-        drawEntities();
-        game.getBatch().end();
-
-        if (DEBUG_PHYSICS) {
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-            debugRenderer.render(OptionsController.getInstance().getWorld(), debugCamera);
-        }
+        debugPhysics(OptionsController.getInstance().getWorld());
 
         OptionsController.getInstance().setSensitivity(slider.getValue());
         game.getPreferences().writeSensitivity(slider.getValue());
@@ -188,7 +170,8 @@ public class OptionsView extends GameView{
 
     }
 
-    private void drawEntities() {
+    @Override
+    void drawEntities() {
         EnemyModel callibrateModel= OptionsModel.getInstance().getCallibrateModel();
         EntityView view1 = ViewFactory.makeView(game, callibrateModel);
         view1.update(callibrateModel);
@@ -225,7 +208,8 @@ public class OptionsView extends GameView{
         stage.addActor(slider);
     }
 
-    private void handleInputs(float delta) {
+    @Override
+    void handleInputs(float delta) {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)||Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){

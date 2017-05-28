@@ -116,6 +116,7 @@ public class LevelView extends GameView {
         this.game.getAssetManager().finishLoading();
     }
 
+    @Override
     public void render(float delta) {
         stage.setDebugAll(true);
         handleInputs(delta);
@@ -158,7 +159,9 @@ public class LevelView extends GameView {
 
     }
 
-    private void drawEntities() {
+
+    @Override
+    void drawEntities() {
 
         BallModel ballModel = LevelModel.getInstance(currLevel).getPlayerModel();
         EntityView view = ViewFactory.makeView(game, ballModel);
@@ -187,8 +190,8 @@ public class LevelView extends GameView {
 
     }
 
-
-    private void handleInputs(float delta) {
+    @Override
+    void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)||Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             backToMenu();
         }

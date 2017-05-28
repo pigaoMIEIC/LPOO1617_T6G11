@@ -146,7 +146,8 @@ public class LevelChoiceView extends GameView {
 
     }
 
-    private void drawEntities() {
+    @Override
+    void drawEntities() {
         for (int i = 0; i < MenuController.RANDNR; i++) {
             BallModel ballModel = MenuModel.getInstance().getBallModel(i);
             EntityView view = ViewFactory.makeView(game, ballModel);
@@ -162,7 +163,8 @@ public class LevelChoiceView extends GameView {
         }
     }
 
-    private void handleInputs(float delta) {
+    @Override
+    void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
             this.dispose();
             game.setScreen(new MenuView(game));

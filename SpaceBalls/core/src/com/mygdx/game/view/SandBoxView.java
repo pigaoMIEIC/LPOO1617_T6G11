@@ -35,12 +35,6 @@ import com.mygdx.game.view.entities.ViewFactory;
  */
 
 public class SandBoxView extends GameView{
-
-    /**
-     * The camera used to show the viewport.
-     */
-    private final OrthographicCamera camera;
-
     private static SpaceBallsGame game = null;
 
     private ImageButton startButton;
@@ -73,9 +67,6 @@ public class SandBoxView extends GameView{
         Gdx.input.setInputProcessor(stage);
         loadAssets();
 
-        //createButtons();
-
-        camera = createCamera();
 
         Skin skin = new Skin();
 
@@ -163,29 +154,38 @@ public class SandBoxView extends GameView{
 
     @Override
     public void render(float delta) {
-
+//
+//        handleInputs(delta);
+//        SandBoxController.getInstance().update(delta);
+//
+//        camera.update();
+//
+//        game.getBatch().setProjectionMatrix(camera.combined);
+//
+//        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
+//        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+//
+//        game.getBatch().begin();
+//        drawEntities();
+//        game.getBatch().end();
+//
+//        if (DEBUG_PHYSICS) {
+//            debugCamera = camera.combined.cpy();
+//            debugCamera.scl(1 / PIXEL_TO_METER);
+//            debugRenderer.render(SandBoxController.getInstance().getWorld(), debugCamera);
+//        }
+//
+//        stage.act();
+//        stage.draw();
         SandBoxController.getInstance().update(delta);
 
-        camera.update();
-
-        game.getBatch().setProjectionMatrix(camera.combined);
-
-        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-        stage.act();
-        stage.draw();
-        game.getBatch().begin();
-
-        drawEntities();
-        game.getBatch().end();
+        super.render(delta);
 
         if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(SandBoxController.getInstance().getWorld(), debugCamera);
         }
-
-
 
         if(SandBoxController.getInstance().isColliding()){
             SandBoxController.getInstance().setColliding(false);
@@ -199,45 +199,40 @@ public class SandBoxView extends GameView{
         if(joystick)
             SandBoxController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
 
-        handleInputs(delta);
 
         if(Gdx.input.justTouched()){
-
-            float conversaoX = VIEWPORT_WIDTH/PIXEL_TO_METER/Gdx.graphics.getWidth();
-            float conversaoY = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER/Gdx.graphics.getHeight();
+            float conversionX = VIEWPORT_WIDTH/PIXEL_TO_METER/Gdx.graphics.getWidth();
+            float conversionY = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER/Gdx.graphics.getHeight();
             float radius = VIEWPORT_WIDTH/12/PIXEL_TO_METER;
-            touchpad.setPosition(Gdx.input.getX()*conversaoX - radius,(Gdx.graphics.getHeight() - Gdx.input.getY())*conversaoY - radius);
+            touchpad.setPosition(Gdx.input.getX()*conversionX - radius,(Gdx.graphics.getHeight() - Gdx.input.getY())*conversionY - radius);
             touchpad.toFront();
             System.out.println(touchpad.getX());
         }
     }
 
-    private void drawEntities() {
-        for (int i = 0; i < SandBoxModel.getInstance().getnBalls(); i++) {
-            EnemyModel ballModel = SandBoxModel.getInstance().getEnemyModel(i);
-            EntityView view = ViewFactory.makeView(game, ballModel);
-            view.update(ballModel);
-            view.draw(game.getBatch());
-        }
-
-        BallModel ballModel = SandBoxModel.getInstance().getPlayerModel();
-        EntityView view = ViewFactory.makeView(game, ballModel);
-        view.update(ballModel);
-        view.draw(game.getBatch());
-
-
-    }
-
-    private void handleInputs(float delta) {
+    @Override
+    void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
             SandBoxController.getInstance().delete();
             game.setScreen(new MenuView(game));
         }
     }
 
+    @Override
+    void drawEntities() {
+        for (int i = 0; i < SandBoxModel.getInstance().getnBalls(); i++) {
+            EnemyModel ballModel = SandBoxModel.getInstance().getEnemyModel(i);
+            drawView(ballModel);
+        }
+
+        BallModel ballModel = SandBoxModel.getInstance().getPlayerModel();
+        drawView(ballModel);
+
+
+    }
+
     public Stage getStage() {
         return stage;
     }
-
 
 }
