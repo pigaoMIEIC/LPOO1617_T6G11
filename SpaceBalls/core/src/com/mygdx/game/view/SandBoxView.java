@@ -56,7 +56,13 @@ public class SandBoxView extends GameView{
 
         Gdx.input.setInputProcessor(stage);
 
-        loadAssets();
+        String[] array = {"back.png",
+                "ball.png",
+                "enemy.png" ,
+                "transparent.png",
+                "exterior.png",
+                "inside.png"};
+        super.loadAssets(array);
 
         Skin skin = new Skin();
 
@@ -88,23 +94,23 @@ public class SandBoxView extends GameView{
     }
 
 
-    private void loadAssets() {
-        game.getAssetManager().load( "back.png" , Texture.class);
-        game.getAssetManager().load( "ball.png" , Texture.class);
-        game.getAssetManager().load( "calibrate.png" , Texture.class);
-        game.getAssetManager().load( "credits.png" , Texture.class);
-        game.getAssetManager().load( "enemy.png" , Texture.class);
-        game.getAssetManager().load( "Exit.png" , Texture.class);
-        game.getAssetManager().load( "howtoplay.png" , Texture.class);
-        game.getAssetManager().load( "options.png" , Texture.class);
-        game.getAssetManager().load( "play.png" , Texture.class);
-        game.getAssetManager().load( "sandbox.png" , Texture.class);
-        game.getAssetManager().load( "title.png" , Texture.class);
-        game.getAssetManager().load( "transparent.png" , Texture.class);
-        game.getAssetManager().load( "exterior.png" , Texture.class);
-        game.getAssetManager().load( "inside.png" , Texture.class);
-        game.getAssetManager().finishLoading();
-    }
+//    private void loadAssets() {
+//        game.getAssetManager().load( "back.png" , Texture.class);
+//        game.getAssetManager().load( "ball.png" , Texture.class);
+//        game.getAssetManager().load( "calibrate.png" , Texture.class);
+//        game.getAssetManager().load( "credits.png" , Texture.class);
+//        game.getAssetManager().load( "enemy.png" , Texture.class);
+//        game.getAssetManager().load( "Exit.png" , Texture.class);
+//        game.getAssetManager().load( "howtoplay.png" , Texture.class);
+//        game.getAssetManager().load( "options.png" , Texture.class);
+//        game.getAssetManager().load( "play.png" , Texture.class);
+//        game.getAssetManager().load( "sandbox.png" , Texture.class);
+//        game.getAssetManager().load( "title.png" , Texture.class);
+//        game.getAssetManager().load( "transparent.png" , Texture.class);
+//        game.getAssetManager().load( "exterior.png" , Texture.class);
+//        game.getAssetManager().load( "inside.png" , Texture.class);
+//        game.getAssetManager().finishLoading();
+//    }
 
 
     @Override

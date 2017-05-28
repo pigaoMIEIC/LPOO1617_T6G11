@@ -1,28 +1,15 @@
 package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
-import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.controller.OptionsController;
-import com.mygdx.game.model.MenuModel;
-import com.mygdx.game.model.entities.BallModel;
-import com.mygdx.game.model.entities.StaticBallModel;
-import com.mygdx.game.view.entities.EntityView;
-import com.mygdx.game.view.entities.ViewFactory;
 
 /**
  * Created by Tiago Neves on 23/05/2017.
@@ -45,20 +32,25 @@ public class GameOverView extends GameView {
         this.clas = clas;
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
-        loadAssets();
+
+        String[] array = {"oneline.png",
+                "Exit.png" ,
+                "Endless.png"
+        };
+        loadAssets(array);
 
         createButtons();
 
         camera = createCamera();
     }
 
-    private void loadAssets() {
-        this.game.getAssetManager().load( "oneline.png" , Texture.class);
-        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-        this.game.getAssetManager().load( "Endless.png" , Texture.class);
-
-        this.game.getAssetManager().finishLoading();
-    }
+//    private void loadAssets() {
+//        this.game.getAssetManager().load( "oneline.png" , Texture.class);
+//        this.game.getAssetManager().load( "Exit.png" , Texture.class);
+//        this.game.getAssetManager().load( "Endless.png" , Texture.class);
+//
+//        this.game.getAssetManager().finishLoading();
+//    }
 
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;

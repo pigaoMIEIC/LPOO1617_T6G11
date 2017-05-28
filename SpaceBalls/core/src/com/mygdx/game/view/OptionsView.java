@@ -74,7 +74,16 @@ public class OptionsView extends GameView{
         super(game);
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
-        loadAssets();
+
+        String[] array = {"back.png",
+                "ball.png",
+                "calibrate.png",
+                "enemy.png",
+                "whiteRectangle.png",
+                "joystick.png",
+                "on.png",
+                "off.png"};
+        loadAssets(array);
 
         createButtons();
         createSlider();
@@ -115,19 +124,18 @@ public class OptionsView extends GameView{
         stage.addActor(checkBox);
     }
 
-    private void loadAssets() {
-        this.game.getAssetManager().load( "back.png" , Texture.class);
-        this.game.getAssetManager().load( "ball.png" , Texture.class);
-        this.game.getAssetManager().load( "calibrate.png" , Texture.class);
-        this.game.getAssetManager().load( "enemy.png" , Texture.class);
-        this.game.getAssetManager().load( "whiteRectangle.png" , Texture.class);
-        this.game.getAssetManager().load("1.png" , Texture.class);
-        this.game.getAssetManager().load("joystick.png" , Texture.class);
-        this.game.getAssetManager().load("on.png" , Texture.class);
-        this.game.getAssetManager().load("off.png" , Texture.class);
-
-        this.game.getAssetManager().finishLoading();
-    }
+//    private void loadAssets() {
+//        this.game.getAssetManager().load("back.png" , Texture.class);
+//        this.game.getAssetManager().load("ball.png" , Texture.class);
+//        this.game.getAssetManager().load("calibrate.png" , Texture.class);
+//        this.game.getAssetManager().load("enemy.png" , Texture.class);
+//        this.game.getAssetManager().load("whiteRectangle.png" , Texture.class);
+//        this.game.getAssetManager().load("joystick.png" , Texture.class);
+//        this.game.getAssetManager().load("on.png" , Texture.class);
+//        this.game.getAssetManager().load("off.png" , Texture.class);
+//
+//        this.game.getAssetManager().finishLoading();
+//    }
 
     public void createButtons(){
         float radius = OptionsModel.getInstance().getCallibrateModel().getRadius();

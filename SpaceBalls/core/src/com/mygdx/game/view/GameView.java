@@ -14,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
-import com.mygdx.game.controller.OptionsController;
-import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
@@ -107,6 +105,13 @@ public abstract class GameView extends ScreenAdapter{
     protected void backToMenu(){
         LevelController.getInstance().delete();
         game.setScreen(new MenuView(game));
+    }
+
+    protected void loadAssets(String[] textures){
+        for (String str: textures) {
+            this.game.getAssetManager().load(str,Texture.class);
+        }
+        this.game.getAssetManager().finishLoading();
     }
 
     protected void drawView(EntityModel model){

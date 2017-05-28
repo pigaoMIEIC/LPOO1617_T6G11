@@ -52,7 +52,15 @@ public class LevelChoiceView extends GameView {
         this.game = game;
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
-        loadAssets();
+
+        String[] array = {"back.png",
+                "1.png",
+                "2.png",
+                "3.png",
+                "4.png",
+                "5.png"
+        };
+        loadAssets(array);
 
         createButtons();
 
@@ -61,7 +69,7 @@ public class LevelChoiceView extends GameView {
     }
 
     private void loadAssets() {
-        this.game.getAssetManager().load( "back.png" , Texture.class);
+        this.game.getAssetManager().load("back.png" , Texture.class);
         this.game.getAssetManager().load("1.png", Texture.class);
         this.game.getAssetManager().load("2.png", Texture.class);
         this.game.getAssetManager().load("3.png", Texture.class);

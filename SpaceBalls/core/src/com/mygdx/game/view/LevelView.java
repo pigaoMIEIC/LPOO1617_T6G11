@@ -2,29 +2,17 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LevelType;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
-import com.mygdx.game.controller.SandBoxController;
 import com.mygdx.game.model.LevelModel;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EndBallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.StaticModel;
-import com.mygdx.game.view.entities.EntityView;
-import com.mygdx.game.view.entities.ViewFactory;
 
 /**
  * Created by Tiago Neves on 26/05/2017.
@@ -52,7 +40,11 @@ public class LevelView extends GameView {
 
         Gdx.input.setInputProcessor(stage);
 
-        loadAssets();
+        String[] array  = {"back.png",
+                "exterior.png",
+                "end.png",
+                "inside.png"};
+        loadAssets(array);
 
         currLevel = newLevel;
 
@@ -71,13 +63,13 @@ public class LevelView extends GameView {
     }
 
 
-    private void loadAssets() {
-        this.game.getAssetManager().load("back.png" , Texture.class);
-        this.game.getAssetManager().load("exterior.png", Texture.class);
-        this.game.getAssetManager().load("end.png",Texture.class);
-        this.game.getAssetManager().load("inside.png", Texture.class);
-        this.game.getAssetManager().finishLoading();
-    }
+//    private void loadAssets() {
+//        this.game.getAssetManager().load("back.png" , Texture.class);
+//        this.game.getAssetManager().load("exterior.png", Texture.class);
+//        this.game.getAssetManager().load("end.png",Texture.class);
+//        this.game.getAssetManager().load("inside.png", Texture.class);
+//        this.game.getAssetManager().finishLoading();
+//    }
 
     public void render(float delta) {
         LevelController lvlContrl = LevelController.getInstance();
@@ -88,7 +80,7 @@ public class LevelView extends GameView {
 
         super.render(delta);
 
-        debugPhysics(LevelController.getInstance().getWorld());
+        debugPhysics(lvlContrl.getWorld());
 
         if(joystick)
           lvlContrl.accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
