@@ -29,7 +29,7 @@ import com.mygdx.game.view.entities.ViewFactory;
  * Created by Tiago Neves on 26/05/2017.
  */
 
-public class LevelView extends ScreenAdapter {
+public class LevelView extends GameView {
 
     /**
      * Used to debug the position of the physics fixtures
@@ -90,6 +90,7 @@ public class LevelView extends ScreenAdapter {
 
 
     public LevelView(SpaceBallsGame game,LevelType.levelType newLevel) {
+        super(game);
         this.game = game;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
@@ -255,8 +256,4 @@ public class LevelView extends ScreenAdapter {
         stage.getViewport().update(width,height,true);
     }
 
-    private void backToMenu(){
-        LevelController.getInstance().delete();
-        game.setScreen(new MenuView(game));
-    }
 }

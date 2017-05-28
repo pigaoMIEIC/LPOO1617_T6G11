@@ -34,7 +34,7 @@ import com.mygdx.game.view.entities.ViewFactory;
  * Created by Tiago Neves on 22/05/2017.
  */
 
-public class SandBoxView extends ScreenAdapter{
+public class SandBoxView extends GameView{
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -101,6 +101,7 @@ public class SandBoxView extends ScreenAdapter{
 
 
     public SandBoxView(SpaceBallsGame game) {
+        super(game);
         this.game = game;
         this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
@@ -238,6 +239,10 @@ public class SandBoxView extends ScreenAdapter{
 
         //dá mais ou menos... era para poderes mover o joystick onde quisesses... mas n dá mt bem pk não consegues mexer logo o joystick
         //quando clicas no ecrã... tens de voltar a clicar no joystick para dar para controlar a bola...
+
+
+
+
         if(Gdx.input.justTouched()){
             System.out.println(Gdx.graphics.getWidth());
             System.out.println(Gdx.input.getX());
