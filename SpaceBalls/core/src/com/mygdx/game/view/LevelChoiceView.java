@@ -31,10 +31,6 @@ import java.util.Vector;
  */
 
 public class LevelChoiceView extends GameView {
-    /**
-     * Used to debug the position of the physics fixtures
-     */
-    private static final boolean DEBUG_PHYSICS = true;
 
     /**
      * How much meters does a pixel represent.
@@ -57,20 +53,7 @@ public class LevelChoiceView extends GameView {
      */
     private final OrthographicCamera camera;
 
-    /**
-     * A renderer used to debug the physical fixtures.
-     */
-    private Box2DDebugRenderer debugRenderer;
-
-    /**
-     * The transformation matrix used to transform meters into
-     * pixels in order to show fixtures in their correct places.
-     */
-    private Matrix4 debugCamera;
-
     private final SpaceBallsGame game;
-
-    private final Stage stage;
 
     private Button tmpButton;
 
@@ -82,7 +65,6 @@ public class LevelChoiceView extends GameView {
     public LevelChoiceView(SpaceBallsGame game) {
         super(game);
         this.game = game;
-        this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
         loadAssets();

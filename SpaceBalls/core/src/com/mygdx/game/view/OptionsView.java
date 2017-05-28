@@ -49,17 +49,6 @@ public class OptionsView extends GameView{
      */
     private final OrthographicCamera camera;
 
-    /**
-     * A renderer used to debug the physical fixtures.
-     */
-    private Box2DDebugRenderer debugRenderer;
-
-    /**
-     * The transformation matrix used to transform meters into
-     * pixels in order to show fixtures in their correct places.
-     */
-    private Matrix4 debugCamera;
-
     private Skin sliderSkin;
 
     private Drawable touchBackground;

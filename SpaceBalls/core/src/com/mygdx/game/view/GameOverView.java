@@ -29,21 +29,6 @@ import com.mygdx.game.view.entities.ViewFactory;
  */
 
 public class GameOverView extends GameView {
-    /**
-     * Used to debug the position of the physics fixtures
-     */
-    private static final boolean DEBUG_PHYSICS = true;
-
-    /**
-     * How much meters does a pixel represent.
-     */
-    public static final float PIXEL_TO_METER = 0.20f / 200;
-
-    /**
-     * The width of the viewport in meters. The height is
-     * automatically calculated using the screen ratio.
-     */
-    public static final float VIEWPORT_WIDTH = 4;
 
     /**
      * The screen ratio.
@@ -55,21 +40,8 @@ public class GameOverView extends GameView {
      */
     private final OrthographicCamera camera;
 
-    /**
-     * A renderer used to debug the physical fixtures.
-     */
-    private Box2DDebugRenderer debugRenderer;
-
-    /**
-     * The transformation matrix used to transform meters into
-     * pixels in order to show fixtures in their correct places.
-     */
-    private Matrix4 debugCamera;
-
     private final SpaceBallsGame game;
 
-
-    private final Stage stage;
 
 //    private Vector2[] positions = {
 //            new Vector2(0,0),
@@ -92,7 +64,6 @@ public class GameOverView extends GameView {
         super(game);
         this.game = game;
         this.clas = clas;
-        this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
         loadAssets();

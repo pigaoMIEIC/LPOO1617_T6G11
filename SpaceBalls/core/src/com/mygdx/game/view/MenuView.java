@@ -54,9 +54,6 @@ public class MenuView extends GameView {
     private final OrthographicCamera camera;
 
     private final SpaceBallsGame game;
-
-    private final Stage stage;
-
 //    private Vector2[] positions = {
 //            new Vector2(0,0),
 //            new Vector2(VIEWPORT_WIDTH,0),
@@ -78,7 +75,6 @@ public class MenuView extends GameView {
     public MenuView(SpaceBallsGame game) {
         super(game);
         this.game = game;
-        this.stage = new Stage();
         this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         Gdx.input.setInputProcessor(stage);
         loadAssets();
