@@ -11,7 +11,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -58,7 +60,6 @@ public class SandBoxView extends ScreenAdapter{
      * The camera used to show the viewport.
      */
     private final OrthographicCamera camera;
-
     /**
      * A renderer used to debug the physical fixtures.
      */
@@ -233,8 +234,21 @@ public class SandBoxView extends ScreenAdapter{
             SandBoxController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
 
         handleInputs(delta);
+        System.out.println(touchpad.getX());
 
-
+        //dá mais ou menos... era para poderes mover o joystick onde quisesses... mas n dá mt bem pk não consegues mexer logo o joystick
+        //quando clicas no ecrã... tens de voltar a clicar no joystick para dar para controlar a bola...
+        if(Gdx.input.justTouched()){
+            System.out.println(Gdx.graphics.getWidth());
+            System.out.println(Gdx.input.getX());
+            System.out.println();
+            float conversaoX = VIEWPORT_WIDTH/PIXEL_TO_METER/Gdx.graphics.getWidth();
+            float conversaoY = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER/Gdx.graphics.getHeight();
+            float radius = VIEWPORT_WIDTH/12/PIXEL_TO_METER;
+            touchpad.setPosition(Gdx.input.getX()*conversaoX - radius,(Gdx.graphics.getHeight() - Gdx.input.getY())*conversaoY - radius);
+            //touchpad.setPosition(a.x,a.y);
+            System.out.println(touchpad.getX());
+        }
     }
 
     private void drawEntities() {
