@@ -52,19 +52,23 @@ public class SandBoxController {
     float offsetX;
     float offsetY;
 
+    float radius;
 
 
     SandBoxController() {
             rballBodys.removeAllElements();
+            SandBoxModel sandBoxModel = SandBoxModel.getInstance();
 
             world = new World(new Vector2(0, 0), false);
 
-            playerBody = new BallBody(world,SandBoxModel.getInstance().getPlayerModel());
+            playerBody = new BallBody(world,sandBoxModel.getPlayerModel());
             playerBody.setDrag(0.5f);
+
             userData = playerBody.getUserData();
 
 
             rballBodys.addElement(new BallBody(world, SandBoxModel.getInstance().getEnemyModel(0)));
+            radius = sandBoxModel.getEnemyModel(0).getRadius();
             rballBodys.elementAt(0).setType(BodyDef.BodyType.DynamicBody);
 
             wallsBody = new WallsBody(world,SandBoxModel.getInstance().getStaticModel(), 0.5f);
@@ -126,15 +130,6 @@ public class SandBoxController {
         }
 
 
-
-        float accelX = Gdx.input.getAccelerometerX();
-        float accelY = Gdx.input.getAccelerometerY();
-
-        Vector2 vector = new Vector2((accelY *sensitivity)/35 - offsetY, (-accelX *sensitivity)/35 + offsetX);
-
-        if(!joystick)
-            playerBody.applyForceToCenter(vector.x,vector.y, true);
-
         for(int i=0; i < rballBodys.size();i++){
             Vector2 follow = new Vector2((playerBody.getX()-rballBodys.elementAt(i).getX())/50,(playerBody.getY()-rballBodys.elementAt(i).getY())/50);
             follow.limit(0.01f);
@@ -161,7 +156,12 @@ public class SandBoxController {
      * @param y
      */
     public void accelerate(float x,float y){
-        playerBody.applyForceToCenter(sensitivity*x,sensitivity*y, true);
+        if(joystick)
+         playerBody.applyForceToCenter(sensitivity*x,sensitivity*y, true);
+        else{
+            Vector2 vector = new Vector2((y *sensitivity)/35 - offsetY, (-x *sensitivity)/35 + offsetX);
+            playerBody.applyForceToCenter(vector.x,vector.y, true);
+        }
     }
 
 
@@ -170,7 +170,7 @@ public class SandBoxController {
         return world;
     }
 
-    public void nextLevel(int nBall,float radius){
+    public void nextLevel(int nBall){
 
         Random r = new Random();
         for(int i = 0; i < nBall-1;i++) {

@@ -85,7 +85,7 @@ public class SandBoxView extends GameView{
         SandBoxController.getInstance().setSensitivity(sensitivity);
         joystick = game.getPreferences().readJoystick();
         if(joystick)
-         createJoystick();
+            createJoystick();
 
         SandBoxController.getInstance().setJoystick(game.getPreferences().readJoystick());
         SandBoxController.getInstance().setOffsetX(game.getPreferences().readOffsetX());
@@ -94,71 +94,33 @@ public class SandBoxView extends GameView{
     }
 
 
-//    private void loadAssets() {
-//        game.getAssetManager().load( "back.png" , Texture.class);
-//        game.getAssetManager().load( "ball.png" , Texture.class);
-//        game.getAssetManager().load( "calibrate.png" , Texture.class);
-//        game.getAssetManager().load( "credits.png" , Texture.class);
-//        game.getAssetManager().load( "enemy.png" , Texture.class);
-//        game.getAssetManager().load( "Exit.png" , Texture.class);
-//        game.getAssetManager().load( "howtoplay.png" , Texture.class);
-//        game.getAssetManager().load( "options.png" , Texture.class);
-//        game.getAssetManager().load( "play.png" , Texture.class);
-//        game.getAssetManager().load( "sandbox.png" , Texture.class);
-//        game.getAssetManager().load( "title.png" , Texture.class);
-//        game.getAssetManager().load( "transparent.png" , Texture.class);
-//        game.getAssetManager().load( "exterior.png" , Texture.class);
-//        game.getAssetManager().load( "inside.png" , Texture.class);
-//        game.getAssetManager().finishLoading();
-//    }
-
-
     @Override
     public void render(float delta) {
-//
-//        handleInputs(delta);
-//        SandBoxController.getInstance().update(delta);
-//
-//        camera.update();
-//
-//        game.getBatch().setProjectionMatrix(camera.combined);
-//
-//        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
-//        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-//
-//        game.getBatch().begin();
-//        drawEntities();
-//        game.getBatch().end();
-//
-//        if (DEBUG_PHYSICS) {
-//            debugCamera = camera.combined.cpy();
-//            debugCamera.scl(1 / PIXEL_TO_METER);
-//            debugRenderer.render(SandBoxController.getInstance().getWorld(), debugCamera);
-//        }
-//
-//        stage.act();
-//        stage.draw();
-        SandBoxController.getInstance().update(delta);
+        SandBoxController controller = SandBoxController.getInstance();
+
+        controller.update(delta);
 
         super.render(delta);
 
-        if (DEBUG_PHYSICS) {
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-            debugRenderer.render(SandBoxController.getInstance().getWorld(), debugCamera);
-        }
+        debugPhysics(controller.getWorld());
 
-        if(SandBoxController.getInstance().isColliding()){
-            SandBoxController.getInstance().setColliding(false);
-            SandBoxController.getInstance().delete();
+        if(controller.isColliding()){
+            controller.setColliding(false);
+            controller.delete();
             game.setScreen(new GameOverView(game,this));
             return;
         }
 
-        bar.setValue(SandBoxController.getInstance().getSeconds());
+
+        bar.setValue(controller.getSeconds());
 
         if(joystick)
-            SandBoxController.getInstance().accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
+            controller.accelerate(touchpad.getKnobPercentX()/16,touchpad.getKnobPercentY()/16);
+        else{
+            float accelX = Gdx.input.getAccelerometerX();
+            float accelY = Gdx.input.getAccelerometerY();
+            controller.accelerate(accelX,accelY);
+        }
 
 
         if(Gdx.input.justTouched() && joystick){

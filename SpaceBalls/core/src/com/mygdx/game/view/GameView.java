@@ -44,7 +44,8 @@ public abstract class GameView extends ScreenAdapter{
     /**
      * The screen ratio.
      */
-    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
+    //public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
+    public static  final float RATIO = 0.5f;  //testing proposes
 
     public final static int RANDNR = 4;//number of random balls in start menu
     public final static int SRANDNR = 6;//number of random balls in start menu
@@ -94,12 +95,16 @@ public abstract class GameView extends ScreenAdapter{
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+
         game.getBatch().begin();
         drawEntities();
         game.getBatch().end();
 
         stage.act();
         stage.draw();
+
+
+
     }
 
     abstract void drawEntities();

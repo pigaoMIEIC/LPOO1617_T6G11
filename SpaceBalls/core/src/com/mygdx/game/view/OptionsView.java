@@ -118,18 +118,6 @@ public class OptionsView extends GameView{
         stage.addActor(checkBox);
     }
 
-//    private void loadAssets() {
-//        this.game.getAssetManager().load("back.png" , Texture.class);
-//        this.game.getAssetManager().load("ball.png" , Texture.class);
-//        this.game.getAssetManager().load("calibrate.png" , Texture.class);
-//        this.game.getAssetManager().load("enemy.png" , Texture.class);
-//        this.game.getAssetManager().load("whiteRectangle.png" , Texture.class);
-//        this.game.getAssetManager().load("joystick.png" , Texture.class);
-//        this.game.getAssetManager().load("on.png" , Texture.class);
-//        this.game.getAssetManager().load("off.png" , Texture.class);
-//
-//        this.game.getAssetManager().finishLoading();
-//    }
 
     public void createButtons(){
         float radius = OptionsModel.getInstance().getCallibrateModel().getRadius();
@@ -153,12 +141,6 @@ public class OptionsView extends GameView{
         OptionsController.getInstance().update(delta);
 
         super.render(delta);
-
-//        if (DEBUG_PHYSICS) {
-//            debugCamera = camera.combined.cpy();
-//            debugCamera.scl(1 / PIXEL_TO_METER);
-//            debugRenderer.render(OptionsController.getInstance().getWorld(), debugCamera);
-//        }
 
         debugPhysics(OptionsController.getInstance().getWorld());
 

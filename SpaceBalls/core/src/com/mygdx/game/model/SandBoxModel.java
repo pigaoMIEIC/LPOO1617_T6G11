@@ -16,7 +16,7 @@ import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
  * Created by Tiago Neves on 22/05/2017.
  */
 
-public class SandBoxModel extends Stage{
+public class SandBoxModel{
     private static SandBoxModel instance;
 
     private Vector<EnemyModel> ballModels = new Vector<EnemyModel>();
@@ -81,7 +81,7 @@ public class SandBoxModel extends Stage{
 
         this.ballModels.addElement(new EnemyModel(x,y,radius,true));
 
-        SandBoxController.getInstance().nextLevel(nBalls,radius);
+        SandBoxController.getInstance().nextLevel(nBalls);
     }
 
     public void delete(){

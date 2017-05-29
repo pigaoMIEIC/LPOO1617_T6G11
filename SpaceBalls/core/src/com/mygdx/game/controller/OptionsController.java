@@ -155,7 +155,7 @@ public class OptionsController {
 
 
     public float[] getReadingXY() {
-        float[] temp= {readingY.floatValue(),readingX.floatValue()};
+        float[] temp= {readingX.floatValue(),readingY.floatValue()};
         return temp;
     }
 
