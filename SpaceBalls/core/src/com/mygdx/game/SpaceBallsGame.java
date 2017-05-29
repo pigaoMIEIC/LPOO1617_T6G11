@@ -21,16 +21,23 @@ public class SpaceBallsGame extends Game{
 
     private final Preferences preferences;
 
+    /**
+     * Constructor for the game class
+     *
+     * @param preferences interface to communicate with the required implementation (android,desktop,ios)
+     */
     public SpaceBallsGame(Preferences preferences) {
         this.preferences = preferences;
     }
 
+
+    private SpriteBatch batch;
+
     /**
      * Manages the game assets
      */
-
-    private SpriteBatch batch;
     private AssetManager assetManager;
+
 
     private boolean joystick;
 
@@ -42,10 +49,12 @@ public class SpaceBallsGame extends Game{
     @Override
     public void create() {batch = new SpriteBatch();
         assetManager = new AssetManager();
-
         startGame();
     }
 
+    /**
+     * Loads the necessary fonts and sets the screen for the entry menu
+     */
     private void startGame() {
         MyFonts.getInstance();
         setScreen(new MenuView(this));
@@ -60,19 +69,32 @@ public class SpaceBallsGame extends Game{
         return assetManager;
     }
 
+
+    /**
+     *
+     * Return the Sprite Batch
+     *
+     * @return
+     */
     public SpriteBatch getBatch() {
         return batch;
     }
 
-    public void setJoystick(boolean joystick) {
-        this.joystick = joystick;
-    }
+//    public void setJoystick(boolean joystick) {
+//        this.joystick = joystick;
+//    }
+//
+//    public boolean hasJoystick() {
+//
+//        return joystick;
+//    }
 
-    public boolean hasJoystick() {
-
-        return joystick;
-    }
-
+    /**
+     *
+     * Returns the preferences interface
+     *
+     * @return
+     */
     public Preferences getPreferences() {
         return preferences;
     }

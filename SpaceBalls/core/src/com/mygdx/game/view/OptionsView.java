@@ -54,23 +54,25 @@ public class OptionsView extends GameView{
 
     private Button calibrate;
 
-    CheckBox checkBox;
+    private CheckBox checkBox;
 
-
-    Slider slider;
+    private Slider slider;
 
     private final float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
     private final float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
 
     private Label lblsensitivity;
 
-    OptionsController controller = OptionsController.getInstance();
+    private OptionsController controller = OptionsController.getInstance();
 
 
+    /**
+     * Method to call the superclass constructor and load the assets and buttons
+     *
+     * @param game The game which will be associated with the screenAdapter
+     */
     public OptionsView(SpaceBallsGame game) {
         super(game);
-        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
-        Gdx.input.setInputProcessor(stage);
 
         String[] array = {"back.png",
                 "ball.png",
@@ -86,10 +88,6 @@ public class OptionsView extends GameView{
         createSlider();
         createCheckBox();
 
-        camera = createCamera();
-
-        Gdx.input.setCatchBackKey(true);
-
         sensitivity = game.getPreferences().readSensitivity();
         if(sensitivity == 0){
             sensitivity = slider.getValue();
@@ -102,23 +100,9 @@ public class OptionsView extends GameView{
 
     }
 
-    private void createCheckBox() {
-        BitmapFont font = MyFonts.getInstance().getFont();
-        Sprite off = new Sprite((Texture)game.getAssetManager().get("off.png"));
-        off.setSize(width/6,width/12);
-        Sprite on = new Sprite((Texture)game.getAssetManager().get("on.png"));
-        on.setSize(width/6,width/12);
-        SpriteDrawable offDrawable = new SpriteDrawable(off);
-        SpriteDrawable onDrawable = new SpriteDrawable(on);
-        CheckBox.CheckBoxStyle s = new CheckBox.CheckBoxStyle(offDrawable,onDrawable,font, Color.RED);
-
-        checkBox = new CheckBox(" JoyStick",s);
-
-        checkBox.setPosition(width/10,5*height/8);
-        stage.addActor(checkBox);
-    }
-
-
+    /**
+     * Method to create the buttons for the menu
+     */
     public void createButtons(){
         float radius = OptionsModel.getInstance().getCallibrateModel().getRadius();
         buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("calibrate.png")));
@@ -134,6 +118,10 @@ public class OptionsView extends GameView{
         stage.addActor(lblsensitivity);
     }
 
+    /**
+     * Method to update the world and render the updated view
+     * @param delta Time delta from the last update
+     */
     public void render(float delta) {
         controller.setAccelX(Gdx.input.getAccelerometerX());
         controller.setAccelY(Gdx.input.getAccelerometerY());
@@ -148,6 +136,9 @@ public class OptionsView extends GameView{
 
     }
 
+    /**
+     * Method that draws the views of the models present in the scene
+     */
     @Override
     void drawEntities() {
         OptionsModel optModel = OptionsModel.getInstance();
@@ -158,6 +149,38 @@ public class OptionsView extends GameView{
         drawView(ballModel);
     }
 
+    /**
+     * Method that handles the inputs from the stage
+     */
+    @Override
+    void handleInputs() {
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)||Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            OptionsController.getInstance().delete();
+            game.setScreen(new MenuView(game));
+        }
+
+
+        if(calibrate.isPressed()){
+            OptionsController optContrl = OptionsController.getInstance();
+            offsetXY = optContrl.getReadingXY();
+            writeOffset(offsetXY[0],offsetXY[1]);
+            optContrl.setOffsetXY(offsetXY);
+        }
+
+        if(checkBox.isChecked()){
+            game.getPreferences().writeJoystick(true);
+        }else {
+            game.getPreferences().writeJoystick(false);
+        }
+
+
+    }
+
+    /**
+     * Creates the Slider for te interface
+     */
     private void createSlider(){
 
         sliderSkin = new Skin();
@@ -181,31 +204,26 @@ public class OptionsView extends GameView{
         stage.addActor(slider);
     }
 
-    @Override
-    void handleInputs(float delta) {
+    /**
+     * Creates the check box for the interface
+     */
+    private void createCheckBox() {
+        BitmapFont font = MyFonts.getInstance().getFont();
+        Sprite off = new Sprite((Texture)game.getAssetManager().get("off.png"));
+        off.setSize(width/6,width/12);
+        Sprite on = new Sprite((Texture)game.getAssetManager().get("on.png"));
+        on.setSize(width/6,width/12);
+        SpriteDrawable offDrawable = new SpriteDrawable(off);
+        SpriteDrawable onDrawable = new SpriteDrawable(on);
+        CheckBox.CheckBoxStyle s = new CheckBox.CheckBoxStyle(offDrawable,onDrawable,font, Color.RED);
 
+        checkBox = new CheckBox(" JoyStick",s);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)||Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            OptionsController.getInstance().delete();
-            game.setScreen(new MenuView(game));
-        }
-
-
-        if(calibrate.isPressed()){
-            OptionsController optContrl = OptionsController.getInstance();
-            offsetXY = optContrl.getReadingXY();
-            writeOffset(offsetXY[0],offsetXY[1]);
-            optContrl.setOffsetXY(offsetXY);
-        }
-
-        if(checkBox.isChecked()){
-          game.getPreferences().writeJoystick(true);
-        }else {
-            game.getPreferences().writeJoystick(false);
-        }
-
-
+        checkBox.setPosition(width/10,5*height/8);
+        stage.addActor(checkBox);
     }
+
+
 
 
 

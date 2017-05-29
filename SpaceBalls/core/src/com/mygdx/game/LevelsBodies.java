@@ -26,16 +26,27 @@ public class LevelsBodies {
         return ourInstance;
     }
 
+    /**
+     * Default contructor
+     */
     private LevelsBodies(){
     }
 
+
+    /**
+     * Method to get the entity bodies of the elements present in the level passed as argument
+     *
+     * @param level Indicates the level of the models to be returned
+     * @param world Indicates the world in which the bodies will be created
+     * @return Returns the entity bodies of the chosen level
+     */
     public Vector<EntityBody> getEntitiesBodies(LevelType.levelType level,World world){
         Vector<EntityBody> temp = new Vector<EntityBody>();
         switch(level){
             case ONE:
                 //Player ball
                 temp.add(new BallBody(world, LevelModel.getInstance(ONE).getPlayerModel()));
-                //end ball
+                //End ball
                 temp.add(new BallBody(world,LevelModel.getInstance(ONE).getEndBall()));
                 //Enemy balls
                 for (int i = 0; i < LevelModel.getInstance(ONE).getEnemySize() ; i++) {
@@ -45,7 +56,7 @@ public class LevelsBodies {
             case TWO:
                 //Player ball
                 temp.add(new BallBody(world, LevelModel.getInstance(TWO).getPlayerModel()));
-                //end ball
+                //End ball
                 temp.add(new BallBody(world,LevelModel.getInstance(TWO).getEndBall()));
                 //Enemy balls
                 for (int i = 0; i < LevelModel.getInstance(TWO).getEnemySize() ; i++) {
@@ -58,7 +69,13 @@ public class LevelsBodies {
         }
     }
 
-
+    /**
+     * Method to get the static bodies of the elements present in the level passed as argument
+     *
+     * @param level Indicates the level of the models to be returned
+     * @param world Indicates the world in which the bodies will be created
+     * @return Returns the static bodies of the chosen level
+     */
     public Vector<StaticBody> getStaticBodies(LevelType.levelType level, World world){
         Vector<StaticBody> temp = new Vector<StaticBody>();
         switch(level){
@@ -84,11 +101,4 @@ public class LevelsBodies {
                 return temp;
         }
     }
-//    static Vector<EntityBody> levelOneBodies(World world){
-//        Vector<EntityBody> temp = new Vector<EntityBody>();
-//        temp.add(new BallBody(world,SandBoxModel.getInstance().getPlayerModel()));
-//        //temp.add(new endBallBody)
-//        return temp;
-//    }
-
 }

@@ -50,13 +50,13 @@ public class SandBoxView extends GameView{
 
     SandBoxController controller = SandBoxController.getInstance();
 
-
+    /**
+     * Method to call the superclass constructor and loads the necessary assets. Creates the necessary objects in the stage.
+     *
+     * @param game The game which will be associated with the screenAdapter
+     */
     public SandBoxView(SpaceBallsGame game) {
         super(game);
-
-        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
-
-        Gdx.input.setInputProcessor(stage);
 
         String[] array = {"back.png",
                 "ball.png",
@@ -80,9 +80,6 @@ public class SandBoxView extends GameView{
         bar.setSize(VIEWPORT_WIDTH/PIXEL_TO_METER,0.8f);
         stage.addActor(bar);
 
-        Gdx.input.setCatchBackKey(true);
-
-
         sensitivity = game.getPreferences().readSensitivity();
         SandBoxController.getInstance().setSensitivity(sensitivity);
         joystick = game.getPreferences().readJoystick();
@@ -94,7 +91,10 @@ public class SandBoxView extends GameView{
 
     }
 
-
+    /**
+     * Method to update the world and render the updated view
+     * @param delta Time delta from the last update
+     */
     @Override
     public void render(float delta) {;
         controller.update(delta);
@@ -132,14 +132,20 @@ public class SandBoxView extends GameView{
         }
     }
 
+    /**
+     * Method that handles the inputs from the stage
+     */
     @Override
-    void handleInputs(float delta) {
+    void handleInputs() {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
             controller.delete();
             game.setScreen(new MenuView(game));
         }
     }
 
+    /**
+     * Method that draws the views of the models present in the scene
+     */
     @Override
     void drawEntities() {
         for (int i = 0; i < SandBoxModel.getInstance().getnBalls(); i++) {
@@ -153,6 +159,10 @@ public class SandBoxView extends GameView{
 
     }
 
+    /**
+     * Getter for the stage
+     * @return Returns the stage
+     */
     public Stage getStage() {
         return stage;
     }

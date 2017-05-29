@@ -12,19 +12,24 @@ import com.mygdx.game.model.entities.EntityModel;
  */
 
 public class EnemyView extends  EntityView{
+
+    /**
+     * Constructor for the view
+     *
+     * @param game The game this view belongs to. Needed to access the asset manager to get textures.
+     */
     public EnemyView(SpaceBallsGame game) {
         sprite = createSprite(game);
     }
 
-
+    /**
+     * Method that calls the super class method with specific parameters
+     * @param game The game this view belongs to. Needed to access the asset manager to get textures.
+     * @return Returns the sprite to be rendered
+     */
     public Sprite createSprite(SpaceBallsGame game) {
         float radius = SandBoxModel.getInstance().getEnemyModel(0).getRadius();
 
         return super.createSprite(game,"enemy.png",radius);
-    }
-
-    @Override
-    public void update(EntityModel model) {
-        super.update(model);
     }
 }

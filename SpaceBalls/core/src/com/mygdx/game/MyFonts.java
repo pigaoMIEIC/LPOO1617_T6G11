@@ -18,10 +18,20 @@ public class MyFonts {
         return ourInstance;
     }
 
+
+    /**
+     * Default constructor, loads the necessary fonts
+     */
     private MyFonts() {
         this.font = loadFonts();
     }
 
+
+    /**
+     * Generates the required fonts for the application
+     *
+     * @return Returns the font used in the application
+     */
     private BitmapFont loadFonts(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/DAGGERSQUARE.otf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -34,6 +44,11 @@ public class MyFonts {
         return font;
     }
 
+    /**
+     * Getter for the generated font
+     *
+     * @return Returns the generated font
+     */
     public BitmapFont getFont() {
         return font;
     }

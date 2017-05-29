@@ -24,6 +24,14 @@ public class ViewFactory {
     private static Map<EntityModel.ModelType, EntityView> cache =
             new HashMap<EntityModel.ModelType, EntityView>();
 
+
+    /**
+     *
+     * @param game The game this view belongs to. Needed to access the asset manager to get textures.
+     * @param model The model to be displayed
+     * @param currLevel The current level type. Used in case there is an EndBall model to access teh ball information
+     * @return Returns the EntityView that will be displayed
+     */
     public static EntityView makeView(SpaceBallsGame game, EntityModel model, LevelType.levelType currLevel) {
 
         if (!cache.containsKey(model.getType())) {

@@ -25,13 +25,14 @@ public class GameOverView extends GameView {
 
 
 
-
+    /**
+     * Method to call the superclass constructor and load the assets and buttons
+     *
+     * @param game The game which will be associated with the screenAdapter
+     */
     public GameOverView(SpaceBallsGame game,Object clas) {
         super(game);
-        this.game = game;
         this.clas = clas;
-        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
-        Gdx.input.setInputProcessor(stage);
 
         String[] array = {"oneline.png",
                 "Exit.png" ,
@@ -40,11 +41,11 @@ public class GameOverView extends GameView {
         loadAssets(array);
 
         createButtons();
-
-        camera = createCamera();
     }
 
-
+    /**
+     * Method to create the buttons for the menu
+     */
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
         float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
@@ -72,27 +73,14 @@ public class GameOverView extends GameView {
 
     }
 
-//    public void render(float delta) {
-//        handleInputs(delta);
-//
-//        camera.update();
-//
-//        game.getBatch().setProjectionMatrix(camera.combined);
-//
-//        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
-//        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-//
-//        stage.act();
-//        stage.draw();
-//
-//    }
-
-
     @Override
     void drawEntities() {}
 
+    /**
+     * Method that handles the inputs from the stage
+     */
     @Override
-    void handleInputs(float delta) {
+    void handleInputs() {
         if(restart.isPressed()){
             if(clas instanceof SandBoxView) {
                 game.setScreen(new SandBoxView(game));

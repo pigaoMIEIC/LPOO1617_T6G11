@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.Preferences;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
@@ -67,6 +68,7 @@ public abstract class GameView extends ScreenAdapter{
      */
     protected OrthographicCamera camera;
 
+
     protected final Stage stage;
 
     SpaceBallsGame game;
@@ -77,18 +79,29 @@ public abstract class GameView extends ScreenAdapter{
 
     float[] offsetXY = {0,0};
 
+    /**
+     * Method to initialize the local game, the camera and the stage
+     *
+     * @param game The game which will be associated with the screenAdapter
+     */
     public GameView(SpaceBallsGame game) {
         super();
         stage = new Stage();
+        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
         camera = createCamera();
         this.game = game;
         Gdx.input.setCatchBackKey(true);
+        Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Method to update the world and render the updated view
+     * @param delta Time delta from the last update
+     */
     public void render(float delta) {
         Batch batch= game.getBatch();
 
-        handleInputs(delta);
+        handleInputs();
 
         camera.update();
 
@@ -107,8 +120,12 @@ public abstract class GameView extends ScreenAdapter{
 
     abstract void drawEntities();
 
-    abstract void handleInputs(float delta);
+    abstract void handleInputs();
 
+    /**
+     * Loads the file names received as Textures
+     * @param textures The names of the files to be loaded as Textures
+     */
     protected void loadAssets(String[] textures){
         for (String str: textures) {
             this.game.getAssetManager().load(str,Texture.class);
@@ -116,12 +133,22 @@ public abstract class GameView extends ScreenAdapter{
         this.game.getAssetManager().finishLoading();
     }
 
+    /**
+     * Draws the view of the model passed as a parameter
+     *
+     * @param model Model to be drawn
+     */
     protected void drawView(EntityModel model){
         EntityView view = ViewFactory.makeView(game, model, null);
         view.update(model);
         view.draw(game.getBatch());
     }
 
+    /**
+     * Renders the debug camera for the game Physics
+     *
+     * @param world the world that will be rendered
+     */
     protected void debugPhysics(World world){
         if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
@@ -130,6 +157,9 @@ public abstract class GameView extends ScreenAdapter{
         }
     }
 
+    /**
+     * Creates the Joystick for the game
+     */
     protected void createJoystick(){
         Touchpad.TouchpadStyle  touchpadStyle;
         Drawable touchBackground,touchKnob;
@@ -165,6 +195,11 @@ public abstract class GameView extends ScreenAdapter{
 
     }
 
+    /**
+     * Creates the camera for the View
+     *
+     * @return Returns the created camera
+     */
     protected OrthographicCamera createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
 
@@ -179,12 +214,23 @@ public abstract class GameView extends ScreenAdapter{
         return camera;
     }
 
+    /**
+     * Writes the offset to the Preferences interface
+     *
+     * @param x New X coordinate offset
+     * @param y New Y coordinate offset
+     */
     protected void writeOffset(float x, float y){
         Preferences prefs= game.getPreferences();
         prefs.writeOffsetX(x);
         prefs.writeOffsetY(y);
     }
 
+    /**
+     * Method to get the offset from the Preferences interface
+     *
+     * @return Returns an array with the X and Y coordinates offset respectively
+     */
     protected float[] readOffsetXY(){
         float[] array = new float[2];
         Preferences prefs = game.getPreferences();
@@ -193,6 +239,12 @@ public abstract class GameView extends ScreenAdapter{
         return array;
     }
 
+    /**
+     * Method to update the Viewport size
+     *
+     * @param width New Viewport width
+     * @param height New Viewport height
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width,height,true);

@@ -28,14 +28,6 @@ import com.mygdx.game.view.entities.ViewFactory;
  */
 
 public class MenuView extends GameView {
-    /**
-     * The camera used to show the viewport.
-     */
-    private final OrthographicCamera camera;
-
-    private final SpaceBallsGame game;
-
-
     private ImageButton startButton;
     private ImageButton exitButton;
     private ImageButton howtoplay;
@@ -49,9 +41,6 @@ public class MenuView extends GameView {
 
     public MenuView(SpaceBallsGame game) {
         super(game);
-        this.game = game;
-        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
-        Gdx.input.setInputProcessor(stage);
 
         String[] array  = {"play.png",
                 "Exit.png",
@@ -66,7 +55,6 @@ public class MenuView extends GameView {
 
         createButtons();
 
-        camera = createCamera();
         controller = MenuController.getInstance();
 
         controller.setOffset(game.getPreferences().readOffsetX(),game.getPreferences().readOffsetY());
@@ -74,7 +62,9 @@ public class MenuView extends GameView {
         controller.setSensitivity(game.getPreferences().readSensitivity());
     }
 
-
+    /**
+     * Method to create the buttons for the menu
+     */
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
         float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
@@ -127,6 +117,11 @@ public class MenuView extends GameView {
 
     }
 
+
+    /**
+     * Method to update the world and render the updated view
+     * @param delta Time delta from the last update
+     */
     @Override
     public void render(float delta) {
         float x = Gdx.input.getAccelerometerX();
@@ -140,6 +135,10 @@ public class MenuView extends GameView {
         debugPhysics(controller.getWorld());
     }
 
+
+    /**
+     * Method that draws the views of the models present in the scene
+     */
     @Override
     void drawEntities() {
         for (int i = 0; i < RANDNR; i++) {
@@ -154,8 +153,11 @@ public class MenuView extends GameView {
 
     }
 
+    /**
+     * Method that handles the inputs from the stage
+     */
     @Override
-    void handleInputs(float delta) {
+    void handleInputs() {
 
         if (exitButton.isPressed()) {
             Gdx.app.exit();

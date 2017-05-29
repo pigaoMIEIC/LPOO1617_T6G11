@@ -41,12 +41,11 @@ public abstract class EntityView extends Stage{
     }
 
     /**
-     * Abstract method that creates the view sprite. Concrete
-     * implementation should extend this method to create their
-     * own sprites.
+     * Method that creates the view sprite.
      *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
+     * @param game The game this view belongs to. Needed to access the asset manager to get textures.
+     * @param name The name of the texture file.
+     * @param radius The measure to scale the sprite to the appropriate size
      * @return the sprite representing this view.
      */
     public Sprite createSprite(SpaceBallsGame game,String name,float radius){

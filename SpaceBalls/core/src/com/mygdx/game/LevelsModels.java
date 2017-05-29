@@ -22,8 +22,19 @@ public class LevelsModels {
         return ourInstance;
     }
 
+
+    /**
+     * Default contructor
+     */
     private LevelsModels() {}
 
+
+    /**
+     * Method to get the entity models of the elements present in the level passed as argument
+     *
+     * @param level Indicates the level of the models to be returned
+     * @return Returns the entity models of the chosen level
+     */
     public final Vector<EntityModel> getEntitiesModels(LevelType.levelType level){
         Vector<EntityModel> tempEntity = new Vector<EntityModel>();
         switch(level){
@@ -46,7 +57,12 @@ public class LevelsModels {
     }
 
 
-
+    /**
+     * Method to get the static models of the elements present in the level passed as argument
+     *
+     * @param level Indicates the level of the models to be returned
+     * @return Returns the static models of the chosen level
+     */
     public final Vector<StaticModel> getStaticModels(LevelType.levelType level){
         Vector<StaticModel> tempStatic = new Vector<StaticModel>();
         switch(level){

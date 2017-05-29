@@ -21,24 +21,18 @@ import com.mygdx.game.view.entities.ViewFactory;
  */
 
 public class LevelView extends GameView {
-
-    /**
-     * The camera used to show the viewport.
-     */
-    private final OrthographicCamera camera;
-
     boolean joystick;
 
     private LevelType.levelType currLevel;
 
-
+    /**
+     * Method to call the superclass constructor and load the assets and objects
+     *
+     * @param newLevel The Level type to be loaded and stored
+     * @param game The game which will be associated with the screenAdapter
+     */
     public LevelView(SpaceBallsGame game,LevelType.levelType newLevel) {
-
         super(game);
-
-        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
-
-        Gdx.input.setInputProcessor(stage);
 
         String[] array  = {"back.png",
                 "exterior.png",
@@ -62,18 +56,18 @@ public class LevelView extends GameView {
         }
 
         lvlContrl.setOffset(game.getPreferences().readOffsetX(),game.getPreferences().readOffsetY());
-
-        camera = createCamera();
-        Gdx.input.setCatchBackKey(true);
     }
 
-
+    /**
+     * Method to update the world and render the updated view
+     * @param delta Time delta from the last update
+     */
     public void render(float delta) {
         LevelController lvlContrl = LevelController.getInstance(currLevel);
 
         stage.setDebugAll(true);
 
-       lvlContrl.update(delta);
+        lvlContrl.update(delta);
 
         super.render(delta);
 
@@ -100,7 +94,9 @@ public class LevelView extends GameView {
 
     }
 
-
+    /**
+     * Method that draws the views of the models present in the scene
+     */
     @Override
     void drawEntities() {
 
@@ -125,22 +121,29 @@ public class LevelView extends GameView {
 
     }
 
+    /**
+     * Method that handles the inputs from the stage
+     */
     @Override
-    void handleInputs(float delta) {
+    void handleInputs() {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)||Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             backToMenu();
         }
     }
 
-
+    /**
+     * Getter for the current Level
+     * @return Returns the current level type
+     */
     public LevelType.levelType getCurrLevel() {
         return currLevel;
     }
 
+    /**
+     * Methdo to set the screen to the MenuView
+     */
     protected void backToMenu(){
         LevelController.getInstance(currLevel).delete();
         game.setScreen(new MenuView(game));
     }
-
-
 }

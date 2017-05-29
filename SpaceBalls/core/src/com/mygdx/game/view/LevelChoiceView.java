@@ -39,12 +39,13 @@ public class LevelChoiceView extends GameView {
     private ImageButton returni;
 
 
-
+    /**
+     * Method to call the superclass constructor and load the assets and buttons
+     *
+     * @param game The game which will be associated with the screenAdapter
+     */
     public LevelChoiceView(SpaceBallsGame game) {
         super(game);
-        this.game = game;
-        this.stage.setViewport(new StretchViewport(VIEWPORT_WIDTH/PIXEL_TO_METER,VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER));
-        Gdx.input.setInputProcessor(stage);
 
         String[] array = {"back.png",
                 "1.png",
@@ -57,7 +58,9 @@ public class LevelChoiceView extends GameView {
         createButtons();
     }
 
-
+    /**
+     * Method to create the buttons for the menu
+     */
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
         float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
@@ -106,6 +109,10 @@ public class LevelChoiceView extends GameView {
 
     }
 
+    /**
+     * Method to update the world and render the updated view
+     * @param delta Time delta from the last update
+     */
     @Override
     public void render(float delta) {
         MenuController controler = MenuController.getInstance();
@@ -121,6 +128,9 @@ public class LevelChoiceView extends GameView {
         debugPhysics(MenuController.getInstance().getWorld());
     }
 
+    /**
+     * Method that draws the views of the models present in the scene
+     */
     @Override
     void drawEntities() {
         for (int i = 0; i < RANDNR; i++) {
@@ -134,8 +144,11 @@ public class LevelChoiceView extends GameView {
         }
     }
 
+    /**
+     * Method that handles the inputs from the stage
+     */
     @Override
-    void handleInputs(float delta) {
+    void handleInputs() {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
             this.dispose();
             game.setScreen(new MenuView(game));

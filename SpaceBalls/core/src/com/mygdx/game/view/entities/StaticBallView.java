@@ -13,22 +13,23 @@ import static com.mygdx.game.view.MenuView.PIXEL_TO_METER;
  */
 
 public class StaticBallView extends  EntityView{
+
+    /**
+     * Constructor for the view
+     *
+     * @param game Game from which the texture will be assigned
+     */
     public StaticBallView(SpaceBallsGame game) {
         sprite = createSprite(game);
     }
 
-
+    /**
+     * Method that calls the super class method with specific parameters
+     * @param game Game from which the texture will be assigned
+     * @return Returns the sprite to be rendered
+     */
     public Sprite createSprite(SpaceBallsGame game) {
-//        Texture texture = game.getAssetManager().get("enemy.png");
-//        float radius = MenuModel.getInstance().getStaticBallModel(1).getRadius();
-//
-//        float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
-//        Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
-//        sprite.setScale(factor);
-//
-//        return sprite;
         float radius = MenuModel.getInstance().getStaticBallModel(1).getRadius();
-
         return super.createSprite(game,"enemy.png",radius);
     }
 }
