@@ -85,26 +85,23 @@ public abstract class GameView extends ScreenAdapter{
     }
 
     public void render(float delta) {
+        Batch batch= game.getBatch();
 
         handleInputs(delta);
 
         camera.update();
 
-        game.getBatch().setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.combined);
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-
-        game.getBatch().begin();
+        batch.begin();
         drawEntities();
-        game.getBatch().end();
+        batch.end();
 
         stage.act();
         stage.draw();
-
-
-
     }
 
     abstract void drawEntities();
