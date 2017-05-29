@@ -72,19 +72,6 @@ public class MenuView extends GameView {
         MenuController.getInstance().setSensitivity(game.getPreferences().readSensitivity());
     }
 
-//    private void loadAssets() {
-//        this.game.getAssetManager().load( "play.png" , Texture.class);
-//        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-//        this.game.getAssetManager().load( "title.png" , Texture.class);
-//        this.game.getAssetManager().load( "howtoplay.png" , Texture.class);
-//        this.game.getAssetManager().load( "credits.png" , Texture.class);
-//        this.game.getAssetManager().load( "options.png" , Texture.class);
-//        this.game.getAssetManager().load( "Survival.png" , Texture.class);
-//        this.game.getAssetManager().load( "ball.png" , Texture.class);
-//        this.game.getAssetManager().load( "enemy.png" , Texture.class);
-//
-//        this.game.getAssetManager().finishLoading();
-//    }
 
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;

@@ -70,7 +70,7 @@ public class SandBoxView extends GameView{
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
         skin.add("white", new Texture(pixmap));
-        TextureRegionDrawable textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("whiteSquare.png"))));
+        TextureRegionDrawable textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("whiteRectangle.png"))));
         ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.RED), textureBar);
         barStyle.knobBefore = barStyle.knob;
         bar = new ProgressBar(0, 5, 1/60f, false, barStyle);
