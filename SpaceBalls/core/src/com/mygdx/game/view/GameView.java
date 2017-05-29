@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.mygdx.game.Preferences;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
 import com.mygdx.game.model.entities.EntityModel;
@@ -71,6 +72,8 @@ public abstract class GameView extends ScreenAdapter{
     Touchpad touchpad;
 
     float sensitivity;
+
+    float[] offsetXY = {0,0};
 
     public GameView(SpaceBallsGame game) {
         super();
@@ -177,7 +180,19 @@ public abstract class GameView extends ScreenAdapter{
         return camera;
     }
 
+    protected void writeOffset(float x, float y){
+        Preferences prefs= game.getPreferences();
+        prefs.writeOffsetX(x);
+        prefs.writeOffsetY(y);
+    }
 
+    protected float[] readOffsetXY(){
+        float[] array = new float[2];
+        Preferences prefs = game.getPreferences();
+        array[0] = prefs.readOffsetX();
+        array[1] = prefs.readOffsetY();
+        return array;
+    }
 
     @Override
     public void resize(int width, int height) {

@@ -64,9 +64,6 @@ public class OptionsView extends GameView{
     private final float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
     private final float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
 
-    private float offsetY = 0;
-    private float offsetX = 0;
-
     private Label lblsensitivity;
 
 
@@ -98,11 +95,8 @@ public class OptionsView extends GameView{
             sensitivity = slider.getValue();
         }else slider.setValue(sensitivity);
 
-
-        this.offsetX =game.getPreferences().readOffsetX();
-        this.offsetY =game.getPreferences().readOffsetY();
-        OptionsController.getInstance().setOffsetX(this.offsetX);
-        OptionsController.getInstance().setOffsetY(this.offsetY);
+        float[] offsetXY = readOffsetXY();
+        OptionsController.getInstance().setOffsetXY(offsetXY);
 
         checkBox.setChecked(game.getPreferences().readJoystick());
 
@@ -227,12 +221,10 @@ public class OptionsView extends GameView{
 
 
         if(calibrate.isPressed()){
-            this.offsetX = OptionsController.getInstance().getReadingX();
-            this.offsetY = OptionsController.getInstance().getReadingY();
-            game.getPreferences().writeOffsetX(this.offsetX);
-            game.getPreferences().writeOffsetY(this.offsetY);
-            OptionsController.getInstance().setOffsetX(this.offsetX);
-            OptionsController.getInstance().setOffsetY(this.offsetY);
+            OptionsController optContrl = OptionsController.getInstance();
+            offsetXY = optContrl.getReadingXY();
+            writeOffset(offsetXY[0],offsetXY[1]);
+            optContrl.setOffsetXY(offsetXY);
         }
 
         if(checkBox.isChecked()){

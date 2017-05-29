@@ -48,15 +48,17 @@ public class LevelView extends GameView {
 
         currLevel = newLevel;
 
+        LevelController lvlContrl = LevelController.getInstance();
+
         sensitivity = game.getPreferences().readSensitivity();
         LevelController.getInstance().setSensitivity(sensitivity);
         joystick = game.getPreferences().readJoystick();
         if(joystick)
             createJoystick();
 
-        LevelController.getInstance().setJoystick(game.getPreferences().readJoystick());
-        LevelController.getInstance().setOffsetX(game.getPreferences().readOffsetX());
-        LevelController.getInstance().setOffsetY(game.getPreferences().readOffsetY());
+        //lvlContrl.setJoystick(game.getPreferences().readJoystick());
+        lvlContrl.setOffsetX(game.getPreferences().readOffsetX());
+        lvlContrl.setOffsetY(game.getPreferences().readOffsetY());
 
         camera = createCamera();
         Gdx.input.setCatchBackKey(true);

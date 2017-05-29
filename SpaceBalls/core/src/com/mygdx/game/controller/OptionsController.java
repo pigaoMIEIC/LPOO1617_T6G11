@@ -154,21 +154,14 @@ public class OptionsController {
     }
 
 
-    public float getReadingY() {
-        return readingY.floatValue();
+    public float[] getReadingXY() {
+        float[] temp= {readingY.floatValue(),readingX.floatValue()};
+        return temp;
     }
 
 
-    public float getReadingX() {
-        return readingX.floatValue();
-    }
-
-
-    public void setOffsetY(Float readingY) {
-        this.offsetY = readingY;
-    }
-
-    public void setOffsetX(Float readingX) {
-        this.offsetX = readingX;
+    public void setOffsetXY(float[] offsetXY) {
+        this.offsetX = offsetXY[0];
+        this.offsetY = offsetXY[1];
     }
 }
