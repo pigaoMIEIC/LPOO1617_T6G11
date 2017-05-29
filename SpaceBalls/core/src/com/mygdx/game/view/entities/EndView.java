@@ -32,6 +32,6 @@ public class EndView extends EntityView{
 
         float radius = LevelModel.getInstance(currLevel).getEndBall().getRadius();
 
-        return super.createSprite(game,"ball.png",radius);
+        return super.createSprite(game,"end.png",radius);
     }
 }

@@ -16,7 +16,7 @@ import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
  * Created by Tiago Neves on 18/05/2017.
  */
 
-public class MenuModel extends Stage{
+public class MenuModel{
     private static MenuModel instance;
 
     private BallModel[] ballModels = new BallModel[GameView.RANDNR];
@@ -32,7 +32,7 @@ public class MenuModel extends Stage{
             new Vector2(VIEWPORT_WIDTH,(VIEWPORT_WIDTH * RATIO)/2)
     };
 
-    public MenuModel() {
+    private MenuModel() {
         for(int i = 0; i < ballModels.length;i++) {
             this.ballModels[i] = new BallModel(0.08f, 0.08f, 0.08f,true);
         }

@@ -48,6 +48,8 @@ public class SandBoxView extends GameView{
 
     private boolean joystick;
 
+    SandBoxController controller = SandBoxController.getInstance();
+
 
     public SandBoxView(SpaceBallsGame game) {
         super(game);
@@ -88,16 +90,13 @@ public class SandBoxView extends GameView{
             createJoystick();
 
         SandBoxController.getInstance().setJoystick(game.getPreferences().readJoystick());
-        SandBoxController.getInstance().setOffsetX(game.getPreferences().readOffsetX());
-        SandBoxController.getInstance().setOffsetY(game.getPreferences().readOffsetY());
+        SandBoxController.getInstance().setOffset(game.getPreferences().readOffsetX(),game.getPreferences().readOffsetY());
 
     }
 
 
     @Override
-    public void render(float delta) {
-        SandBoxController controller = SandBoxController.getInstance();
-
+    public void render(float delta) {;
         controller.update(delta);
 
         super.render(delta);
@@ -136,7 +135,7 @@ public class SandBoxView extends GameView{
     @Override
     void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            SandBoxController.getInstance().delete();
+            controller.delete();
             game.setScreen(new MenuView(game));
         }
     }

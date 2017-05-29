@@ -9,7 +9,7 @@ import com.mygdx.game.model.entities.StaticModel;
  * Created by Tiago Neves on 22/05/2017.
  */
 
-public class OptionsModel extends Stage{
+public class OptionsModel{
     private static OptionsModel instance;
 
     private EnemyModel callibrateModel;
@@ -44,10 +44,6 @@ public class OptionsModel extends Stage{
 
     public BallModel getPlayerModel() {
         return playerModel;
-    }
-
-    public int getnBalls() {
-        return nBalls;
     }
 
 

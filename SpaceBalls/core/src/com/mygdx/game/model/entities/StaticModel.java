@@ -10,10 +10,9 @@ import com.mygdx.game.view.MenuView;
 public class StaticModel extends EntityModel {
     @Override
     public ModelType getType() {
-        return ModelType.STATIC;
+        return ModelType.OBS;
     }
 
-    float length;
     boolean dynamic;
     boolean drag;
     boolean highRebound;
@@ -25,21 +24,5 @@ public class StaticModel extends EntityModel {
         this.dynamic = false;
         this.drag = true;
         this.highRebound = true;
-    }
-
-    public float getLength() {
-        return length;
-    }
-
-    public boolean isDynamic() {
-        return dynamic;
-    }
-
-    public boolean hasDrag() {
-        return drag;
-    }
-
-    public boolean hasHighRebound() {
-        return highRebound;
     }
 }

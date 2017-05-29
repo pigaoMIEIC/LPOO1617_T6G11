@@ -12,6 +12,7 @@ import java.util.Map;
 import static com.mygdx.game.model.entities.EntityModel.ModelType.BALL;
 import static com.mygdx.game.model.entities.EntityModel.ModelType.END;
 import static com.mygdx.game.model.entities.EntityModel.ModelType.ENEMY;
+import static com.mygdx.game.model.entities.EntityModel.ModelType.OBS;
 import static com.mygdx.game.model.entities.EntityModel.ModelType.STATIC;
 
 
@@ -34,6 +35,8 @@ public class ViewFactory {
                 cache.put(model.getType(), new EnemyView(game));
             if(model.getType() == END)
                 cache.put(model.getType(), new EndView(game,currLevel));
+            if(model.getType() == OBS)
+                cache.put(model.getType(), new ObsView(game));
         }
         return cache.get(model.getType());
     }

@@ -116,14 +116,6 @@ public abstract class EntityBody {
         body.setLinearVelocity((float)(velocity * -Math.sin(getAngle())), (float) (velocity * Math.cos(getAngle())));
     }
 
-    /**
-     * Wraps the setAngularVelocity method from the Box2D body class.
-     *
-     * @param omega the new angular velocity angle for this body
-     */
-    public void setAngularVelocity(float omega) {
-        body.setAngularVelocity(omega);
-    }
 
     /**
      * Wraps the applyForceToCenter method from the Box2D body class.

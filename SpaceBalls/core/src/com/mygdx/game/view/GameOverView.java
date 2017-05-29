@@ -35,7 +35,7 @@ public class GameOverView extends GameView {
 
         String[] array = {"oneline.png",
                 "Exit.png" ,
-                "Endless.png"
+                "restart.png"
         };
         loadAssets(array);
 
@@ -44,13 +44,6 @@ public class GameOverView extends GameView {
         camera = createCamera();
     }
 
-//    private void loadAssets() {
-//        this.game.getAssetManager().load( "oneline.png" , Texture.class);
-//        this.game.getAssetManager().load( "Exit.png" , Texture.class);
-//        this.game.getAssetManager().load( "Endless.png" , Texture.class);
-//
-//        this.game.getAssetManager().finishLoading();
-//    }
 
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
@@ -70,9 +63,9 @@ public class GameOverView extends GameView {
         returni.setPosition(width - width/10 - width/7,height/2-buttonYSize);
         stage.addActor(returni);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Survival.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("restart.png")));
         restart = new ImageButton(buttonDrawable);
-        restart.setSize(width/7,buttonYSize*2f);
+        restart.setSize(width/4,buttonYSize*2f);
         restart.setPosition(width/10,height/2-buttonYSize);
         stage.addActor(restart);
 
@@ -115,7 +108,8 @@ public class GameOverView extends GameView {
                 OptionsController.getInstance().delete();
             }
             if(clas instanceof LevelView){
-                LevelController.getInstance().delete();
+
+                LevelController.getInstance(((LevelView) clas).getCurrLevel()).delete();
             }
             game.setScreen(new MenuView(game));
         }

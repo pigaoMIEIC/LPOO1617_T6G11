@@ -130,6 +130,9 @@ public class SandBoxController {
         }
 
 
+
+
+
         for(int i=0; i < rballBodys.size();i++){
             Vector2 follow = new Vector2((playerBody.getX()-rballBodys.elementAt(i).getX())/50,(playerBody.getY()-rballBodys.elementAt(i).getY())/50);
             follow.limit(0.01f);
@@ -159,6 +162,10 @@ public class SandBoxController {
         if(joystick)
          playerBody.applyForceToCenter(sensitivity*x,sensitivity*y, true);
         else{
+            System.out.println("sensitivity sand " + sensitivity);
+            System.out.println("offsetx sand  " + offsetX);
+            System.out.println("offsetY sand  " + offsetY);
+            System.out.println("force sand  " + (-x *sensitivity)/35);
             Vector2 vector = new Vector2((y *sensitivity)/35 - offsetY, (-x *sensitivity)/35 + offsetX);
             playerBody.applyForceToCenter(vector.x,vector.y, true);
         }
@@ -210,13 +217,10 @@ public class SandBoxController {
         this.joystick = joystick;
     }
 
-    public void setOffsetX(float offsetX) {
+    public void setOffset(float offsetX,float offsetY) {
         this.offsetX = offsetX;
     }
 
-    public void setOffsetY(float offsetY) {
-        this.offsetY = offsetY;
-    }
 }
 
 

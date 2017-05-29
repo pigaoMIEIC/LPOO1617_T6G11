@@ -54,8 +54,6 @@ public class OptionsView extends GameView{
 
     private Button calibrate;
 
-    private float sensitivity;
-
     CheckBox checkBox;
 
 
@@ -65,6 +63,8 @@ public class OptionsView extends GameView{
     private final float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
 
     private Label lblsensitivity;
+
+    OptionsController controller = OptionsController.getInstance();
 
 
     public OptionsView(SpaceBallsGame game) {
@@ -96,7 +96,7 @@ public class OptionsView extends GameView{
         }else slider.setValue(sensitivity);
 
         float[] offsetXY = readOffsetXY();
-        OptionsController.getInstance().setOffsetXY(offsetXY);
+        controller.setOffsetXY(offsetXY);
 
         checkBox.setChecked(game.getPreferences().readJoystick());
 
@@ -135,22 +135,16 @@ public class OptionsView extends GameView{
     }
 
     public void render(float delta) {
-
-        stage.setDebugAll(true);
-
-        OptionsController.getInstance().update(delta);
+        controller.setAccelX(Gdx.input.getAccelerometerX());
+        controller.setAccelY(Gdx.input.getAccelerometerY());
+        controller.update(delta);
 
         super.render(delta);
 
-        debugPhysics(OptionsController.getInstance().getWorld());
+        debugPhysics(controller.getWorld());
 
-        OptionsController.getInstance().setSensitivity(slider.getValue());
+        controller.setSensitivity(slider.getValue());
         game.getPreferences().writeSensitivity(slider.getValue());
-
-
-
-        stage.act();
-        stage.draw();
 
     }
 

@@ -44,6 +44,8 @@ public class MenuView extends GameView {
     private ImageButton title;
     private ImageButton options;
 
+    private MenuController controller;
+
 
     public MenuView(SpaceBallsGame game) {
         super(game);
@@ -65,11 +67,11 @@ public class MenuView extends GameView {
         createButtons();
 
         camera = createCamera();
+        controller = MenuController.getInstance();
 
-        MenuController.getInstance().setOffsetX(game.getPreferences().readOffsetX());
-        MenuController.getInstance().setOffsetY(game.getPreferences().readOffsetY());
+        controller.setOffset(game.getPreferences().readOffsetX(),game.getPreferences().readOffsetY());
 
-        MenuController.getInstance().setSensitivity(game.getPreferences().readSensitivity());
+        controller.setSensitivity(game.getPreferences().readSensitivity());
     }
 
 
@@ -127,11 +129,15 @@ public class MenuView extends GameView {
 
     @Override
     public void render(float delta) {
-        MenuController.getInstance().update(delta);
+        float x = Gdx.input.getAccelerometerX();
+        float y = Gdx.input.getAccelerometerY();
+        controller.setAccelX(x);
+        controller.setAccelY(y);
+        controller.update(delta);
 
         super.render(delta);
 
-        debugPhysics(MenuController.getInstance().getWorld());
+        debugPhysics(controller.getWorld());
     }
 
     @Override
@@ -150,9 +156,6 @@ public class MenuView extends GameView {
 
     @Override
     void handleInputs(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            MenuController.getInstance().accelerate();
-        }
 
         if (exitButton.isPressed()) {
             Gdx.app.exit();

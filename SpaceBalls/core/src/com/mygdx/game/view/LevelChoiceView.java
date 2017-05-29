@@ -57,15 +57,6 @@ public class LevelChoiceView extends GameView {
         createButtons();
     }
 
-//    private void loadAssets() {
-//        this.game.getAssetManager().load("back.png" , Texture.class);
-//        this.game.getAssetManager().load("1.png", Texture.class);
-//        this.game.getAssetManager().load("2.png", Texture.class);
-//        this.game.getAssetManager().load("3.png", Texture.class);
-//        this.game.getAssetManager().load("4.png", Texture.class);
-//        this.game.getAssetManager().load("5.png", Texture.class);
-//        this.game.getAssetManager().finishLoading();
-//    }
 
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
@@ -117,9 +108,13 @@ public class LevelChoiceView extends GameView {
 
     @Override
     public void render(float delta) {
+        MenuController controler = MenuController.getInstance();
         stage.setDebugAll(true);
-
-        MenuController.getInstance().update(delta);
+        float x = Gdx.input.getAccelerometerX();
+        float y = Gdx.input.getAccelerometerY();
+        controler.setAccelX(x);
+        controler.setAccelY(y);
+        controler.update(delta);
 
         super.render(delta);
 
@@ -148,6 +143,10 @@ public class LevelChoiceView extends GameView {
 
         if(levels.elementAt(0).isPressed()){
             game.setScreen(new LevelView(game, LevelType.levelType.ONE));
+        }
+
+        if(levels.elementAt(1).isPressed()){
+            game.setScreen(new LevelView(game, LevelType.levelType.TWO));
         }
     }
 

@@ -26,18 +26,6 @@ public class EndBallModel extends EntityModel {
         this.highRebound = true;
     }
 
-    public boolean isDynamic() {
-        return dynamic;
-    }
-
-    public boolean hasDrag() {
-        return drag;
-    }
-
-    public boolean hasHighRebound() {
-        return highRebound;
-    }
-
     public float getRadius() {
         return radius;
     }

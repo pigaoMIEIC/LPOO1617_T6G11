@@ -28,13 +28,16 @@ public class LevelsModels {
         Vector<EntityModel> tempEntity = new Vector<EntityModel>();
         switch(level){
             case ONE:
-                System.out.println("this is Model one");
                 tempEntity.add(new BallModel(0.08f, 0.08f, 0.08f,true));
                 tempEntity.add(new EndBallModel(2,2,0.08f));
                 tempEntity.add(new EnemyModel(2.1f,2.1f, 0.08f,true));
                 tempEntity.add(new EnemyModel(0.8f, VIEWPORT_WIDTH*RATIO-0.08f, 0.08f,true));
                 return tempEntity;
             case TWO:
+                tempEntity.add(new BallModel(0.08f, 0.08f, 0.08f,true));
+                tempEntity.add(new EndBallModel(2,2,0.08f));
+                tempEntity.add(new EnemyModel(2.1f,2.1f, 0.08f,true));
+                tempEntity.add(new EnemyModel(0.8f, VIEWPORT_WIDTH*RATIO-0.08f, 0.08f,true));
                 return tempEntity;
             default:
                 System.out.println("default levelModel.java... ups!!");
@@ -48,12 +51,15 @@ public class LevelsModels {
         Vector<StaticModel> tempStatic = new Vector<StaticModel>();
         switch(level){
             case ONE:
-                System.out.println("this is StaticModel one");
                 tempStatic.add(new StaticModel(0,0));
                 tempStatic.add(new StaticModel(1.5f,1.5f));
                 tempStatic.add(new StaticModel(3f,2f));
                 return tempStatic;
             case TWO:
+                tempStatic.add(new StaticModel(0,0));
+                tempStatic.add(new StaticModel(3f,0f));
+                tempStatic.add(new StaticModel(2f,2f));
+                tempStatic.add(new StaticModel(3f,1.5f));
                 return tempStatic;
             default:
                 System.out.println("default levelModel.java... ups!!");

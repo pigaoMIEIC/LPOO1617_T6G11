@@ -62,51 +62,21 @@ public abstract class StaticBody {
 
 
 
-    /**
-     * Wraps the getX method from the Box2D body class.
-     *
-     * @return the x-coordinate of this body.
-     */
-    public float getX() {
-        return body.getPosition().x;
-    }
-
-    /**
-     * Wraps the getY method from the Box2D body class.
-     *
-     * @return the y-coordinate of this body.
-     */
-    public float getY() {
-        return body.getPosition().y;
-    }
-
-    /**
-     * Wraps the getAngle method from the Box2D body class.
-     *
-     * @return the angle of rotation of this body.
-     */
-    public float getAngle() {
-        return body.getAngle();
-    }
-
-    /**
-     * Wraps the setTransform method from the Box2D body class.
-     *
-     * @param x the new x-coordinate for this body
-     * @param y the new y-coordinate for this body
-     * @param angle the new rotation angle for this body
-     */
-    public void setTransform(float x, float y, float angle) {
-        body.setTransform(x, y, angle);
-    }
-
-
-    /**
-     * Wraps the getUserData method from the Box2D body class.
-     *
-     * @return the user data
-     */
-    public Object getUserData() {
-        return body.getUserData();
-    }
+//    /**
+//     * Wraps the getX method from the Box2D body class.
+//     *
+//     * @return the x-coordinate of this body.
+//     */
+//    public float getX() {
+//        return body.getPosition().x;
+//    }
+//
+//    /**
+//     * Wraps the getY method from the Box2D body class.
+//     *
+//     * @return the y-coordinate of this body.
+//     */
+//    public float getY() {
+//        return body.getPosition().y;
+//    }
 }

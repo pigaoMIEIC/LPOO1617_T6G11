@@ -45,8 +45,8 @@ public abstract class GameView extends ScreenAdapter{
     /**
      * The screen ratio.
      */
-    //public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
-    public static  final float RATIO = 0.5f;  //testing proposes
+    public static final float RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
+    //public static  final float RATIO = 0.5f;  //testing proposes
 
     public final static int RANDNR = 4;//number of random balls in start menu
     public final static int SRANDNR = 6;//number of random balls in start menu
@@ -108,11 +108,6 @@ public abstract class GameView extends ScreenAdapter{
     abstract void drawEntities();
 
     abstract void handleInputs(float delta);
-
-    protected void backToMenu(){
-        LevelController.getInstance().delete();
-        game.setScreen(new MenuView(game));
-    }
 
     protected void loadAssets(String[] textures){
         for (String str: textures) {

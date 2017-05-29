@@ -11,6 +11,7 @@ import com.mygdx.game.model.LevelModel;
 import java.util.Vector;
 
 import static com.mygdx.game.LevelType.levelType.ONE;
+import static com.mygdx.game.LevelType.levelType.TWO;
 
 
 /**
@@ -32,7 +33,6 @@ public class LevelsBodies {
         Vector<EntityBody> temp = new Vector<EntityBody>();
         switch(level){
             case ONE:
-                System.out.println("this is entityBodies one");
                 //Player ball
                 temp.add(new BallBody(world, LevelModel.getInstance(ONE).getPlayerModel()));
                 //end ball
@@ -43,6 +43,14 @@ public class LevelsBodies {
                 }
                 return temp;
             case TWO:
+                //Player ball
+                temp.add(new BallBody(world, LevelModel.getInstance(TWO).getPlayerModel()));
+                //end ball
+                temp.add(new BallBody(world,LevelModel.getInstance(TWO).getEndBall()));
+                //Enemy balls
+                for (int i = 0; i < LevelModel.getInstance(TWO).getEnemySize() ; i++) {
+                    temp.add(new BallBody(world, LevelModel.getInstance(TWO).getEnemyModel(i)));
+                }
                 return temp;
             default:
                 System.out.println("default levelBodies.java... ups!!");
@@ -64,6 +72,12 @@ public class LevelsBodies {
                 }
                 return temp;
             case TWO:
+                //outer limits wall
+                temp.add(new WallsBody(world, LevelModel.getInstance(TWO).getStaticModel(0), 0f));
+                //inner obstacles
+                for (int i = 1; i < LevelModel.getInstance(TWO).getObstaclesSize(); i++) {
+                    temp.add(new SquareBody(world,LevelModel.getInstance(TWO).getStaticModel(i), 0f));
+                }
                 return temp;
             default:
                 System.out.println("default level... ups!!");

@@ -18,8 +18,6 @@ public class EnemyModel extends EntityModel {
     public EnemyModel(float x, float y, float radius, boolean highRebound) {
         super(x, y);
         this.radius = radius;
-        this.dynamic = dynamic;
-        this.drag = drag;
         this.highRebound = highRebound;
     }
 

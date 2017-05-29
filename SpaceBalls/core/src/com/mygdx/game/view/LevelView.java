@@ -27,8 +27,6 @@ public class LevelView extends GameView {
      */
     private final OrthographicCamera camera;
 
-    float sensitivity;
-
     boolean joystick;
 
     private LevelType.levelType currLevel;
@@ -45,38 +43,33 @@ public class LevelView extends GameView {
         String[] array  = {"back.png",
                 "exterior.png",
                 "end.png",
-                "inside.png"};
+                "inside.png",
+                "whiteSquare.png"
+        };
         loadAssets(array);
 
         currLevel = newLevel;
 
-        LevelController lvlContrl = LevelController.getInstance();
+        LevelController lvlContrl = LevelController.getInstance(currLevel);
 
         sensitivity = game.getPreferences().readSensitivity();
-        LevelController.getInstance().setSensitivity(sensitivity);
-        joystick = game.getPreferences().readJoystick();
-        if(joystick)
-            createJoystick();
 
-        //lvlContrl.setJoystick(game.getPreferences().readJoystick());
-        lvlContrl.setOffsetX(game.getPreferences().readOffsetX());
-        lvlContrl.setOffsetY(game.getPreferences().readOffsetY());
+        LevelController.getInstance(currLevel).setSensitivity(game.getPreferences().readSensitivity());
+        joystick = game.getPreferences().readJoystick();
+        if(joystick) {
+            LevelController.getInstance(currLevel).setJoystick(joystick);
+            createJoystick();
+        }
+
+        lvlContrl.setOffset(game.getPreferences().readOffsetX(),game.getPreferences().readOffsetY());
 
         camera = createCamera();
         Gdx.input.setCatchBackKey(true);
     }
 
 
-//    private void loadAssets() {
-//        this.game.getAssetManager().load("back.png" , Texture.class);
-//        this.game.getAssetManager().load("exterior.png", Texture.class);
-//        this.game.getAssetManager().load("end.png",Texture.class);
-//        this.game.getAssetManager().load("inside.png", Texture.class);
-//        this.game.getAssetManager().finishLoading();
-//    }
-
     public void render(float delta) {
-        LevelController lvlContrl = LevelController.getInstance();
+        LevelController lvlContrl = LevelController.getInstance(currLevel);
 
         stage.setDebugAll(true);
 
@@ -99,6 +92,11 @@ public class LevelView extends GameView {
             lvlContrl.delete();
             game.setScreen(new GameOverView(game,this));
         }
+
+        float accelX = Gdx.input.getAccelerometerX();
+        float accelY = Gdx.input.getAccelerometerY();
+
+        lvlContrl.setAccelaration(accelX,accelY);
 
     }
 
@@ -137,6 +135,11 @@ public class LevelView extends GameView {
 
     public LevelType.levelType getCurrLevel() {
         return currLevel;
+    }
+
+    protected void backToMenu(){
+        LevelController.getInstance(currLevel).delete();
+        game.setScreen(new MenuView(game));
     }
 
 

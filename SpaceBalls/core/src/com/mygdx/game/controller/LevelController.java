@@ -29,7 +29,7 @@ import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
  * Created by Tiago Neves on 26/05/2017.
  */
 
-public class LevelController {
+public class LevelController extends Controller{
     private float accumulator;
 
     private float seconds;
@@ -59,15 +59,19 @@ public class LevelController {
 
     float sensitivity = 60;
 
-    float offsetX = 0;
-    float offsetY = 0;
-
     static LevelType.levelType currLevel = LevelType.levelType.ONE;
 
     private boolean win;
 
-    public static LevelController getInstance() {
-        if (instance == null){
+    private float accelY = 0;
+
+    private float accelX = 0;
+
+    public static LevelController getInstance(LevelType.levelType newLevel) {
+        if (instance == null)
+            instance = new LevelController();
+        if(currLevel!=newLevel){
+            currLevel = newLevel;
             instance = new LevelController();
         }
         return instance;
@@ -75,6 +79,8 @@ public class LevelController {
 
     LevelController() {
         world = new World(new Vector2(0, 0), false);
+
+
 
         Vector<EntityBody> entityTemp = LevelsBodies.getInstance().getEntitiesBodies(currLevel,world);
         Vector<StaticBody> staticTemp = LevelsBodies.getInstance().getStaticBodies(currLevel,world);
@@ -96,6 +102,7 @@ public class LevelController {
         for (int i = 1; i < staticTemp.size(); i++) {
             obstaclesBodies.addElement(staticTemp.elementAt(i));
         }
+
 
 
         world.setContactListener(new ContactListener() {
@@ -141,9 +148,6 @@ public class LevelController {
 
         }
 
-
-        float accelX = Gdx.input.getAccelerometerX();
-        float accelY = Gdx.input.getAccelerometerY();
 
         Vector2 vector = new Vector2((accelY *sensitivity)/35 - offsetY, (-accelX *sensitivity)/35 + offsetX);
 
@@ -196,10 +200,6 @@ public class LevelController {
         LevelModel.getInstance(currLevel).delete();
     }
 
-    public float getSeconds() {
-        return seconds;
-    }
-
     public boolean getWin() {
         return win;
     }
@@ -212,11 +212,8 @@ public class LevelController {
         this.joystick = joystick;
     }
 
-    public void setOffsetX(float offsetX) {
-        this.offsetX = offsetX;
-    }
-
-    public void setOffsetY(float offsetY) {
-        this.offsetY = offsetY;
+    public void setAccelaration(float accelarationX,float accelarationY){
+        this.accelX = accelarationX;
+        this.accelY = accelarationY;
     }
 }

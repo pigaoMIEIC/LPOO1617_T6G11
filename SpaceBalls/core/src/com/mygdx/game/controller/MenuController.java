@@ -18,7 +18,7 @@ import java.util.Random;
  * Created by Tiago Neves on 17/05/2017.
  */
 
-public class MenuController{
+public class MenuController extends Controller{
 
     private float accumulator;
 
@@ -34,20 +34,11 @@ public class MenuController{
 
     BallBody[] staticBodys = new BallBody[GameView.SRANDNR];
 
-    float offsetY = 0;
-    float offsetX = 0;
-
     float sensitivity = 0;
 
+    float accelX;
+    float accelY;
 
-    //    Vector2[] positions = {
-//            new Vector2(0,0),
-//            new Vector2(VIEWPORT_WIDTH,0),
-//            new Vector2(0,VIEWPORT_WIDTH * ratio),
-//            new Vector2(VIEWPORT_WIDTH,VIEWPORT_WIDTH * ratio),
-//            new Vector2(VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * ratio)/2),
-//            new Vector2(VIEWPORT_WIDTH-VIEWPORT_WIDTH/4,(VIEWPORT_WIDTH * ratio)/2)
-//    };
     MenuController() {
 
         world = new World(new Vector2(0, 0), false);
@@ -82,8 +73,6 @@ public class MenuController{
             accumulator -= 1/60f;
         }
 
-        float accelX = Gdx.input.getAccelerometerX();
-        float accelY = Gdx.input.getAccelerometerY();
         Vector2 vector = new Vector2(accelY * sensitivity * 0.01f - offsetY*0.01f, -accelX * sensitivity * 0.01f + offsetX*0.01f);
 
         for(int i=0; i < rballBodys.length;i++){
@@ -99,21 +88,16 @@ public class MenuController{
         }
     }
 
+    public void setAccelX(float accelX) {
+        this.accelX = accelX;
+    }
+
+    public void setAccelY(float accelY) {
+        this.accelY = accelY;
+    }
+
     public World getWorld() {
         return world;
-    }
-
-    public void accelerate() {
-        //System.out.println("manel");
-        //ballBody.applyForceToCenter(0.1f,0.1f, true);
-    }
-
-    public void setOffsetY(float offsetY) {
-        this.offsetY = offsetY;
-    }
-
-    public void setOffsetX(float offsetX) {
-        this.offsetX = offsetX;
     }
 
     public void setSensitivity(float sensitivity) {

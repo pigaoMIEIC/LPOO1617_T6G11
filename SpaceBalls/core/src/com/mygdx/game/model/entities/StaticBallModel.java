@@ -11,8 +11,6 @@ public class StaticBallModel extends EntityModel{
     }
 
     private float radius;
-    private boolean dynamic;
-    private boolean drag;
     private boolean highRebound;
 
     public StaticBallModel(float x, float y, float radius, boolean highRebound) {

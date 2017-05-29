@@ -19,7 +19,7 @@ import static com.mygdx.game.view.MenuView.VIEWPORT_WIDTH;
  * Created by Tiago Neves on 17/05/2017.
  */
 
-public class OptionsController {
+public class OptionsController extends Controller{
     private float accumulator;
 
     private float seconds;
@@ -50,11 +50,13 @@ public class OptionsController {
     //readings
     private Float readingY = new Float(0);
     private Float readingX = new Float(0);
-    private Float offsetY = 0f;
-    private Float offsetX = 0f;
 
 
-    OptionsController() {
+    float accelY = 0;
+    float accelX = 0;
+
+
+    private OptionsController() {
 
         world = new World(new Vector2(0, 0), false);
 
@@ -92,10 +94,6 @@ public class OptionsController {
             accumulator -= 1/60f;
 
         }
-
-
-        float accelX = Gdx.input.getAccelerometerX();
-        float accelY = Gdx.input.getAccelerometerY();
 
         X_values.remove(0);
         X_values.add(accelX*delta);
@@ -138,10 +136,6 @@ public class OptionsController {
         OptionsModel.getInstance().delete();
     }
 
-    public float getSeconds() {
-        return seconds;
-    }
-
     public void setSensitivity(float sensitivity) {
         this.sensitivity = sensitivity;
     }
@@ -163,5 +157,13 @@ public class OptionsController {
     public void setOffsetXY(float[] offsetXY) {
         this.offsetX = offsetXY[0];
         this.offsetY = offsetXY[1];
+    }
+
+    public void setAccelY(float accelY) {
+        this.accelY = accelY;
+    }
+
+    public void setAccelX(float accelX) {
+        this.accelX = accelX;
     }
 }
