@@ -3,6 +3,7 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -91,43 +92,45 @@ public class MenuView extends GameView {
         float buttonYSize =height/10;
         float spacing = (height - buttonYSize*3)/6;
 
-        Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("play.png")));
+        AssetManager assetManager = game.getAssetManager();
+
+        Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("play.png")));
         startButton = new ImageButton(buttonDrawable);
         startButton.setSize(width/5,buttonYSize*2f);
         startButton.setPosition(width/2 - width/10,height/2+buttonYSize);
         stage.addActor(startButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Exit.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("Exit.png")));
         exitButton = new ImageButton(buttonDrawable);
         exitButton.setSize(width/10,buttonYSize);
         exitButton.setPosition(width/2 - width/20,spacing);
         stage.addActor(exitButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("title.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("title.png")));
         title = new ImageButton(buttonDrawable);
         title.setSize(width/2,buttonYSize*1.1f);
         title.setPosition(width/2 - width/4,height - buttonYSize*1.5f);
         stage.addActor(title);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("howtoplay.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("howtoplay.png")));
         howtoplay = new ImageButton(buttonDrawable);
         howtoplay.setSize(width/3,buttonYSize);
         howtoplay.setPosition(width/3,spacing*4 - buttonYSize);
         stage.addActor(howtoplay);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("options.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("options.png")));
         options = new ImageButton(buttonDrawable);
         options.setSize(width/10,height/10);
         options.setPosition(width - width/10,height-height/9);
         stage.addActor(options);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("Survival.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("Survival.png")));
         sandbox = new ImageButton(buttonDrawable);
         sandbox.setSize(width/5,buttonYSize);
         sandbox.setPosition(width/2 - width/10,spacing*5 - buttonYSize);
         stage.addActor(sandbox);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("credits.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("credits.png")));
         credits = new ImageButton(buttonDrawable);
         credits.setSize(width/6,buttonYSize);
         credits.setPosition(width/2 - width/12,spacing*3 - buttonYSize);
