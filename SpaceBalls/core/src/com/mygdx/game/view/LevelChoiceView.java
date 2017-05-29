@@ -3,6 +3,7 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,14 +33,6 @@ import java.util.Vector;
 
 public class LevelChoiceView extends GameView {
 
-
-    /**
-     * The camera used to show the viewport.
-     */
-    private final OrthographicCamera camera;
-
-    private final SpaceBallsGame game;
-
     private Button tmpButton;
 
     private Vector<Button> levels = new Vector<Button>();
@@ -61,59 +54,56 @@ public class LevelChoiceView extends GameView {
                 "5.png"
         };
         loadAssets(array);
-
         createButtons();
-
-        camera = createCamera();
-        Gdx.input.setCatchBackKey(true);
     }
 
-    private void loadAssets() {
-        this.game.getAssetManager().load("back.png" , Texture.class);
-        this.game.getAssetManager().load("1.png", Texture.class);
-        this.game.getAssetManager().load("2.png", Texture.class);
-        this.game.getAssetManager().load("3.png", Texture.class);
-        this.game.getAssetManager().load("4.png", Texture.class);
-        this.game.getAssetManager().load("5.png", Texture.class);
-        this.game.getAssetManager().finishLoading();
-    }
+//    private void loadAssets() {
+//        this.game.getAssetManager().load("back.png" , Texture.class);
+//        this.game.getAssetManager().load("1.png", Texture.class);
+//        this.game.getAssetManager().load("2.png", Texture.class);
+//        this.game.getAssetManager().load("3.png", Texture.class);
+//        this.game.getAssetManager().load("4.png", Texture.class);
+//        this.game.getAssetManager().load("5.png", Texture.class);
+//        this.game.getAssetManager().finishLoading();
+//    }
 
     public void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
         float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
         float buttonSize =Math.min((height/4)-(height/20),(width-(width/4)-(width/4))/5);
+        AssetManager assetManager = game.getAssetManager();
 
         float horzSpacing = (width-(width/4)-(5*buttonSize))/4f;
 
-        Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("1.png")));
+        Drawable buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("1.png")));
         tmpButton = new ImageButton(buttonDrawable);
         tmpButton.setSize(buttonSize,buttonSize);
         tmpButton.setPosition(width/8,(height/2)-(buttonSize/2));
         levels.addElement(tmpButton);
         stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("2.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("2.png")));
         tmpButton = new Button(buttonDrawable);
         tmpButton.setSize(buttonSize,buttonSize);
         tmpButton.setPosition(width/8+(buttonSize+horzSpacing),(height/2)-(buttonSize/2));
         levels.addElement(tmpButton);
         stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("3.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("3.png")));
         tmpButton = new Button(buttonDrawable);
         tmpButton.setSize(buttonSize,buttonSize);
         tmpButton.setPosition(width/8+(buttonSize+horzSpacing)*2,(height/2)-(buttonSize/2));
         levels.addElement(tmpButton);
         stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("4.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("4.png")));
         tmpButton = new Button(buttonDrawable);
         tmpButton.setSize(buttonSize,buttonSize);
         tmpButton.setPosition(width/8+(buttonSize+horzSpacing)*3,(height/2)-(buttonSize/2));
         levels.addElement(tmpButton);
         stage.addActor(tmpButton);
 
-        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)game.getAssetManager().get("5.png")));
+        buttonDrawable = new TextureRegionDrawable(new TextureRegion((Texture)assetManager.get("5.png")));
         tmpButton = new Button(buttonDrawable);
         tmpButton.setSize(buttonSize,buttonSize);
         tmpButton.setPosition(width/8+(buttonSize+horzSpacing)*4,(height/2)-(buttonSize/2));
@@ -128,30 +118,12 @@ public class LevelChoiceView extends GameView {
     @Override
     public void render(float delta) {
         stage.setDebugAll(true);
-        handleInputs(delta);
+
         MenuController.getInstance().update(delta);
 
-        camera.update();
+        super.render(delta);
 
-        game.getBatch().setProjectionMatrix(camera.combined);
-
-        Gdx.gl.glClearColor( 0f, 0f,0f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
-        game.getBatch().begin();
-
-        drawEntities();
-        game.getBatch().end();
-
-        if (DEBUG_PHYSICS) {
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-            debugRenderer.render(MenuController.getInstance().getWorld(), debugCamera);
-        }
-
-        stage.act();
-        stage.draw();
-
+        debugPhysics(MenuController.getInstance().getWorld());
     }
 
     @Override

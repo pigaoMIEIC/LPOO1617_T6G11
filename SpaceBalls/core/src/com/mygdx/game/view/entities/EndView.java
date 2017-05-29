@@ -15,24 +15,23 @@ import static com.mygdx.game.view.entities.EntityView.PIXEL_TO_METER;
  */
 
 public class EndView extends EntityView{
-    public EndView(SpaceBallsGame game) {
-        super(game);
+    public EndView(SpaceBallsGame game,LevelType.levelType currLevel) {
+        sprite = createSprite(game,currLevel);
     }
 
-    @Override
-    public Sprite createSprite(SpaceBallsGame game) {
-        Texture texture = game.getAssetManager().get("end.png");
-        float radius = LevelModel.getInstance(LevelType.levelType.ONE).getEndBall().getRadius();
 
-        float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
-        Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
-        sprite.setScale(factor);
+    public Sprite createSprite(SpaceBallsGame game, LevelType.levelType currLevel) {
+//        Texture texture = game.getAssetManager().get("end.png");
+//        float radius = LevelModel.getInstance(LevelType.levelType.ONE).getEndBall().getRadius();
+//
+//        float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
+//        Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
+//        sprite.setScale(factor);
+//
+//        return sprite;
 
-        return sprite;
-    }
+        float radius = LevelModel.getInstance(currLevel).getEndBall().getRadius();
 
-    @Override
-    public void update(EntityModel model) {
-        super.update(model);
+        return super.createSprite(game,"ball.png",radius);
     }
 }

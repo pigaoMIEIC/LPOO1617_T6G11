@@ -1,8 +1,10 @@
 package com.mygdx.game.view.entities;
 
+import com.mygdx.game.LevelType;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EntityModel;
+import com.mygdx.game.view.LevelView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +23,7 @@ public class ViewFactory {
     private static Map<EntityModel.ModelType, EntityView> cache =
             new HashMap<EntityModel.ModelType, EntityView>();
 
-    public static EntityView makeView(SpaceBallsGame game, EntityModel model) {
+    public static EntityView makeView(SpaceBallsGame game, EntityModel model, LevelType.levelType currLevel) {
 
         if (!cache.containsKey(model.getType())) {
             if (model.getType() == BALL)
@@ -31,7 +33,7 @@ public class ViewFactory {
             if (model.getType() == ENEMY)
                 cache.put(model.getType(), new EnemyView(game));
             if(model.getType() == END)
-                cache.put(model.getType(), new EndView(game));
+                cache.put(model.getType(), new EndView(game,currLevel));
         }
         return cache.get(model.getType());
     }

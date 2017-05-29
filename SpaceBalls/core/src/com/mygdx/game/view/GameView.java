@@ -80,6 +80,7 @@ public abstract class GameView extends ScreenAdapter{
         stage = new Stage();
         camera = createCamera();
         this.game = game;
+        Gdx.input.setCatchBackKey(true);
     }
 
     public void render(float delta) {
@@ -118,7 +119,7 @@ public abstract class GameView extends ScreenAdapter{
     }
 
     protected void drawView(EntityModel model){
-        EntityView view = ViewFactory.makeView(game, model);
+        EntityView view = ViewFactory.makeView(game, model, null);
         view.update(model);
         view.draw(game.getBatch());
     }

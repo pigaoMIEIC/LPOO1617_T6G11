@@ -13,6 +13,8 @@ import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.EndBallModel;
 import com.mygdx.game.model.entities.EnemyModel;
 import com.mygdx.game.model.entities.StaticModel;
+import com.mygdx.game.view.entities.EntityView;
+import com.mygdx.game.view.entities.ViewFactory;
 
 /**
  * Created by Tiago Neves on 26/05/2017.
@@ -108,7 +110,9 @@ public class LevelView extends GameView {
         drawView(ballModel);
 
         EndBallModel endBall = LevelModel.getInstance(currLevel).getEndBall();
-        drawView(endBall);
+        EntityView view = ViewFactory.makeView(game, endBall, currLevel);
+        view.update(endBall);
+        view.draw(game.getBatch());
 
 
         for (int i = 0; i < LevelModel.getInstance(currLevel).getEnemySize(); i++) {

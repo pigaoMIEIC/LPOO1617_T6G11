@@ -174,17 +174,12 @@ public class OptionsView extends GameView{
 
     @Override
     void drawEntities() {
-        EnemyModel callibrateModel= OptionsModel.getInstance().getCallibrateModel();
-        EntityView view1 = ViewFactory.makeView(game, callibrateModel);
-        view1.update(callibrateModel);
-        view1.draw(game.getBatch());
+        OptionsModel optModel = OptionsModel.getInstance();
+        EnemyModel callibrateModel= optModel.getCallibrateModel();
+        drawView(callibrateModel);
 
-        BallModel ballModel = OptionsModel.getInstance().getPlayerModel();
-        EntityView view = ViewFactory.makeView(game, ballModel);
-        view.update(ballModel);
-        view.draw(game.getBatch());
-
-
+        BallModel ballModel = optModel.getPlayerModel();
+        drawView(ballModel);
     }
 
     private void createSlider(){

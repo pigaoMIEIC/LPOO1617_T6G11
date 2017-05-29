@@ -13,19 +13,14 @@ import com.mygdx.game.model.entities.EntityModel;
 
 public class EnemyView extends  EntityView{
     public EnemyView(SpaceBallsGame game) {
-        super(game);
+        sprite = createSprite(game);
     }
 
-    @Override
+
     public Sprite createSprite(SpaceBallsGame game) {
-        Texture texture = game.getAssetManager().get("enemy.png");
         float radius = SandBoxModel.getInstance().getEnemyModel(0).getRadius();
 
-        float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
-        Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
-        sprite.setScale(factor);
-
-        return sprite;
+        return super.createSprite(game,"enemy.png",radius);
     }
 
     @Override

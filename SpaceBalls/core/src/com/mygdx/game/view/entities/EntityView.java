@@ -1,9 +1,11 @@
 package com.mygdx.game.view.entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.SpaceBallsGame;
+import com.mygdx.game.model.SandBoxModel;
 import com.mygdx.game.model.entities.EntityModel;
 
 /**
@@ -19,15 +21,15 @@ public abstract class EntityView extends Stage{
      */
     Sprite sprite;
 
-    /**
-     * Creates a view belonging to a game.
-     *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
-     */
-    EntityView(SpaceBallsGame game) {
-        sprite = createSprite(game);
-    }
+//    /**
+//     * Creates a view belonging to a game.
+//     *
+//     * @param game the game this view belongs to. Needed to access the
+//     *             asset manager to get textures.
+//     */
+//    EntityView(SpaceBallsGame game) {
+//        sprite = createSprite(game);
+//    }
 
     /**
      * Draws the sprite from this view using a sprite batch.
@@ -47,7 +49,15 @@ public abstract class EntityView extends Stage{
      *             asset manager to get textures.
      * @return the sprite representing this view.
      */
-    public abstract Sprite createSprite(SpaceBallsGame game);
+    public Sprite createSprite(SpaceBallsGame game,String name,float radius){
+        Texture texture = game.getAssetManager().get(name);
+
+        float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
+        Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
+        sprite.setScale(factor);
+
+        return sprite;
+    }
 
     /**
      * Updates this view based on a certain model.

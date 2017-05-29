@@ -14,23 +14,21 @@ import static com.mygdx.game.view.MenuView.PIXEL_TO_METER;
 
 public class StaticBallView extends  EntityView{
     public StaticBallView(SpaceBallsGame game) {
-        super(game);
+        sprite = createSprite(game);
     }
 
-    @Override
+
     public Sprite createSprite(SpaceBallsGame game) {
-        Texture texture = game.getAssetManager().get("enemy.png");
+//        Texture texture = game.getAssetManager().get("enemy.png");
+//        float radius = MenuModel.getInstance().getStaticBallModel(1).getRadius();
+//
+//        float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
+//        Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
+//        sprite.setScale(factor);
+//
+//        return sprite;
         float radius = MenuModel.getInstance().getStaticBallModel(1).getRadius();
 
-        float factor = (radius*2/PIXEL_TO_METER)/texture.getWidth();
-        Sprite sprite =  new Sprite(texture, texture.getWidth(), texture.getHeight());
-        sprite.setScale(factor);
-
-        return sprite;
-    }
-
-    @Override
-    public void update(EntityModel model) {
-        super.update(model);
+        return super.createSprite(game,"enemy.png",radius);
     }
 }
