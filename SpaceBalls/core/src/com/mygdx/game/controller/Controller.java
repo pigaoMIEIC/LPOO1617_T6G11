@@ -8,6 +8,11 @@ public abstract class Controller {
     float offsetX = 0;
     float offsetY = 0;
 
+    /**
+     * @param offsetx
+     * @param offsety
+     * Sets the accelerometer offset
+     */
     public void setOffset(float offsetx,float offsety){
         offsetX = offsetx;
         offsetY = offsety;

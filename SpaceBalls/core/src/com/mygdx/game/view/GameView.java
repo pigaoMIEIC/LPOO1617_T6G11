@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.mygdx.game.LevelType;
 import com.mygdx.game.Preferences;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
@@ -26,6 +27,8 @@ import com.mygdx.game.view.entities.ViewFactory;
  */
 
 public abstract class GameView extends ScreenAdapter{
+
+
 
     /**
      * Used to debug the position of the physics fixtures
@@ -92,6 +95,7 @@ public abstract class GameView extends ScreenAdapter{
         this.game = game;
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(stage);
+
     }
 
     /**

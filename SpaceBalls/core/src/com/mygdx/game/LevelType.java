@@ -6,6 +6,7 @@ package com.mygdx.game;
 
 
 public interface LevelType {
+    float a = 0;
     /**
      * Enum type to determine the available levels in the game
      */

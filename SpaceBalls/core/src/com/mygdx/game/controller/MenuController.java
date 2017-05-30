@@ -27,7 +27,6 @@ public class MenuController extends Controller{
     private final World world;
     private Random forceRand = new Random();
 
-//    private final BallBody ballBody;
     private final WallsBody wallsBody;
 
     BallBody[] rballBodys = new BallBody[GameView.RANDNR];
@@ -39,6 +38,9 @@ public class MenuController extends Controller{
     float accelX;
     float accelY;
 
+    /**
+     * MenuController constructor
+     */
     MenuController() {
 
         world = new World(new Vector2(0, 0), false);
@@ -59,12 +61,19 @@ public class MenuController extends Controller{
 
     }
 
+    /**
+     * @return MenuController instance
+     */
     public static MenuController getInstance() {
         if (instance == null)
             instance = new MenuController();
         return instance;
     }
 
+    /**
+     * @param delta time passed
+     * updates the physics engine and ball positions
+     */
     public void update(float delta) {
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -88,18 +97,33 @@ public class MenuController extends Controller{
         }
     }
 
+    /**
+     * @param accelX
+     * Set acceleration in X
+     */
     public void setAccelX(float accelX) {
         this.accelX = accelX;
     }
 
+    /**
+     * @param accelY
+     * Set acceleration in Y
+     */
     public void setAccelY(float accelY) {
         this.accelY = accelY;
     }
 
+    /**
+     * @return OptionsController physics world
+     */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * @param sensitivity
+     * Sets the controller sensitivity
+     */
     public void setSensitivity(float sensitivity) {
         this.sensitivity = sensitivity;
     }

@@ -56,6 +56,8 @@ public class LevelView extends GameView {
         }
 
         lvlContrl.setOffset(game.getPreferences().readOffsetX(),game.getPreferences().readOffsetY());
+
+
     }
 
     /**
