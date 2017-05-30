@@ -30,7 +30,9 @@ public class SandBoxModel{
 
 
 
-
+    /**
+     * SandBoxModel constructor
+     */
     public SandBoxModel() {
         nBalls = 1;
         this.ballModels.removeAllElements();
@@ -42,6 +44,9 @@ public class SandBoxModel{
         this.staticModel = new StaticModel(0,0);
     }
 
+    /**
+     * @return SandBoxModel instance
+     */
     public static SandBoxModel getInstance() {
         if (instance == null)
             instance = new SandBoxModel();
@@ -56,20 +61,32 @@ public class SandBoxModel{
         return ballModels.elementAt(i);
     }
 
-
+    /**
+     * @return Ball Model of the player ball model
+     */
     public BallModel getPlayerModel() {
         return playerModel;
     }
 
+    /**
+     * @return Number of enemy balls in game
+     */
     public int getnBalls() {
         return nBalls;
     }
 
 
+    /**
+     * @return StaticModel of the game's wall
+     */
     public StaticModel getStaticModel() {
         return staticModel;
     }
 
+
+    /**
+     * Method to start the next level
+     */
     public void nextLevel(){
         float radius = ballModels.elementAt(0).getRadius();
 
@@ -84,6 +101,9 @@ public class SandBoxModel{
         SandBoxController.getInstance().nextLevel(nBalls);
     }
 
+    /**
+     * Delete the instance
+     */
     public void delete(){
         instance=null;
     }

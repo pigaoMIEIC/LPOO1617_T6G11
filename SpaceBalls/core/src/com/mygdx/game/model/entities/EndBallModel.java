@@ -17,6 +17,10 @@ public class EndBallModel extends EntityModel {
     boolean drag;
     boolean highRebound;
 
+
+    /**
+     * EndBallModel constructor
+     */
     public EndBallModel(float x, float y,float radius) {
         super(x, y);
 
@@ -26,6 +30,9 @@ public class EndBallModel extends EntityModel {
         this.highRebound = true;
     }
 
+    /**
+     * @return ball radius
+     */
     public float getRadius() {
         return radius;
     }

@@ -17,6 +17,10 @@ public class StaticModel extends EntityModel {
     boolean drag;
     boolean highRebound;
 
+
+    /**
+     * StaticModel constructor
+     */
     public StaticModel(float x, float y) {
         super(x, y);
 

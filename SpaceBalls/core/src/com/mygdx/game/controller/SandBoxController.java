@@ -55,6 +55,9 @@ public class SandBoxController {
     float radius;
 
 
+    /**
+     * SandBoxController constructor
+     */
     SandBoxController() {
             rballBodys.removeAllElements();
             SandBoxModel sandBoxModel = SandBoxModel.getInstance();
@@ -105,13 +108,19 @@ public class SandBoxController {
 
 }
 
+    /**
+     * @return SandBoxController instance
+     */
     public static SandBoxController getInstance() {
         if (instance == null){
             instance = new SandBoxController();
         }
         return instance;
     }
-
+    /**
+     * @param delta time passed
+     * updates the physics engine and ball positions
+     */
     public void update(float delta) {
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -128,9 +137,6 @@ public class SandBoxController {
             SandBoxModel.getInstance().nextLevel();
             seconds = 0;
         }
-
-
-
 
 
         for(int i=0; i < rballBodys.size();i++){
@@ -171,12 +177,17 @@ public class SandBoxController {
         }
     }
 
-
-
+    /**
+     * @return controller's physics world
+     */
     public World getWorld() {
         return world;
     }
 
+
+    /**
+     * Method to start the next level
+     */
     public void nextLevel(int nBall){
 
         Random r = new Random();
@@ -192,33 +203,61 @@ public class SandBoxController {
         playerBody.setDrag(0.6f);
     }
 
+
+    /**
+     * @return true if the ball has collided with enemy balls,false otherwise
+     */
     public boolean isColliding() {
         return Colliding;
     }
 
+    /**
+     * @param colliding
+     * Sets the colliding field
+     */
     public void setColliding(boolean colliding) {
         Colliding = colliding;
     }
 
+
+    /**
+     * Delete the instance
+     */
     public void delete(){
         this.instance = null;
         SandBoxModel.getInstance().delete();
     }
 
+    /**
+     * @return seconds spent on the current level
+     */
     public float getSeconds() {
         return seconds;
     }
 
+    /**
+     * @param sensitivity
+     * Sets the controller sensitivity
+     */
     public void setSensitivity(float sensitivity) {
         this.sensitivity = sensitivity;
     }
 
+    /**
+     * @param joystick true if the input is by joystick
+     */
     public void setJoystick(boolean joystick) {
         this.joystick = joystick;
     }
 
+    /**
+     * @param offsetX
+     * @param offsetY
+     * Sets the accelerometer offset
+     */
     public void setOffset(float offsetX,float offsetY) {
         this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
 }

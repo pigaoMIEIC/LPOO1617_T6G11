@@ -22,6 +22,9 @@ public class OptionsModel{
     private int nBalls = 1;
 
 
+    /**
+     * Options Model constructor
+     */
     public OptionsModel() {
         this.callibrateModel = new EnemyModel(3f, 2f, 0.08f,false);
 
@@ -29,7 +32,9 @@ public class OptionsModel{
 
         this.staticModel = new StaticModel(0,0);
     }
-
+    /**
+     * @return OptionsModel instance
+     */
     public static OptionsModel getInstance() {
         if (instance == null)
             instance = new OptionsModel();
@@ -37,21 +42,33 @@ public class OptionsModel{
     }
 
 
+    /**
+     * @return EnemyModel of the calibrate ball
+     */
     public EnemyModel getCallibrateModel() {
         return callibrateModel;
     }
 
 
+    /**
+     * @return Ball Model of the player ball model
+     */
     public BallModel getPlayerModel() {
         return playerModel;
     }
 
 
+
+    /**
+     * @return StaticModel of the game's wall
+     */
     public StaticModel getStaticModel() {
         return staticModel;
     }
 
-
+    /**
+     * Delete the instance
+     */
     public void delete(){
         instance=null;
     }

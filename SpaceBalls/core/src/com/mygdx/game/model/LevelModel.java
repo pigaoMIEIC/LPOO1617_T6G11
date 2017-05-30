@@ -30,6 +30,9 @@ public class LevelModel {
     private Vector<StaticModel> obstaclesModels =  new Vector<StaticModel>();
 
 
+    /**
+     * @return  instance of MevelModel
+     */
     public static LevelModel getInstance(LevelType.levelType newLevel) {
         if (instance == null)
             instance = new LevelModel();
@@ -40,6 +43,9 @@ public class LevelModel {
         return instance;
     }
 
+    /**
+     * LevelModel constructor
+     */
     private LevelModel() {
         Vector<EntityModel> tempEntities = LevelsModels.getInstance().getEntitiesModels(currLevel);
         Vector<StaticModel> tempStatics = LevelsModels.getInstance().getStaticModels(currLevel);
@@ -60,32 +66,51 @@ public class LevelModel {
 
     /**
      * @param i index in the vector of enemies
-     * @return
+     * @return EnemyModel at i position
      */
     public EnemyModel getEnemyModel(int i) {
         return enemyModels.elementAt(i);
     }
 
+    /**
+     * @return BallModel of the players ball
+     */
     public BallModel getPlayerModel() {
         return playerModel;
     }
 
+    /**
+     * @return EndBallModel
+     */
     public EndBallModel getEndBall() {
         return endBall;
     }
 
+    /**
+     * @param  i vector position
+     * @return StaticModel of the obstacle at i position
+     */
     public StaticModel getStaticModel(int i) {
         return obstaclesModels.elementAt(i);
     }
 
+    /**
+     * @return number of enemy balls
+     */
     public int getEnemySize() {
         return enemyModels.size();
     }
 
+    /**
+     * @return number of obstacles
+     */
     public int getObstaclesSize() {
         return obstaclesModels.size();
     }
 
+    /**
+     * Delete the instance
+     */
     public void delete(){
         instance=null;
     }

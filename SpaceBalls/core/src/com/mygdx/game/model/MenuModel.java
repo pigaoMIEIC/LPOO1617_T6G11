@@ -32,6 +32,9 @@ public class MenuModel{
             new Vector2(VIEWPORT_WIDTH,(VIEWPORT_WIDTH * RATIO)/2)
     };
 
+    /**
+     *  MenuModel constructor
+     */
     private MenuModel() {
         for(int i = 0; i < ballModels.length;i++) {
             this.ballModels[i] = new BallModel(0.08f, 0.08f, 0.08f,true);
@@ -44,6 +47,9 @@ public class MenuModel{
         this.staticModel = new StaticModel(0,0);
     }
 
+    /**
+     * @return MenuModel instance
+     */
     public static MenuModel getInstance() {
         if (instance == null)
             instance = new MenuModel();
@@ -52,16 +58,23 @@ public class MenuModel{
 
     /**
      * @param i index in the vector of balls
-     * @return
+     * @return BallModel in i position
      */
     public BallModel getBallModel(int i) {
         return ballModels[i];
     }
 
+    /**
+     * @param i index in the vector of static balls
+     * @return StaticBallModel in i position
+     */
     public StaticBallModel getStaticBallModel(int i) {
         return staticBallModel[i];
     }
 
+    /**
+     * @return StaticModel of the game's wall
+     */
     public StaticModel getStaticModel() {
         return staticModel;
     }

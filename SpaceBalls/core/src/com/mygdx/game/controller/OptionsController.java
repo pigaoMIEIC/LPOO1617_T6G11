@@ -55,7 +55,9 @@ public class OptionsController extends Controller{
     float accelY = 0;
     float accelX = 0;
 
-
+    /**
+     * OptionsController constructor
+     */
     private OptionsController() {
 
         world = new World(new Vector2(0, 0), false);
@@ -77,6 +79,9 @@ public class OptionsController extends Controller{
 
     }
 
+    /**
+     * @return OptionsController instance
+     */
     public static OptionsController getInstance() {
         if (instance == null)
             instance = new OptionsController();
@@ -84,7 +89,10 @@ public class OptionsController extends Controller{
     }
 
 
-
+    /**
+     * @param delta time passed
+     * updates the physics engine and ball positions
+     */
     public void update(float delta) {
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -126,20 +134,34 @@ public class OptionsController extends Controller{
 
 
 
+    /**
+     * @return OptionsController physics world
+     */
     public World getWorld() {
         return world;
     }
 
 
+    /**
+     * @return Delete the instance
+     */
     public void delete(){
         this.instance = null;
         OptionsModel.getInstance().delete();
     }
 
+    /**
+     * @param sensitivity
+     * Sets the controller sensitivity
+     */
     public void setSensitivity(float sensitivity) {
         this.sensitivity = sensitivity;
     }
 
+    /**
+     * @param arr array list of Floats
+     * @return average of the array
+     */
     public float average(ArrayList<Float> arr){
         Float sum = new Float(0);
         for(Float f : arr)
@@ -148,21 +170,34 @@ public class OptionsController extends Controller{
     }
 
 
+    /**
+     * @return Current accelerometer offset
+     */
     public float[] getReadingXY() {
         float[] temp= {readingX.floatValue(),readingY.floatValue()};
         return temp;
     }
 
 
+    /**
+     * Set accelerometer offset
+     */
     public void setOffsetXY(float[] offsetXY) {
         this.offsetX = offsetXY[0];
         this.offsetY = offsetXY[1];
     }
-
+    /**
+     * @param accelY
+     * Set acceleration in Y
+     */
     public void setAccelY(float accelY) {
         this.accelY = accelY;
     }
 
+    /**
+     * @param accelX
+     * Set acceleration in X
+     */
     public void setAccelX(float accelX) {
         this.accelX = accelX;
     }

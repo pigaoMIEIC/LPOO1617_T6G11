@@ -19,6 +19,10 @@ public abstract class EntityModel {
      */
     private float y;
 
+
+    /**
+     * EntityModel constructor
+     */
     EntityModel(float x, float y) {
         this.x = x;
         this.y = y;

@@ -15,16 +15,27 @@ public class BallModel extends EntityModel {
     private boolean drag;
     private boolean highRebound;
 
+
+    /**
+     * BallModel constructor
+     */
     public BallModel(float x, float y, float radius, boolean highRebound) {
         super(x, y);
         this.radius = radius;
         this.highRebound = highRebound;
     }
 
+
+    /**
+     * @return ball radius
+     */
     public float getRadius() {
         return radius;
     }
 
+    /**
+     * @return true if the ball has high Rebound,false otherwise
+     */
     public boolean hasHighRebound() {
         return highRebound;
     }
