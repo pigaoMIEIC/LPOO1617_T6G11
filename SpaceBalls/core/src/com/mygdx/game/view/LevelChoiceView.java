@@ -2,28 +2,19 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LevelType;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.model.MenuModel;
 import com.mygdx.game.model.entities.BallModel;
 import com.mygdx.game.model.entities.StaticBallModel;
-import com.mygdx.game.view.entities.EntityView;
-import com.mygdx.game.view.entities.ViewFactory;
 
 import java.util.Vector;
 
@@ -31,12 +22,11 @@ import java.util.Vector;
  * Created by Tiago Neves on 23/05/2017.
  */
 
-public class LevelChoiceView extends GameView {
+class LevelChoiceView extends GameView {
 
     private Button tmpButton;
 
-    private Vector<Button> levels = new Vector<Button>();
-    private ImageButton returni;
+    private Vector<Button> levels = new Vector<>();
 
 
     /**
@@ -44,7 +34,7 @@ public class LevelChoiceView extends GameView {
      *
      * @param game The game which will be associated with the screenAdapter
      */
-    public LevelChoiceView(SpaceBallsGame game) {
+    LevelChoiceView(SpaceBallsGame game) {
         super(game);
 
         String[] array = {"back.png",
@@ -61,7 +51,7 @@ public class LevelChoiceView extends GameView {
     /**
      * Method to create the buttons for the menu
      */
-    public void createButtons(){
+    private void createButtons(){
         float width = VIEWPORT_WIDTH/PIXEL_TO_METER;
         float height = VIEWPORT_WIDTH*RATIO/PIXEL_TO_METER;
         float buttonSize =Math.min((height/4)-(height/20),(width-(width/4)-(width/4))/5);
@@ -116,7 +106,7 @@ public class LevelChoiceView extends GameView {
     @Override
     public void render(float delta) {
         MenuController controler = MenuController.getInstance();
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
         float x = Gdx.input.getAccelerometerX();
         float y = Gdx.input.getAccelerometerY();
         controler.setAccelX(x);

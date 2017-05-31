@@ -14,10 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.mygdx.game.LevelType;
 import com.mygdx.game.Preferences;
 import com.mygdx.game.SpaceBallsGame;
-import com.mygdx.game.controller.LevelController;
 import com.mygdx.game.model.entities.EntityModel;
 import com.mygdx.game.view.entities.EntityView;
 import com.mygdx.game.view.entities.ViewFactory;
@@ -33,7 +31,7 @@ public abstract class GameView extends ScreenAdapter{
     /**
      * Used to debug the position of the physics fixtures
      */
-    protected static final boolean DEBUG_PHYSICS = true;
+    private static final boolean DEBUG_PHYSICS = false;
 
     /**
      * How much meters does a pixel represent.
@@ -58,19 +56,18 @@ public abstract class GameView extends ScreenAdapter{
     /**
      * A renderer used to debug the physical fixtures.
      */
-    protected Box2DDebugRenderer debugRenderer;
+    private Box2DDebugRenderer debugRenderer;
 
     /**
      * The transformation matrix used to transform meters into
      * pixels in order to show fixtures in their correct places.
      */
-    protected Matrix4 debugCamera;
+    private Matrix4 debugCamera;
 
     /**
      * The camera used to show the viewport.
      */
-    protected OrthographicCamera camera;
-
+    private OrthographicCamera camera;
 
     protected final Stage stage;
 
@@ -130,7 +127,7 @@ public abstract class GameView extends ScreenAdapter{
      * Loads the file names received as Textures
      * @param textures The names of the files to be loaded as Textures
      */
-    protected void loadAssets(String[] textures){
+    void loadAssets(String[] textures){
         for (String str: textures) {
             this.game.getAssetManager().load(str,Texture.class);
         }
@@ -142,7 +139,7 @@ public abstract class GameView extends ScreenAdapter{
      *
      * @param model Model to be drawn
      */
-    protected void drawView(EntityModel model){
+    void drawView(EntityModel model){
         EntityView view = ViewFactory.makeView(game, model, null);
         view.update(model);
         view.draw(game.getBatch());
@@ -153,7 +150,7 @@ public abstract class GameView extends ScreenAdapter{
      *
      * @param world the world that will be rendered
      */
-    protected void debugPhysics(World world){
+    void debugPhysics(World world){
         if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
@@ -164,7 +161,7 @@ public abstract class GameView extends ScreenAdapter{
     /**
      * Creates the Joystick for the game
      */
-    protected void createJoystick(){
+    void createJoystick(){
         Touchpad.TouchpadStyle  touchpadStyle;
         Drawable touchBackground,touchKnob;
         Skin touchpadSkin;
@@ -204,7 +201,7 @@ public abstract class GameView extends ScreenAdapter{
      *
      * @return Returns the created camera
      */
-    protected OrthographicCamera createCamera() {
+    private OrthographicCamera createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * RATIO);
 
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
@@ -224,7 +221,7 @@ public abstract class GameView extends ScreenAdapter{
      * @param x New X coordinate offset
      * @param y New Y coordinate offset
      */
-    protected void writeOffset(float x, float y){
+    void writeOffset(float x, float y){
         Preferences prefs= game.getPreferences();
         prefs.writeOffsetX(x);
         prefs.writeOffsetY(y);
@@ -235,7 +232,7 @@ public abstract class GameView extends ScreenAdapter{
      *
      * @return Returns an array with the X and Y coordinates offset respectively
      */
-    protected float[] readOffsetXY(){
+    float[] readOffsetXY(){
         float[] array = new float[2];
         Preferences prefs = game.getPreferences();
         array[0] = prefs.readOffsetX();

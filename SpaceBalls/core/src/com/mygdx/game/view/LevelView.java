@@ -2,9 +2,6 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LevelType;
 import com.mygdx.game.SpaceBallsGame;
 import com.mygdx.game.controller.LevelController;
@@ -21,9 +18,9 @@ import com.mygdx.game.view.entities.ViewFactory;
  */
 
 public class LevelView extends GameView {
-    boolean joystick;
+    private final boolean joystick;
 
-    private LevelType.levelType currLevel;
+    private final LevelType.levelType currLevel;
 
     /**
      * Method to call the superclass constructor and load the assets and objects
@@ -31,7 +28,7 @@ public class LevelView extends GameView {
      * @param newLevel The Level type to be loaded and stored
      * @param game The game which will be associated with the screenAdapter
      */
-    public LevelView(SpaceBallsGame game,LevelType.levelType newLevel) {
+    LevelView(SpaceBallsGame game,LevelType.levelType newLevel) {
         super(game);
 
         String[] array  = {"back.png",
@@ -67,7 +64,7 @@ public class LevelView extends GameView {
     public void render(float delta) {
         LevelController lvlContrl = LevelController.getInstance(currLevel);
 
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         lvlContrl.update(delta);
 
@@ -137,14 +134,14 @@ public class LevelView extends GameView {
      * Getter for the current Level
      * @return Returns the current level type
      */
-    public LevelType.levelType getCurrLevel() {
+    LevelType.levelType getCurrLevel() {
         return currLevel;
     }
 
     /**
      * Methdo to set the screen to the MenuView
      */
-    protected void backToMenu(){
+    private void backToMenu(){
         LevelController.getInstance(currLevel).delete();
         game.setScreen(new MenuView(game));
     }
