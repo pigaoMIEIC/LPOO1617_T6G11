@@ -8,7 +8,9 @@ import android.os.Handler;
  * Created by Tiago Neves on 25/05/2017.
  */
 
-
+/**
+ * Preferences interface implementation for android deployment
+ */
 public class ActionResolverAndroid implements Preferences {
     public static final String myPref = "preferenceName";
 

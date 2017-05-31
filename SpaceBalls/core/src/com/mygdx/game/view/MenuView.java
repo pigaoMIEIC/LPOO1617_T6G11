@@ -124,6 +124,7 @@ public class MenuView extends GameView {
      */
     @Override
     public void render(float delta) {
+        stage.setDebugAll(true);
         float x = Gdx.input.getAccelerometerX();
         float y = Gdx.input.getAccelerometerY();
         controller.setAccelX(x);
@@ -173,6 +174,14 @@ public class MenuView extends GameView {
 
         if(options.isPressed()){
             game.setScreen(new OptionsView(game));
+        }
+
+        if(howtoplay.isPressed()){
+            game.setScreen( new HowToPlayView(game));
+        }
+
+        if(credits.isPressed()){
+            game.setScreen( new CreditsView(game));
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){

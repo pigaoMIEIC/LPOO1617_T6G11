@@ -143,7 +143,7 @@ public class OptionsController extends Controller{
 
 
     /**
-     * @return Delete the instance
+     * Delete the instance
      */
     public void delete(){
         this.instance = null;
