@@ -1,5 +1,4 @@
 exclude:
-- /Project_1/.*
 - /SpaceBalls/android/.*
 - /SpaceBalls/html/.*
 - /SpaceBalls/ios/.*
