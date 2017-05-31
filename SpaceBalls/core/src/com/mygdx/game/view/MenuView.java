@@ -117,14 +117,13 @@ public class MenuView extends GameView {
 
     }
 
-
     /**
      * Method to update the world and render the updated view
      * @param delta Time delta from the last update
      */
     @Override
     public void render(float delta) {
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
         float x = Gdx.input.getAccelerometerX();
         float y = Gdx.input.getAccelerometerY();
         controller.setAccelX(x);
@@ -135,8 +134,7 @@ public class MenuView extends GameView {
 
         debugPhysics(controller.getWorld());
     }
-
-
+    
     /**
      * Method that draws the views of the models present in the scene
      */

@@ -67,7 +67,7 @@ public class LevelView extends GameView {
     public void render(float delta) {
         LevelController lvlContrl = LevelController.getInstance(currLevel);
 
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         lvlContrl.update(delta);
 

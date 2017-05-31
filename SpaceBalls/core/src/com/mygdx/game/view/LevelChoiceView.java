@@ -116,7 +116,7 @@ public class LevelChoiceView extends GameView {
     @Override
     public void render(float delta) {
         MenuController controler = MenuController.getInstance();
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
         float x = Gdx.input.getAccelerometerX();
         float y = Gdx.input.getAccelerometerY();
         controler.setAccelX(x);
