@@ -51,6 +51,8 @@ public class MenuView extends GameView {
         controller.setOffset(game.getPreferences().readOffsetX(),game.getPreferences().readOffsetY());
 
         controller.setSensitivity(game.getPreferences().readSensitivity());
+
+
     }
 
     /**
@@ -152,7 +154,8 @@ public class MenuView extends GameView {
     void handleInputs() {
 
         if (exitButton.isPressed()) {
-            Gdx.app.exit();
+            MenuController.getInstance().delete();
+            System.exit(0);
         }
 
         if(sandbox.isPressed()){
@@ -176,7 +179,7 @@ public class MenuView extends GameView {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            Gdx.app.exit();
+            //Gdx.app.exit();
         }
 
     }

@@ -127,4 +127,12 @@ public class MenuController extends Controller{
     public void setSensitivity(float sensitivity) {
         this.sensitivity = sensitivity;
     }
+
+    /**
+     * Deletes the instance
+     */
+    public void delete(){
+        this.instance = null;
+        MenuModel.getInstance().delete();
+    }
 }

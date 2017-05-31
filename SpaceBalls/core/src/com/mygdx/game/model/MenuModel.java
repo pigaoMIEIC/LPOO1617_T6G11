@@ -79,4 +79,7 @@ public class MenuModel{
         return staticModel;
     }
 
+    public void delete() {
+        this.instance = null;
+    }
 }

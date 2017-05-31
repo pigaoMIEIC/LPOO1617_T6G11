@@ -151,6 +151,8 @@ class LevelChoiceView extends GameView {
         if(levels.elementAt(1).isPressed()){
             game.setScreen(new LevelView(game, LevelType.levelType.TWO));
         }
+
+
     }
 
 }
