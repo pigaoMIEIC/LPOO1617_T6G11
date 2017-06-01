@@ -13,7 +13,7 @@ The work load was evenly distibuted amongst both group members, with an approxim
 
 # Development Documentation
 ## Javadoc Core Documentation
-
+[Java Documentation](JavaDoc/) for core module.
 ## UML Diagrams
 ![Uml Diagram](Resources/SpaceBalls_core.png)
 
