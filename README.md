@@ -37,7 +37,7 @@ The Design Patterns used to solve development problems were
 ![Main Menu](Resources/menu.PNG)
 The main menu is the first screen you will be presented with when you start the app. First thing you will notice is the background is not static and is acctualy resposnive to your device movements (if you are not running the application on a mobile device we are sorry but you will not be able to take profit of this feature :'( ), you are also presented with a choice of submenus to enter, they are as follow: 
 * The Play Button will take you to the [Levels Menu](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#levels-menu).
-* The Survival Button will launch you stright into [Survival mode](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#survival-game-mode) gameplay.
+* The Survival Button will launch you straight into [Survival mode](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#survival-game-mode) gameplay.
 * The How to play button will take you to a screen with instruction on how to play the game.
 * The Credits button will take you to a screen whit the credits.
 * On the top right corner you can press the cog to enter the [Options](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#options-menu) screen.
@@ -53,7 +53,7 @@ This is an example of a Level, your goal is to reach the yellow ball with out be
 This is an endless mode of the game no walls to stop you and no yellow ball to be reached. Avoid the red balls if you want to survive every time the white bar is full another enemy will apear to hunt you down. The use of the joystick is configurable in the options menu.
 ## Options Menu
 ![Options Menu](Resources/options.PNG)
-In these menu you can edit your settings. Choose weather you want to play with the joystick or with the device accelerometer after that go on and select a sensitivity level, you can use the ball in the background to test it out. In case you decide to use your device accelrometer and don't fancy playing with your phone horizontally you can touch the target on the right to calibrate your movements.
+In these menu you can edit your settings. Choose whether you want to play with the joystick or with the device accelerometer after that go on and select a sensitivity level, you can use the ball in the background to test it out. In case you decide to use your device accelrometer and don't fancy playing with your phone horizontally you can touch the target on the right to calibrate your movements.
 ## Game Over
 ![Game over screen](Resources/gameover.PNG)
 You can reach this screen by loosing either a level or a survival game press exit to return to the main menu or restart to try the game again.
