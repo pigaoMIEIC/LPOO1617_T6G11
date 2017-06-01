@@ -38,7 +38,7 @@ The Design Patterns used to solve development problems were
 The main menu is the first screen you will be presented with when you start the app. First thing you will notice is the background is not static and is acctualy resposnive to your device movements (if you are not running the application on a mobile device we are sorry but you will not be able to take profit of this feature :'( ), you are also presented with a choice of submenus to enter, they are as follow: 
 * The Play Button will take you to the [Levels Menu](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#levels-menu).
 * The Survival Button will launch you straight into [Survival mode](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#survival-game-mode) gameplay.
-* The How to play button will take you to a screen with instruction on how to play the game.
+* The How to play button will take you to a screen with instructions on how to play the game.
 * The Credits button will take you to a screen whit the credits.
 * On the top right corner you can press the cog to enter the [Options](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#options-menu) screen.
 * The highlighted exit button will do exactly what is says.
@@ -58,6 +58,8 @@ In these menu you can edit your settings. Choose whether you want to play with t
 ![Game over screen](Resources/gameover.PNG)
 You can reach this screen by loosing either a level or a survival game press exit to return to the main menu or restart to try the game again.
 
+
+#### Developed by:
  
  Tiago Costa Neves 201506203 up201506203@fe.up.pt
  
