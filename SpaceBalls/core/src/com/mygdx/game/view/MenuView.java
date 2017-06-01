@@ -107,7 +107,6 @@ public class MenuView extends GameView {
         credits.setSize(width/6,buttonYSize);
         credits.setPosition(width/2 - width/12,spacing*3 - buttonYSize);
         stage.addActor(credits);
-
     }
 
 
@@ -154,7 +153,6 @@ public class MenuView extends GameView {
     void handleInputs() {
 
         if (exitButton.isPressed()) {
-            MenuController.getInstance().delete();
             System.exit(0);
         }
 

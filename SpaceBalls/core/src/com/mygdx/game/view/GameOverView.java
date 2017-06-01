@@ -70,7 +70,6 @@ public class GameOverView extends GameView {
         restart.setPosition(width/10,height/2-buttonYSize);
         stage.addActor(restart);
 
-
     }
 
     @Override

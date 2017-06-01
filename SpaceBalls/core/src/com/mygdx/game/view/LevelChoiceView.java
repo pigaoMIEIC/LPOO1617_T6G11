@@ -94,8 +94,6 @@ class LevelChoiceView extends GameView {
         levels.addElement(tmpButton);
         stage.addActor(tmpButton);
 
-        //(buttonYSize+horzSpacing)
-
 
     }
 

@@ -49,6 +49,7 @@ public class HowToPlayView extends GameView {
         image.setPosition(0,0);
         stage.addActor(image);
 
+
     }
     /**
      * Method that handles the inputs from the stage
