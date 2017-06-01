@@ -35,7 +35,7 @@ The Design Patterns used to solve development problems were
 
 ## The Main menu (entry point of the application)
 ![Main Menu](Resources/menu.PNG)
-The main menu is the first screen you will be presented with when you start the app. First thing you will notice is the background is not static and is acctualy resposnive to your device movements (if you are not running the application on a mobile device we are sorry but you will not be able to take profit of this feature :'( [sadface](http://www.simplystamps.com/images/products/sad_face_emoji_stamp_large.png) ), you are also presented with a choice of submenus to enter, they are as follow: 
+The main menu is the first screen you will be presented with when you start the app. First thing you will notice is the background is not static and is acctualy resposnive to your device movements (if you are not running the application on a mobile device we are sorry but you will not be able to take profit of this feature :'( ), you are also presented with a choice of submenus to enter, they are as follow: 
 * The Play Button will take you to the [Levels Menu](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#levels-menu).
 * The Survival Button will launch you stright into [Survival mode](https://github.com/pigaoMIEIC/LPOO1617_T6G11/blob/finalRelease/README.md#survival-game-mode) gameplay.
 * The How to play button will take you to a screen with instruction on how to play the game.
