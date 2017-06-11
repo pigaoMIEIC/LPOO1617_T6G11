@@ -5,9 +5,9 @@
 # Setup
 
 ## Project Installation
-
+To intall and further develop the project it is necessary to build the project using Gradle. LibGDX libraries are also nedded.
 ## App installation
-
+To install the app the user needs to download the .apk file available in the repository root and install it in the desired android device.
 # Work Load
 The work load was evenly distibuted amongst both group members, with an approximate development time of 50 hours.
 
